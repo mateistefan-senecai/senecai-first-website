@@ -46,16 +46,6 @@ document.querySelectorAll("[data-tabs]").forEach((tabsRoot) => {
   });
 });
 
-// FAQ accordion
-document.querySelectorAll("[data-accordion] .accordion-item").forEach((item) => {
-  const trigger = item.querySelector(".accordion-trigger");
-  trigger.addEventListener("click", () => {
-    const isActive = item.classList.contains("is-active");
-    item.classList.toggle("is-active", !isActive);
-    trigger.setAttribute("aria-expanded", String(!isActive));
-  });
-});
-
 // Language toggle (visual only — RO copy not yet implemented)
 document.querySelectorAll(".lang-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
