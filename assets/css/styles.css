@@ -228,6 +228,11 @@ a { color: inherit; text-decoration: none; }
 }
 .framing-scope { max-width: 640px; margin: 0; }
 
+.framing-center { text-align: center; }
+.framing-center .framing-body,
+.framing-center .framing-scope { max-width: 640px; margin-left: auto; margin-right: auto; }
+.framing-center .tag-grid { justify-content: center; margin-left: auto; margin-right: auto; }
+
 /* ===== Regulatory coverage matrix ===== */
 .matrix-wrap { overflow-x: auto; }
 .matrix { width: 100%; border-collapse: collapse; min-width: 640px; }
