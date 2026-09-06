@@ -16,7 +16,7 @@
   [id] { scroll-margin-top: 210px; }
   /* Keeps the Hub button in the true top-right corner: below this width the nav
      links drop to their own row instead of pushing the button down. */
-  @media (max-width: 1240px) { [data-nav-links] { order: 3; flex-basis: 100%; margin-right: 0 !important; } }
+  @media (max-width: 1100px) { [data-nav-links] { order: 3; flex-basis: 100%; } }
   .om-cta { position: relative; overflow: hidden; }
   .om-cta > span { position: relative; z-index: 1; }
   .om-cta::before { content: ""; position: absolute; inset: 0; background: #201e1d; transform: translateX(-101%); transition: transform .28s cubic-bezier(.2,.7,.2,1); }
@@ -145,14 +145,14 @@
 <div style="background: #ffffff;">
 
   <!-- ================= NAV ================= -->
-  <div id="top" style="position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: 28px; padding: 16px clamp(20px, 4vw, 64px); border-bottom: 1px solid #e6e1d5; background: #ffffff;">
-    <a href="#top" style="display: flex; align-items: center; gap: 10px; margin-right: auto; color: #201e1d;">
-      <img src="assets/senecai-logo-trimmed.png" alt="SenecAI Consulting" style="display: block; height: auto; width: clamp(230px, 20vw, 330px);">
+  <div id="top" style="position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: 20px; padding: 16px clamp(16px, 3vw, 48px); border-bottom: 1px solid #ecdfba; background: #f8f1de;">
+    <a href="#top" style="display: flex; align-items: center; gap: 10px; color: #201e1d;">
+      <img src="assets/senecai-logo-trimmed.png" alt="SenecAI Consulting" style="display: block; height: auto; width: clamp(210px, 16vw, 260px);">
     </a>
-    <div data-nav-links="true" style="display: flex; flex-wrap: wrap; gap: 24px; margin-right: auto; font: 600 12px/1 Archivo, sans-serif; letter-spacing: .12em; text-transform: uppercase;">
-      <a class="x1" href="#services" style="color: #4a453e; padding-bottom: 4px; border-bottom: 2px solid transparent;">How we can help you</a>
-      <a class="x2" href="#coverage" style="color: #4a453e; padding-bottom: 4px; border-bottom: 2px solid transparent;">Regulations covered</a>
+    <div data-nav-links="true" style="display: flex; flex-wrap: wrap; gap: 18px; font: 600 12px/1 Archivo, sans-serif; letter-spacing: .12em; text-transform: uppercase;">
+      <a class="x1" href="#services" style="color: #4a453e; padding-bottom: 4px; border-bottom: 2px solid transparent;">Services</a>
       <a class="x3" href="#method" style="color: #4a453e; padding-bottom: 4px; border-bottom: 2px solid transparent;">How we work</a>
+      <a class="x2" href="#coverage" style="color: #4a453e; padding-bottom: 4px; border-bottom: 2px solid transparent;">Regulations covered</a>
       <a class="x4" href="#substack" style="color: #4a453e; padding-bottom: 4px; border-bottom: 2px solid transparent;">Research</a>
       <a class="x5" href="#team" style="color: #4a453e; padding-bottom: 4px; border-bottom: 2px solid transparent;">Team</a>
     </div>
@@ -237,9 +237,6 @@
         <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">Coverage</div>
         <h2 style="margin: 0; max-width: 22ch; font: 900 clamp(32px, 3.8vw, 48px)/1.02 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">Under one team, every regulation.</h2>
       </div>
-      <p style="margin: 0; max-width: 34ch; font: 400 17px/1.55 Archivo, sans-serif; color: #4a453e;">
-        Legal, technical and cybersecurity experts — all powered by the SenecAI Governance Hub.
-      </p>
     </div>
     <div style="overflow-x: auto; border: 1px solid #ddd7c8;">
       <table style="width: 100%; min-width: 720px; border-collapse: collapse; font-family: Archivo, sans-serif;">
@@ -383,13 +380,13 @@
           You become compliant.
         </div>
       </div>
-      <div style="display: grid; grid-template-columns: 84px minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); align-items: start; padding: clamp(24px, 3vw, 34px) 0; border-bottom: 1px solid #ddd7c8; background: #fcfbf7;">
-        <div style="font: 800 clamp(28px, 3vw, 40px)/1 Archivo, sans-serif; letter-spacing: -.02em; color: #a37c17;">04</div>
+      <div style="display: grid; grid-template-columns: 84px minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); align-items: start; padding: clamp(24px, 3vw, 34px) 0; border-bottom: 1px solid #ddd7c8;">
+        <div style="font: 800 clamp(28px, 3vw, 40px)/1 Archivo, sans-serif; letter-spacing: -.02em; color: #d6cdb4;">04</div>
         <div style="min-width: 0; display: flex; flex-direction: column; gap: 10px;">
           <h3 style="margin: 0; font: 800 clamp(22px, 2.2vw, 28px)/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Monitor</h3>
           <p style="margin: 0; max-width: 56ch; font: 400 17px/1.55 Archivo, sans-serif; color: #4a453e;">We ensure your compliance stays up to date as your business, technology and the regulatory landscape evolve.</p>
         </div>
-        <div style="min-width: 0; padding-left: clamp(16px, 2vw, 28px); border-left: 2px solid #c9a227; font: 600 15px/1.5 Archivo, sans-serif;">
+        <div style="min-width: 0; padding-left: clamp(16px, 2vw, 28px); border-left: 2px solid #ecdfba; font: 600 15px/1.5 Archivo, sans-serif;">
           <span style="display: block; margin-bottom: 6px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a6a1f;">Outcome</span>
           You maintain your compliance posture over time.
         </div>
@@ -487,7 +484,7 @@
     </div>
 
     <div role="tablist" aria-label="What we do for you" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border: 1px solid #201e1d;">
-      <button class="x19" data-tab="0" role="tab" aria-selected="true" aria-controls="panel-0" style="all: unset; box-sizing: border-box; cursor: pointer; min-width: 0; padding: 18px 20px; font: 800 13px/1.25 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; border-right: 1px solid #ddd7c8; background: #201e1d; color: #ffffff;">AI Inventory</button>
+      <button class="x19" data-tab="0" role="tab" aria-selected="true" aria-controls="panel-0" style="all: unset; box-sizing: border-box; cursor: pointer; min-width: 0; padding: 18px 20px; font: 800 13px/1.25 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; border-right: 1px solid #ddd7c8; background: #201e1d; color: #ffffff;">AI Inventory &amp; Risk Classification</button>
       <button class="x20" data-tab="1" role="tab" aria-selected="false" aria-controls="panel-1" style="all: unset; box-sizing: border-box; cursor: pointer; min-width: 0; padding: 18px 20px; font: 800 13px/1.25 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; border-right: 1px solid #ddd7c8; background: transparent; color: #4a453e;">Governing Agentic Workflows</button>
       <button class="x21" data-tab="2" role="tab" aria-selected="false" aria-controls="panel-2" style="all: unset; box-sizing: border-box; cursor: pointer; min-width: 0; padding: 18px 20px; font: 800 13px/1.25 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; border-right: 1px solid #ddd7c8; background: transparent; color: #4a453e;">Data Governance and Privacy</button>
       <button class="x22" data-tab="3" role="tab" aria-selected="false" aria-controls="panel-3" style="all: unset; box-sizing: border-box; cursor: pointer; min-width: 0; padding: 18px 20px; font: 800 13px/1.25 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; border-right: 1px solid #ddd7c8; background: transparent; color: #4a453e;">Operational Resilience</button>
@@ -497,8 +494,8 @@
 
     <div data-panel="0" id="panel-0" role="tabpanel" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(24px, 3vw, 48px); padding: clamp(28px, 3.4vw, 44px) 0 0;">
       <div style="min-width: 0; display: flex; flex-direction: column; gap: 18px;">
-        <div style="align-self: flex-start; padding: 7px 12px; background: #f7f2e4; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">AI Act</div>
-        <h3 style="margin: 0; font: 900 clamp(24px, 2.6vw, 34px)/1.1 Archivo, sans-serif; letter-spacing: -.025em; text-transform: uppercase;">AI Inventory</h3>
+        <div style="align-self: flex-start; padding: 7px 12px; background: #f7f2e4; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">AI Act · ISO 42001</div>
+        <h3 style="margin: 0; font: 900 clamp(24px, 2.6vw, 34px)/1.1 Archivo, sans-serif; letter-spacing: -.025em; text-transform: uppercase;">AI Inventory &amp; Risk Classification</h3>
         <p style="margin: 0; max-width: 54ch; font: 400 18px/1.6 Archivo, sans-serif; color: #4a453e;">Most companies don't have a clear picture of every AI system they've built, bought, or quietly embedded through a vendor. We help you build and maintain a living inventory of these systems, so you always know what you're running, who's responsible for it, and what regulatory role and risk level it carries — the essential first step before anything else can be assessed.</p>
       </div>
       <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #fcfbf7; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
