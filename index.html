@@ -1,508 +1,731 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SenecAI — EU digital compliance for startups and SMEs</title>
-<meta name="description" content="Legal, technical and cybersecurity support covering the EU digital regulatory landscape — from 'what law applies to us?' to 'we're fully compliant.'" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/styles.css" />
+<meta name="description" content="Legal, technical and cybersecurity support covering the EU digital regulatory landscape — from 'what law applies to us?' to 'we're fully compliant.'">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; font-family: Archivo, system-ui, sans-serif; color: #201e1d; background: #ffffff; }
+  a { color: #8a6a1f; text-decoration: none; }
+  a:hover { color: #6d5417; }
+  html { scroll-behavior: smooth; }
+  [id] { scroll-margin-top: 210px; }
+  /* Keeps the Hub button in the true top-right corner: below this width the nav
+     links drop to their own row instead of pushing the button down. */
+  @media (max-width: 1240px) { [data-nav-links] { order: 3; flex-basis: 100%; margin-right: 0 !important; } }
+  .om-cta { position: relative; overflow: hidden; }
+  .om-cta > span { position: relative; z-index: 1; }
+  .om-cta::before { content: ""; position: absolute; inset: 0; background: #201e1d; transform: translateX(-101%); transition: transform .28s cubic-bezier(.2,.7,.2,1); }
+  .om-cta:hover::before { transform: translateX(0); }
+  .om-cta-light::before { background: #ffffff; }
+</style>
+<script>
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest ? e.target.closest("[data-tab]") : null;
+    if (!btn) return;
+    var i = btn.getAttribute("data-tab");
+    document.querySelectorAll("[data-tab]").forEach(function (b) {
+      var on = b.getAttribute("data-tab") === i;
+      b.style.background = on ? "#201e1d" : "transparent";
+      b.style.color = on ? "#ffffff" : "#4a453e";
+      b.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    document.querySelectorAll("[data-panel]").forEach(function (p) {
+      p.style.display = p.getAttribute("data-panel") === i ? "grid" : "none";
+    });
+  });
+
+  /* Platform slider: prev / next / dots, no runtime dependency. */
+  (function () {
+    function go(i) {
+      var slides = [].slice.call(document.querySelectorAll("[data-slide]"));
+      if (!slides.length) return;
+      var n = (i + slides.length) % slides.length;
+      slides.forEach(function (s, k) { s.style.display = k === n ? "flex" : "none"; });
+      document.querySelectorAll("[data-slide-dot]").forEach(function (d, k) {
+        d.style.background = k === n ? "#c9a227" : "#4a443a";
+      });
+      var c = document.querySelector("[data-slide-counter]");
+      if (c) c.textContent = ("0" + (n + 1)).slice(-2) + " / " + ("0" + slides.length).slice(-2);
+      window.__senecaiSlide = n;
+    }
+    document.addEventListener("click", function (e) {
+      var t = e.target.closest ? e.target : null;
+      if (!t) return;
+      var cur = window.__senecaiSlide || 0;
+      if (t.closest("[data-slide-next]")) go(cur + 1);
+      else if (t.closest("[data-slide-prev]")) go(cur - 1);
+      else {
+        var dot = t.closest("[data-slide-dot]");
+        if (dot) go(parseInt(dot.getAttribute("data-slide-dot"), 10));
+      }
+    });
+  })();
+
+  /* Additive reveals only — content is never hidden in the styles. */
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function init() {
+      if (reduce || !("IntersectionObserver" in window) || !document.body.animate) return;
+      var targets = [].slice.call(document.querySelectorAll("[data-screen-label]")).slice(1);
+      if (!targets.length) return;
+      var ease = "cubic-bezier(.2,.7,.2,1)";
+      var first = true;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          io.unobserve(e.target);
+          if (!e.isIntersecting || first) return;
+          [].slice.call(e.target.querySelectorAll("[data-stagger] > *")).forEach(function (c, k) {
+            c.animate([{ opacity: 0, transform: "translateY(10px)" }, { opacity: 1, transform: "none" }],
+              { duration: 460, delay: k * 80, easing: ease, fill: "none" });
+          });
+          e.target.animate([{ opacity: 0, transform: "translateY(14px)" }, { opacity: 1, transform: "none" }],
+            { duration: 520, easing: ease, fill: "none" });
+        });
+        first = false;
+      }, { threshold: 0.08 });
+      targets.forEach(function (s) { io.observe(s); });
+      setTimeout(function () { first = false; }, 300);
+    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+    else init();
+  })();
+</script>
+<style>
+.x1:hover { color: #201e1d; border-bottom-color: #c9a227; }
+.x2:hover { color: #201e1d; border-bottom-color: #c9a227; }
+.x3:hover { color: #201e1d; border-bottom-color: #c9a227; }
+.x4:hover { color: #201e1d; border-bottom-color: #c9a227; }
+.x5:hover { color: #201e1d; border-bottom-color: #c9a227; }
+.x6:hover { background: #f7f2e4; }
+.x7:hover { color: #ffffff; }
+.x8:hover { color: #ffffff; }
+.x9:hover { color: #8a6a1f; border-bottom-color: #c9a227; }
+.x10:hover { color: #ffffff; }
+.x11:hover { color: #201e1d; }
+.x12:hover { border-color: #c9a227; color: #c9a227; }
+.x12:focus-visible { outline: 2px solid #c9a227; outline-offset: 2px; }
+.x13:hover { border-color: #c9a227; color: #c9a227; }
+.x13:focus-visible { outline: 2px solid #c9a227; outline-offset: 2px; }
+.x14:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
+.x15:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
+.x16:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
+.x17:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
+.x18:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
+.x19:focus-visible { outline: 2px solid #c9a227; outline-offset: -6px; }
+.x20:hover { background: #f7f2e4; color: #201e1d; }
+.x20:focus-visible { outline: 2px solid #c9a227; outline-offset: -6px; }
+.x21:hover { background: #f7f2e4; color: #201e1d; }
+.x21:focus-visible { outline: 2px solid #c9a227; outline-offset: -6px; }
+.x22:hover { background: #f7f2e4; color: #201e1d; }
+.x22:focus-visible { outline: 2px solid #c9a227; outline-offset: -6px; }
+.x23:hover { background: #f7f2e4; color: #201e1d; }
+.x23:focus-visible { outline: 2px solid #c9a227; outline-offset: -6px; }
+.x24:hover { background: #f7f2e4; color: #201e1d; }
+.x24:focus-visible { outline: 2px solid #c9a227; outline-offset: -6px; }
+.x25:hover { color: #fcfbf7; }
+.x26:hover { color: #c9a227; }
+.x27:hover { color: #c9a227; }
+.x28:hover { color: #c9a227; }
+.x29:hover { color: #c9a227; }
+.x30:hover { color: #c9a227; }
+.x31:hover { color: #c9a227; }
+.x32:hover { color: #c9a227; }
+.x33:hover { color: #c9a227; }
+.x34:hover { color: #c9a227; }
+.x35:hover { color: #c9a227; }
+.x36:hover { color: #c9a227; }
+</style>
 </head>
 <body>
+<div style="background: #ffffff;">
 
-<header class="site-header">
-  <div class="container header-inner">
-    <a class="logo" href="#top">
-      <span class="logo-mark">S</span>
-      <span class="logo-word">Senec<span class="accent">AI</span></span>
+  <!-- ================= NAV ================= -->
+  <div id="top" style="position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: 28px; padding: 16px clamp(20px, 4vw, 64px); border-bottom: 1px solid #e6e1d5; background: #ffffff;">
+    <a href="#top" style="display: flex; align-items: center; gap: 10px; margin-right: auto; color: #201e1d;">
+      <img src="assets/senecai-logo-trimmed.png" alt="SenecAI Consulting" style="display: block; height: auto; width: clamp(230px, 20vw, 330px);">
     </a>
-
-    <nav class="main-nav" id="main-nav">
-      <a href="#services">How We Can Help You</a>
-      <a href="#team">Who We Are</a>
-      <a href="#coverage">Regulations Covered</a>
-    </nav>
-
-    <div class="header-actions">
-      <div class="lang-toggle" role="group" aria-label="Language">
-        <button class="lang-btn is-active" type="button">EN</button>
-        <button class="lang-btn" type="button">RO</button>
+    <div data-nav-links="true" style="display: flex; flex-wrap: wrap; gap: 24px; margin-right: auto; font: 600 12px/1 Archivo, sans-serif; letter-spacing: .12em; text-transform: uppercase;">
+      <a class="x1" href="#services" style="color: #4a453e; padding-bottom: 4px; border-bottom: 2px solid transparent;">How we can help you</a>
+      <a class="x2" href="#coverage" style="color: #4a453e; padding-bottom: 4px; border-bottom: 2px solid transparent;">Regulations covered</a>
+      <a class="x3" href="#method" style="color: #4a453e; padding-bottom: 4px; border-bottom: 2px solid transparent;">How we work</a>
+      <a class="x4" href="#substack" style="color: #4a453e; padding-bottom: 4px; border-bottom: 2px solid transparent;">Research</a>
+      <a class="x5" href="#team" style="color: #4a453e; padding-bottom: 4px; border-bottom: 2px solid transparent;">Team</a>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px; margin-left: auto;">
+      <div style="display: flex; border: 1px solid #201e1d; font: 700 12px/1 Archivo, sans-serif; letter-spacing: .1em;">
+        <span style="padding: 8px 12px; background: #201e1d; color: #ffffff;">EN</span>
+        <span class="x6" style="padding: 8px 12px; color: #4a453e; cursor: pointer;">RO</span>
       </div>
-      <a class="btn btn-outline-header" href="#governance-hub">Explore the SenecAI Governance Hub</a>
-      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+      <a href="#governance-hub" class="om-cta x7" style="display: flex; align-items: center; padding: 12px 16px; background: #c9a227; color: #201e1d; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;" data-nav-cta="true">
+        <span>Explore the SenecAI Governance Hub</span>
+      </a>
     </div>
   </div>
-</header>
 
-<main id="top">
-
-  <!-- 1. HERO -->
-  <section class="hero">
-    <div class="container">
-      <h1 class="hero-headline">
-        <span class="line line-black">EU DIGITAL</span>
-        <span class="line line-gold">COMPLIANCE FOR</span>
-        <span class="line line-black">STARTUPS &amp; SMES</span>
+  <!-- ================= HERO ================= -->
+  <div data-screen-label="Hero" style="background: #f8f1de; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: clamp(32px, 4vw, 64px); align-items: start; padding: clamp(48px, 6vw, 88px) clamp(20px, 4vw, 64px) clamp(40px, 5vw, 72px);">
+    <div style="min-width: 0; display: flex; flex-direction: column; gap: 26px;">
+      <div style="display: flex; align-items: center; gap: 12px; font: 700 12px/1.6 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">
+        <span style="width: 28px; height: 2px; background: #c9a227; flex: none;"></span>
+        <span>EU AI Act · GDPR · NIS2 · DORA · CRA</span>
+      </div>
+      <h1 style="margin: 0; font: 900 clamp(40px, 5.4vw, 72px)/0.95 Archivo, sans-serif; letter-spacing: -.035em; text-transform: uppercase; text-wrap: balance;">
+        EU digital <span style="color: #a37c17;">compliance</span> for startups &amp; SMEs
       </h1>
-      <p class="hero-sub">Legal, technical and cybersecurity expertise for navigating the EU digital regulatory landscape:<br /><span class="hero-sub-tags">EU AI Act, GDPR, NIS2, DORA, CRA and more.</span></p>
-
-      <div class="hero-links">
-        <a class="text-link" href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call">Tell us what you're building — book a free intro call <span class="arrow">→</span></a>
-        <div class="hero-link-group">
-          <a class="text-link" href="#governance-hub">Explore the <span class="text-link-ink">SenecAI Governance</span> Hub <span class="arrow">→</span></a>
-          <p class="hero-link-sub">Your central hub for managing EU digital compliance.</p>
-        </div>
-        <a class="text-link" href="#cta">Not sure what applies to you? Try the compliance checker <span class="arrow">→</span></a>
+      <p style="margin: 0; max-width: 46ch; font: 400 19px/1.55 Archivo, sans-serif; color: #4a453e;">
+        Legal, technical and cybersecurity expertise for navigating the EU digital regulatory landscape.
+      </p>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; padding-top: 4px;">
+        <a href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call" class="om-cta x8" style="box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 18px 22px; background: #c9a227; color: #201e1d; font: 800 14px/1.3 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;">
+          <span>Book a free intro call</span>
+          <span style="font-size: 18px;">→</span>
+        </a>
       </div>
-    </div>
-  </section>
-
-  <!-- 2. COMPLIANCE FRAMING -->
-  <section class="section framing-center" id="why-compliance">
-    <div class="container">
-      <p class="eyebrow">The Challenge</p>
-      <h2>Compliance shouldn't be a burden.</h2>
-      <div class="framing-body">
-        <p>You need to pass investor due diligence, get certified for that big client, close an enterprise procurement deal, or simply reduce your regulatory risk?</p>
-        <p>You need to signal to the market that you're compliant.</p>
-        <p><strong>We offer end-to-end compliance support tailored to your regulatory exposure.</strong></p>
-      </div>
-
-      <ul class="tag-grid">
-        <li>AI Act</li>
-        <li>GDPR</li>
-        <li>NIS2</li>
-        <li>DORA</li>
-        <li>CRA</li>
-        <li>And more</li>
-      </ul>
-
-      <p class="framing-scope"><strong>From strategy consulting and initial audits to risk assessments, gap remediation, full implementation and ongoing monitoring.</strong></p>
-    </div>
-  </section>
-
-  <!-- 3. REGULATORY COVERAGE MATRIX -->
-  <section class="section section-alt" id="coverage">
-    <div class="container">
-      <p class="eyebrow">Coverage</p>
-      <h2>Under one team, every regulation.</h2>
-      <p class="section-lead">Legal, technical and cybersecurity experts — all powered by the SenecAI Governance Hub.</p>
-
-      <div class="matrix-wrap">
-        <table class="matrix">
-          <thead>
-            <tr>
-              <th class="matrix-row-label"></th>
-              <th><span class="pill-header">AI Act</span></th>
-              <th><span class="pill-header">GDPR</span></th>
-              <th><span class="pill-header">NIS2</span></th>
-              <th><span class="pill-header">DORA</span></th>
-              <th><span class="pill-header">CRA</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th class="matrix-row-label">Regulatory assessment</th>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-            </tr>
-            <tr>
-              <th class="matrix-row-label">Gap analysis</th>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-            </tr>
-            <tr>
-              <th class="matrix-row-label">Risk management</th>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-            </tr>
-            <tr>
-              <th class="matrix-row-label">Documentation</th>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-            </tr>
-            <tr>
-              <th class="matrix-row-label">Technical controls</th>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-            </tr>
-            <tr>
-              <th class="matrix-row-label">Cybersecurity</th>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-            </tr>
-            <tr>
-              <th class="matrix-row-label">Ongoing monitoring</th>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-              <td><span class="check-icon" aria-label="Covered"></span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="matrix-caption">Coverage depends on your business model, products and regulatory exposure.</p>
-    </div>
-  </section>
-
-  <!-- 4. OUR METHOD -->
-  <section class="section" id="method">
-    <div class="container">
-      <p class="eyebrow">Our Method</p>
-      <h2>From exposure to compliant, step by step.</h2>
-
-      <div class="method-list">
-        <div class="method-step">
-          <span class="method-num">01</span>
-          <div class="method-body">
-            <h3>Discover</h3>
-            <p>We do a deep dive into your business, products and operations to understand your regulatory exposure.</p>
-            <p class="method-outcome"><span class="outcome-label">Outcome —</span> You have a clear picture of which regulatory requirements apply to you.</p>
-          </div>
-        </div>
-        <div class="method-step">
-          <span class="method-num">02</span>
-          <div class="method-body">
-            <h3>Assess</h3>
-            <p>We analyze your compliance readiness against the applicable regulatory frameworks and conduct a gap analysis.</p>
-            <p class="method-outcome"><span class="outcome-label">Outcome —</span> You know what needs to be revised to reduce your regulatory risk.</p>
-          </div>
-        </div>
-        <div class="method-step">
-          <span class="method-num">03</span>
-          <div class="method-body">
-            <h3>Implement</h3>
-            <p>We do the compliance work: documentation, compliant architecture, security controls and more.</p>
-            <p class="method-outcome"><span class="outcome-label">Outcome —</span> You become compliant.</p>
-          </div>
-        </div>
-        <div class="method-step method-step-last">
-          <span class="method-num">04</span>
-          <div class="method-body">
-            <h3>Monitor</h3>
-            <p>We ensure your compliance stays up to date as your business, technology and the regulatory landscape evolve.</p>
-            <p class="method-outcome"><span class="outcome-label">Outcome —</span> You maintain your compliance posture over time.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. OUR PARTNERS (placeholder) -->
-  <section class="section section-alt" id="partners">
-    <div class="container">
-      <p class="eyebrow">Partners</p>
-      <h2>Our Partners</h2>
-      <div class="placeholder-box">Coming soon.</div>
-    </div>
-  </section>
-
-  <!-- 6. TESTIMONIALS (placeholder) -->
-  <section class="section" id="testimonials">
-    <div class="container">
-      <p class="eyebrow">Testimonials</p>
-      <h2>What our clients say</h2>
-      <div class="placeholder-box">Coming soon.</div>
-    </div>
-  </section>
-
-  <!-- 7. GOVERNANCE HUB CALLOUT (black band) -->
-  <section class="band-black" id="governance-hub">
-    <div class="container band-inner">
-      <h2>Explore the SenecAI Governance Hub</h2>
-      <p>Our platform, offered as part of our engagements, lets you monitor, govern and track your compliance journey.</p>
-      <p class="band-strong">All EU digital regulations in one hub.</p>
-      <a class="btn btn-primary btn-lg" href="#cta">Learn more</a>
-    </div>
-  </section>
-
-  <!-- 8. WHAT WE DO FOR YOU (exact preserved design, retitled) -->
-  <section class="section section-alt" id="services">
-    <div class="container">
-      <h2>What We Do For You</h2>
-
-      <div class="tabs" data-tabs>
-        <div class="tab-list" role="tablist">
-          <button class="tab-btn is-active" role="tab" aria-selected="true" data-tab="tab-1">
-            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
-            AI Inventory
-          </button>
-          <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-2">
-            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="6" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><path d="M7.8 7.4 10.5 16.2M16.2 7.4 13.5 16.2M8.2 6h7.6"/></svg>
-            Governing Agentic Workflows
-          </button>
-          <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-3">
-            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z"/></svg>
-            Data Governance and Privacy
-          </button>
-          <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-4">
-            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg>
-            Operational Resilience
-          </button>
-          <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-5">
-            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z"/><path d="m9 12 2 2 4-4"/></svg>
-            Security Governance
-          </button>
-          <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-6">
-            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="6.5"/><line x1="14.8" y1="14.8" x2="20" y2="20"/><path d="M7 10h6M10 7v6"/></svg>
-            Compliance Audits
-          </button>
-        </div>
-
-        <div class="tab-panel is-active" id="tab-1" role="tabpanel">
-          <span class="badge">AI ACT</span>
-          <h3>AI Inventory</h3>
-          <p>Most companies don't have a clear picture of every AI system they've built, bought, or quietly embedded through a vendor. We help you build and maintain a living inventory of these systems, so you always know what you're running, who's responsible for it, and what regulatory role and risk level it carries — the essential first step before anything else can be assessed.</p>
-          <div class="help-box">
-            <p class="help-title">What we help you with</p>
-            <ul>
-              <li>Inventory of your AI systems — built, bought, or embedded</li>
-              <li>Role determination and risk classification</li>
-              <li>Conformity documentation and Declaration of Conformity support</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="tab-panel" id="tab-2" role="tabpanel" hidden>
-          <span class="badge">AI ACT</span>
-          <h3>Governing Agentic Workflows</h3>
-          <p>Agentic systems make decisions and take actions with less human oversight at every step — which means the compliance questions change too. We help you govern agentic workflows before they become a liability: who's accountable when an agent acts, what guardrails are in place, and how you document it.</p>
-          <div class="help-box">
-            <p class="help-title">What we help you with</p>
-            <ul>
-              <li>Human oversight design and accountability mapping</li>
-              <li>Guardrails and escalation logic for autonomous decisions</li>
-              <li>Documentation for agentic system governance</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="tab-panel" id="tab-3" role="tabpanel" hidden>
-          <span class="badge">GDPR</span>
-          <h3>Data Governance and Privacy</h3>
-          <p>Every AI system runs on data, and every dataset carries GDPR obligations that don't disappear just because a model is involved. We help you map your data flows, fix the gaps in your legal basis, and put privacy controls in place that hold up under scrutiny — from regulators and from your own customers.</p>
-          <div class="help-box">
-            <p class="help-title">What we help you with</p>
-            <ul>
-              <li>Data mapping and legal basis review</li>
-              <li>DPIAs and privacy-by-design implementation</li>
-              <li>Vendor and data processing agreement review</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="tab-panel" id="tab-4" role="tabpanel" hidden>
-          <span class="badge">DORA</span>
-          <h3>Operational Resilience</h3>
-          <p>Financial entities and their critical ICT providers now have to prove they can withstand and recover from disruption, not just describe their security posture on paper. We help you build the ICT risk management framework, incident reporting processes and testing program DORA actually requires.</p>
-          <div class="help-box">
-            <p class="help-title">What we help you with</p>
-            <ul>
-              <li>ICT risk management framework design</li>
-              <li>Incident classification and reporting readiness</li>
-              <li>Resilience testing and third-party risk oversight</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="tab-panel" id="tab-5" role="tabpanel" hidden>
-          <span class="badge">NIS2 &middot; ISO 27001</span>
-          <h3>Security Governance</h3>
-          <p>NIS2 raises the bar on cybersecurity governance — and puts personal liability on management if it's not met. We help you build the security controls, incident response processes and governance structure to meet NIS2 obligations, and get ISO 27001-certified if you need it.</p>
-          <div class="help-box">
-            <p class="help-title">What we help you with</p>
-            <ul>
-              <li>NIS2 gap assessment and governance structure</li>
-              <li>ISO 27001 implementation and certification support</li>
-              <li>Incident response planning and testing</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="tab-panel" id="tab-6" role="tabpanel" hidden>
-          <span class="badge">AI ACT &middot; GDPR &middot; NIS2 &middot; DORA &middot; CRA</span>
-          <h3>Compliance Audits</h3>
-          <p>Being compliant on paper isn't the same as proving it under pressure — to a regulator, an auditor, or an enterprise customer's security questionnaire. We run structured compliance audits across every regulation that applies to you, testing your documentation and controls against what each framework actually requires, so you find the gaps before someone else does.</p>
-          <div class="help-box">
-            <p class="help-title">What we help you with</p>
-            <ul>
-              <li>Independent compliance audits across AI Act, GDPR, NIS2, DORA and CRA</li>
-              <li>Documentation and evidence review against regulatory requirements</li>
-              <li>Audit-readiness support for regulators, enterprise clients, and investor due diligence</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 9. CHOOSE THE LEVEL OF SUPPORT YOU NEED -->
-  <section class="section" id="support">
-    <div class="container">
-      <p class="eyebrow">Engagement</p>
-      <h2>Choose the level of support you need</h2>
-      <p class="section-lead">Every organization is different. We tailor our engagements to your objectives, internal capabilities and budget.</p>
-
-      <div class="card-grid card-grid-4 tier-grid">
-        <div class="card tier-card">
-          <div class="tier-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-          </div>
-          <p class="tier-num">01</p>
-          <h3>Check &amp; Strategy</h3>
-          <p class="tier-sub">Hourly consulting</p>
-          <p class="tier-label">Best for</p>
-          <ul>
-            <li>Scoping a new engagement before committing to a project</li>
-            <li>A second opinion on a specific compliance question</li>
-            <li>Ad hoc strategy sessions with our legal and technical team</li>
-          </ul>
-          <p class="tier-outcome">You get clear, actionable answers — billed only for the time you use.</p>
-        </div>
-
-        <div class="card tier-card">
-          <div class="tier-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg>
-          </div>
-          <p class="tier-num">02</p>
-          <h3>Project-Based</h3>
-          <p class="tier-sub">End-to-end compliance projects</p>
-          <p class="tier-label">Best for</p>
-          <ul>
-            <li>A defined scope: a gap assessment, a certification push, a full conformity project</li>
-            <li>Teams that need a fixed timeline and fixed deliverables</li>
-            <li>Milestones tied to a deal, audit or certification deadline</li>
-          </ul>
-          <p class="tier-outcome">You get a fixed-scope project, delivered to a fixed timeline.</p>
-        </div>
-
-        <div class="card tier-card">
-          <div class="tier-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 4v4h-4"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 20v-4h4"/></svg>
-          </div>
-          <p class="tier-num">03</p>
-          <h3>Retainer</h3>
-          <p class="tier-sub">Your ongoing compliance partner</p>
-          <p class="tier-label">Best for</p>
-          <ul>
-            <li>Continuous legal, technical and security coverage</li>
-            <li>Fractional CAIO, CISO, or AI/ML support without a full-time hire</li>
-            <li>Regulatory exposure that keeps evolving as you grow</li>
-          </ul>
-          <p class="tier-outcome">You get an ongoing compliance partner, not a one-off engagement.</p>
-        </div>
-
-        <div class="card tier-card">
-          <div class="tier-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m12 3 8 4.5-8 4.5-8-4.5Z"/><path d="m4 12 8 4.5 8-4.5"/><path d="m4 16.5 8 4.5 8-4.5"/></svg>
-          </div>
-          <p class="tier-num">04</p>
-          <h3>Governance Hub</h3>
-          <p class="tier-sub">Platform access</p>
-          <p class="tier-label">Best for</p>
-          <ul>
-            <li>Teams that want to manage compliance in-house, with our platform as the backbone</li>
-            <li>Clients who want ongoing visibility, not just deliverables</li>
-            <li>Tracking obligations, risks, controls and evidence in one place, continuously</li>
-          </ul>
-          <p class="tier-outcome">You get the SenecAI Governance Hub — compliance you can see, not just documents you're told about.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 10. TEAM -->
-  <section class="section section-alt" id="team">
-    <div class="container">
-      <p class="eyebrow">Team</p>
-      <h2>The people behind SenecAI</h2>
-
-      <div class="card-grid team-grid-single">
-        <div class="card team-card">
-          <div class="avatar">MȘ</div>
-          <h3>Matei Ștefan</h3>
-          <p class="team-role">Founder &amp; Legal Consultant</p>
-          <p class="team-bio">Full bio coming soon.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 11. FAQ (placeholder) -->
-  <section class="section" id="faq">
-    <div class="container">
-      <p class="eyebrow">FAQ</p>
-      <h2>Frequently asked questions</h2>
-      <div class="placeholder-box">Coming soon.</div>
-    </div>
-  </section>
-
-  <!-- 12. FINAL CTA (black band) -->
-  <section class="band-black band-cta" id="cta">
-    <div class="container band-inner">
-      <h2>Ready to get compliant?</h2>
-      <a class="btn btn-primary btn-lg" href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call">Book a free intro call <span class="arrow">→</span></a>
-    </div>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="container">
-    <a class="logo footer-logo" href="#top">
-      <span class="logo-mark">S</span>
-      <span class="logo-word">Senec<span class="accent">AI</span></span>
-    </a>
-
-    <div class="footer-columns">
-      <div class="footer-col">
-        <p class="footer-col-title">Navigation</p>
-        <a href="#method">Our Method</a>
-        <a href="#services">What We Do</a>
-        <a href="#governance-hub">Governance Hub</a>
-        <a href="#support">Support</a>
-        <a href="#team">Team</a>
-        <a href="#faq">FAQ</a>
-      </div>
-      <div class="footer-col">
-        <p class="footer-col-title">Get in touch</p>
-        <a href="mailto:hello@senecai.eu">hello@senecai.eu</a>
-        <a href="#cta">Book a free intro call</a>
-      </div>
-      <div class="footer-col">
-        <p class="footer-col-title">Connect</p>
-        <a href="#">LinkedIn</a>
-        <a href="#">The AI Act Guy — Substack</a>
-      </div>
+      <a class="x9" href="#cta" style="display: inline-flex; align-self: flex-start; align-items: center; gap: 10px; font: 700 13px/1.4 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #4a453e; border-bottom: 2px solid #e6e1d5; padding-bottom: 6px;">
+        Not sure what applies to you? Try the compliance checker <span>→</span>
+      </a>
     </div>
 
-    <p class="footer-copy">&copy; <span id="year"></span> SenecAI. All rights reserved.</p>
+    <!-- product panel: the Governance Hub, above the fold -->
+    <div style="min-width: 0; display: flex; flex-direction: column; gap: 16px;" data-toggle="heroPanel">
+    <div style="border: 1px solid #ddd7c8; background: #f2eee2; overflow: hidden; min-height: 220px;">
+      <img src="assets/platform-overview.png" alt="The SenecAI Governance Hub — aggregate compliance score, per-regulation score and suggested next step" style="display: block; width: 100%; height: auto;">
+    </div>
+    <div style="font: 400 13px/1.5 Archivo, sans-serif; color: #6a6560;">The SenecAI Governance Hub — every obligation, aggregated across every applicable regulation.</div>
+      <a href="#governance-hub" class="om-cta x10" style="box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 18px 22px; border: 2px solid #201e1d; color: #201e1d; font: 800 14px/1.3 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;">
+        <span>Explore the SenecAI Governance Hub</span>
+        <span style="font-size: 18px;">→</span>
+      </a>
+    </div>
   </div>
-</footer>
 
-<script src="assets/js/main.js"></script>
+  <!-- ================= THE CHALLENGE ================= -->
+  <div id="why-compliance" data-screen-label="The Challenge" style="background: #faf6ee; padding: clamp(56px, 7vw, 96px) clamp(20px, 6vw, 96px); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 26px;">
+    <div style="font: 800 14px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #a37c17;">The Challenge</div>
+    <h2 style="margin: 0; max-width: 22ch; font: 800 clamp(36px, 5.2vw, 64px)/1.08 Archivo, sans-serif; letter-spacing: -.03em; color: #16130f;">Compliance shouldn't be a burden.</h2>
+    <p style="margin: 0; max-width: 58ch; font: 400 20px/1.6 Archivo, sans-serif; color: #4a453e;">
+      You need to pass investor due diligence, get certified for that big client, close an enterprise procurement deal, or simply reduce your regulatory risk?
+    </p>
+    <p style="margin: 0; max-width: 52ch; font: 400 20px/1.6 Archivo, sans-serif; color: #4a453e;">
+      You need to signal to the market that you're compliant.
+    </p>
+    <p style="margin: 0; max-width: 46ch; font: 700 20px/1.6 Archivo, sans-serif; color: #3a352e;">
+      We offer end-to-end compliance support tailored to your regulatory exposure.
+    </p>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; padding: 14px 0 8px;">
+      <span style="padding: 12px 26px; border: 2px solid #c9a227; border-radius: 999px; background: #ffffff; font: 700 17px/1 Archivo, sans-serif;">AI Act</span>
+      <span style="padding: 12px 26px; border: 2px solid #c9a227; border-radius: 999px; background: #ffffff; font: 700 17px/1 Archivo, sans-serif;">GDPR</span>
+      <span style="padding: 12px 26px; border: 2px solid #c9a227; border-radius: 999px; background: #ffffff; font: 700 17px/1 Archivo, sans-serif;">NIS2</span>
+      <span style="padding: 12px 26px; border: 2px solid #c9a227; border-radius: 999px; background: #ffffff; font: 700 17px/1 Archivo, sans-serif;">DORA</span>
+      <span style="padding: 12px 26px; border: 2px solid #c9a227; border-radius: 999px; background: #ffffff; font: 700 17px/1 Archivo, sans-serif;">CRA</span>
+      <span style="padding: 12px 26px; border: 2px solid #c9a227; border-radius: 999px; background: #ffffff; font: 700 17px/1 Archivo, sans-serif;">And more</span>
+    </div>
+    <p style="margin: 0; max-width: 52ch; font: 700 20px/1.6 Archivo, sans-serif; color: #3a352e;">
+      From strategy consulting and initial audits to risk assessments, gap remediation, full implementation and ongoing monitoring.
+    </p>
+  </div>
+
+  <!-- ================= COVERAGE ================= -->
+  <div id="coverage" data-screen-label="Coverage" data-toggle="matrix" style="padding: clamp(40px, 5vw, 72px) clamp(20px, 4vw, 64px); border-top: 1px solid #e6e1d5; display: flex; flex-direction: column; gap: 28px;">
+    <div style="display: flex; flex-wrap: wrap; align-items: flex-end; gap: 20px 48px;">
+      <div style="display: flex; flex-direction: column; gap: 16px; min-width: 0;">
+        <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">Coverage</div>
+        <h2 style="margin: 0; max-width: 22ch; font: 900 clamp(32px, 3.8vw, 48px)/1.02 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">Under one team, every regulation.</h2>
+      </div>
+      <p style="margin: 0; max-width: 34ch; font: 400 17px/1.55 Archivo, sans-serif; color: #4a453e;">
+        Legal, technical and cybersecurity experts — all powered by the SenecAI Governance Hub.
+      </p>
+    </div>
+    <div style="overflow-x: auto; border: 1px solid #ddd7c8;">
+      <table style="width: 100%; min-width: 720px; border-collapse: collapse; font-family: Archivo, sans-serif;">
+        <thead>
+          <tr style="background: #fcfbf7;">
+            <th style="text-align: left; padding: 16px 20px; border-bottom: 1px solid #ddd7c8; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #6a6560;">Service</th>
+            <th style="text-align: left; padding: 16px 20px; border-bottom: 1px solid #ddd7c8; font: 800 14px/1 Archivo, sans-serif; letter-spacing: .04em;">AI Act</th>
+            <th style="text-align: left; padding: 16px 20px; border-bottom: 1px solid #ddd7c8; font: 800 14px/1 Archivo, sans-serif; letter-spacing: .04em;">GDPR</th>
+            <th style="text-align: left; padding: 16px 20px; border-bottom: 1px solid #ddd7c8; font: 800 14px/1 Archivo, sans-serif; letter-spacing: .04em;">NIS2</th>
+            <th style="text-align: left; padding: 16px 20px; border-bottom: 1px solid #ddd7c8; font: 800 14px/1 Archivo, sans-serif; letter-spacing: .04em;">DORA</th>
+            <th style="text-align: left; padding: 16px 20px; border-bottom: 1px solid #ddd7c8; font: 800 14px/1 Archivo, sans-serif; letter-spacing: .04em;">CRA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th style="text-align: left; padding: 15px 20px; border-bottom: 1px solid #eeeae0; font: 600 15px/1.3 Archivo, sans-serif;">Regulatory assessment</th>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+          </tr>
+          <tr>
+            <th style="text-align: left; padding: 15px 20px; border-bottom: 1px solid #eeeae0; font: 600 15px/1.3 Archivo, sans-serif;">Gap analysis</th>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+          </tr>
+          <tr>
+            <th style="text-align: left; padding: 15px 20px; border-bottom: 1px solid #eeeae0; font: 600 15px/1.3 Archivo, sans-serif;">Risk management</th>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+          </tr>
+          <tr>
+            <th style="text-align: left; padding: 15px 20px; border-bottom: 1px solid #eeeae0; font: 600 15px/1.3 Archivo, sans-serif;">Documentation</th>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+          </tr>
+          <tr>
+            <th style="text-align: left; padding: 15px 20px; border-bottom: 1px solid #eeeae0; font: 600 15px/1.3 Archivo, sans-serif;">Technical controls</th>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+          </tr>
+          <tr>
+            <th style="text-align: left; padding: 15px 20px; border-bottom: 1px solid #eeeae0; font: 600 15px/1.3 Archivo, sans-serif;">Cybersecurity</th>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px; border-bottom: 1px solid #eeeae0;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+          </tr>
+          <tr>
+            <th style="text-align: left; padding: 15px 20px; font: 600 15px/1.3 Archivo, sans-serif;">Ongoing monitoring</th>
+            <td style="padding: 15px 20px;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+            <td style="padding: 15px 20px;"><span style="display: block; width: 12px; height: 12px; background: #c9a227;"></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="font: 400 14px/1.5 Archivo, sans-serif; color: #6a6560;">Coverage depends on your business model, products and regulatory exposure.</div>
+  </div>
+
+  <div id="partners" data-screen-label="Partners" style="padding: clamp(36px, 4.4vw, 64px) clamp(20px, 4vw, 64px); border-top: 1px solid #e6e1d5; display: flex; flex-direction: column; gap: 18px;">
+    <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">Partners</div>
+    <h2 style="margin: 0; font: 900 clamp(28px, 3.2vw, 40px)/1.05 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">Our Partners</h2>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 32px; padding: 28px; border: 1px dashed #ddd7c8; background: #fcfbf7;">
+      <span style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">Coming soon</span>
+      <span style="font: 400 15px/1.5 Archivo, sans-serif; color: #6a6560;">Partner logos and joint offerings will be listed here.</span>
+    </div>
+  </div>
+
+  <div id="testimonials" data-screen-label="Testimonials" style="padding: clamp(36px, 4.4vw, 64px) clamp(20px, 4vw, 64px); border-top: 1px solid #e6e1d5; display: flex; flex-direction: column; gap: 18px;">
+    <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">Testimonials</div>
+    <h2 style="margin: 0; font: 900 clamp(28px, 3.2vw, 40px)/1.05 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">What our clients say</h2>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 32px; padding: 28px; border: 1px dashed #ddd7c8; background: #fcfbf7;">
+      <span style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">Coming soon</span>
+      <span style="font: 400 15px/1.5 Archivo, sans-serif; color: #6a6560;">Client quotes go here once engagements close.</span>
+    </div>
+  </div>
+
+  <!-- ================= METHOD ================= -->
+  <div id="method" data-screen-label="Our Method" style="padding: clamp(40px, 5vw, 72px) clamp(20px, 4vw, 64px); border-top: 1px solid #e6e1d5;">
+    <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px;">
+      <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">Our Method</div>
+      <h2 style="margin: 0; max-width: 26ch; font: 900 clamp(32px, 3.8vw, 48px)/1.02 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">From exposure to compliant, step by step.</h2>
+      <div style="display: flex; align-items: center; margin-top: 8px;">
+        <span style="width: 10px; height: 10px; background: #c9a227; flex: none;"></span>
+        <span style="flex: 1; height: 2px; background: #ecdfba;"></span>
+        <span style="width: 10px; height: 10px; background: #c9a227; flex: none;"></span>
+        <span style="flex: 1; height: 2px; background: #ecdfba;"></span>
+        <span style="width: 10px; height: 10px; background: #c9a227; flex: none;"></span>
+        <span style="flex: 1; height: 2px; background: #ecdfba;"></span>
+        <span style="width: 10px; height: 10px; background: #201e1d; flex: none;"></span>
+      </div>
+    </div>
+    <div data-stagger="true" style="display: flex; flex-direction: column; border-top: 1px solid #ddd7c8;">
+      <div style="display: grid; grid-template-columns: 84px minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); align-items: start; padding: clamp(24px, 3vw, 34px) 0; border-bottom: 1px solid #ddd7c8;">
+        <div style="font: 800 clamp(28px, 3vw, 40px)/1 Archivo, sans-serif; letter-spacing: -.02em; color: #d6cdb4;">01</div>
+        <div style="min-width: 0; display: flex; flex-direction: column; gap: 10px;">
+          <h3 style="margin: 0; font: 800 clamp(22px, 2.2vw, 28px)/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Discover</h3>
+          <p style="margin: 0; max-width: 56ch; font: 400 17px/1.55 Archivo, sans-serif; color: #4a453e;">We do a deep dive into your business, products and operations to understand your regulatory exposure.</p>
+        </div>
+        <div style="min-width: 0; padding-left: clamp(16px, 2vw, 28px); border-left: 2px solid #ecdfba; font: 600 15px/1.5 Archivo, sans-serif;">
+          <span style="display: block; margin-bottom: 6px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a6a1f;">Outcome</span>
+          You have a clear picture of which regulatory requirements apply to you.
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 84px minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); align-items: start; padding: clamp(24px, 3vw, 34px) 0; border-bottom: 1px solid #ddd7c8;">
+        <div style="font: 800 clamp(28px, 3vw, 40px)/1 Archivo, sans-serif; letter-spacing: -.02em; color: #d6cdb4;">02</div>
+        <div style="min-width: 0; display: flex; flex-direction: column; gap: 10px;">
+          <h3 style="margin: 0; font: 800 clamp(22px, 2.2vw, 28px)/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Assess</h3>
+          <p style="margin: 0; max-width: 56ch; font: 400 17px/1.55 Archivo, sans-serif; color: #4a453e;">We analyze your compliance readiness against the applicable regulatory frameworks and conduct a gap analysis.</p>
+        </div>
+        <div style="min-width: 0; padding-left: clamp(16px, 2vw, 28px); border-left: 2px solid #ecdfba; font: 600 15px/1.5 Archivo, sans-serif;">
+          <span style="display: block; margin-bottom: 6px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a6a1f;">Outcome</span>
+          You know what needs to be revised to reduce your regulatory risk.
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 84px minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); align-items: start; padding: clamp(24px, 3vw, 34px) 0; border-bottom: 1px solid #ddd7c8;">
+        <div style="font: 800 clamp(28px, 3vw, 40px)/1 Archivo, sans-serif; letter-spacing: -.02em; color: #d6cdb4;">03</div>
+        <div style="min-width: 0; display: flex; flex-direction: column; gap: 10px;">
+          <h3 style="margin: 0; font: 800 clamp(22px, 2.2vw, 28px)/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Implement</h3>
+          <p style="margin: 0; max-width: 56ch; font: 400 17px/1.55 Archivo, sans-serif; color: #4a453e;">We do the compliance work: documentation, compliant architecture, security controls and more.</p>
+        </div>
+        <div style="min-width: 0; padding-left: clamp(16px, 2vw, 28px); border-left: 2px solid #ecdfba; font: 600 15px/1.5 Archivo, sans-serif;">
+          <span style="display: block; margin-bottom: 6px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a6a1f;">Outcome</span>
+          You become compliant.
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 84px minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); align-items: start; padding: clamp(24px, 3vw, 34px) 0; border-bottom: 1px solid #ddd7c8; background: #fcfbf7;">
+        <div style="font: 800 clamp(28px, 3vw, 40px)/1 Archivo, sans-serif; letter-spacing: -.02em; color: #a37c17;">04</div>
+        <div style="min-width: 0; display: flex; flex-direction: column; gap: 10px;">
+          <h3 style="margin: 0; font: 800 clamp(22px, 2.2vw, 28px)/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Monitor</h3>
+          <p style="margin: 0; max-width: 56ch; font: 400 17px/1.55 Archivo, sans-serif; color: #4a453e;">We ensure your compliance stays up to date as your business, technology and the regulatory landscape evolve.</p>
+        </div>
+        <div style="min-width: 0; padding-left: clamp(16px, 2vw, 28px); border-left: 2px solid #c9a227; font: 600 15px/1.5 Archivo, sans-serif;">
+          <span style="display: block; margin-bottom: 6px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a6a1f;">Outcome</span>
+          You maintain your compliance posture over time.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= GOVERNANCE HUB (one dark moment) ================= -->
+  <div id="governance-hub" data-screen-label="Governance Hub" data-tone-band="hub" style="margin: clamp(24px, 3vw, 48px) clamp(20px, 4vw, 64px) 0; background: #14120f; color: #ffffff; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+    <div style="min-width: 0; padding: clamp(36px, 4.4vw, 64px); display: flex; flex-direction: column; gap: 22px;">
+      <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #c9a227;">The Platform</div>
+      <h2 style="margin: 0; max-width: 22ch; font: 900 clamp(30px, 3.6vw, 46px)/1.02 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">Explore the SenecAI Governance Hub</h2>
+      <p style="margin: 0; max-width: 44ch; font: 400 18px/1.55 Archivo, sans-serif; color: #cfc9bd;">
+        Our platform, offered as part of our engagements, lets you monitor, govern and track your compliance journey.
+      </p>
+      <p style="margin: 0; font: 800 20px/1.3 Archivo, sans-serif; color: #c9a227;">All EU digital regulations in one hub.</p>
+      <a href="#cta" class="om-cta om-cta-light x11" style="align-self: flex-start; display: flex; align-items: center; gap: 32px; padding: 18px 22px; background: #c9a227; color: #201e1d; font: 800 14px/1 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;">
+        <span>Learn more</span>
+        <span style="font-size: 18px;">→</span>
+      </a>
+    </div>
+    <div style="min-width: 0; padding: clamp(24px, 3vw, 40px); display: flex; flex-direction: column; gap: 14px; border-left: 1px solid #35302a;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px;">
+        <span style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8d877d;">Inside the hub</span>
+        <span data-slide-counter="true" style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .12em; color: #c9a227;">01 / 05</span>
+        <span style="margin-left: auto; display: flex; gap: 8px;">
+          <button class="x12" data-slide-prev="true" aria-label="Previous screen" style="all: unset; box-sizing: border-box; cursor: pointer; padding: 8px 14px; border: 1px solid #4a443a; color: #f6f3ec; font: 800 14px/1 Archivo, sans-serif;">←</button>
+          <button class="x13" data-slide-next="true" aria-label="Next screen" style="all: unset; box-sizing: border-box; cursor: pointer; padding: 8px 14px; border: 1px solid #4a443a; color: #f6f3ec; font: 800 14px/1 Archivo, sans-serif;">→</button>
+        </span>
+      </div>
+
+      <div data-slider="true" style="display: flex; flex-direction: column;">
+        <div data-slide="0" style="flex-direction: column; gap: 12px;">
+          <div style="border: 1px solid #35302a; background: #1c1915; min-height: 180px; overflow: hidden;">
+            <img src="assets/platform-overview.png" alt="SenecAI Governance Hub — Overview" style="display: block; width: 100%; height: auto;">
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 14px;">
+            <span style="font: 800 13px/1.3 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: #c9a227;">Overview</span>
+            <span style="font: 400 13px/1.5 Archivo, sans-serif; color: #a8a29a;">Every obligation, aggregated across every applicable regulation.</span>
+          </div>
+        </div>
+        <div data-slide="1" style="display: none; flex-direction: column; gap: 12px;">
+          <div style="border: 1px solid #35302a; background: #1c1915; min-height: 180px; overflow: hidden;">
+            <img src="assets/platform-overview-2.png" alt="SenecAI Governance Hub — Compliance score" style="display: block; width: 100%; height: auto;">
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 14px;">
+            <span style="font: 800 13px/1.3 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: #c9a227;">Compliance score</span>
+            <span style="font: 400 13px/1.5 Archivo, sans-serif; color: #a8a29a;">Aggregate and per-regulation scores, with open gaps at a glance.</span>
+          </div>
+        </div>
+        <div data-slide="2" style="display: none; flex-direction: column; gap: 12px;">
+          <div style="border: 1px solid #35302a; background: #1c1915; min-height: 180px; overflow: hidden;">
+            <img src="assets/platform-inventory.png" alt="SenecAI Governance Hub — AI Act module" style="display: block; width: 100%; height: auto;">
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 14px;">
+            <span style="font: 800 13px/1.3 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: #c9a227;">AI Act module</span>
+            <span style="font: 400 13px/1.5 Archivo, sans-serif; color: #a8a29a;">Step-by-step: inventory, obligations, gap assessment, roadmap, tracking.</span>
+          </div>
+        </div>
+        <div data-slide="3" style="display: none; flex-direction: column; gap: 12px;">
+          <div style="border: 1px solid #35302a; background: #1c1915; min-height: 180px; overflow: hidden;">
+            <img src="assets/platform-aiact.png" alt="SenecAI Governance Hub — Inventory & classification" style="display: block; width: 100%; height: auto;">
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 14px;">
+            <span style="font: 800 13px/1.3 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: #c9a227;">Inventory & classification</span>
+            <span style="font: 400 13px/1.5 Archivo, sans-serif; color: #a8a29a;">One row per AI system — legal role, risk class and readiness.</span>
+          </div>
+        </div>
+        <div data-slide="4" style="display: none; flex-direction: column; gap: 12px;">
+          <div style="border: 1px solid #35302a; background: #1c1915; min-height: 180px; overflow: hidden;">
+            <img src="assets/platform-gdpr.png" alt="SenecAI Governance Hub — GDPR processing inventory" style="display: block; width: 100%; height: auto;">
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 14px;">
+            <span style="font: 800 13px/1.3 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: #c9a227;">GDPR processing inventory</span>
+            <span style="font: 400 13px/1.5 Archivo, sans-serif; color: #a8a29a;">One row per processing activity — the Art. 30 ROPA unit.</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 6px;">
+          <button class="x14" data-slide-dot="0" aria-label="Overview" style="all: unset; box-sizing: border-box; cursor: pointer; width: 34px; height: 6px; background: #c9a227;"></button>
+          <button class="x15" data-slide-dot="1" aria-label="Compliance score" style="all: unset; box-sizing: border-box; cursor: pointer; width: 34px; height: 6px; background: #4a443a;"></button>
+          <button class="x16" data-slide-dot="2" aria-label="AI Act module" style="all: unset; box-sizing: border-box; cursor: pointer; width: 34px; height: 6px; background: #4a443a;"></button>
+          <button class="x17" data-slide-dot="3" aria-label="Inventory & classification" style="all: unset; box-sizing: border-box; cursor: pointer; width: 34px; height: 6px; background: #4a443a;"></button>
+          <button class="x18" data-slide-dot="4" aria-label="GDPR processing inventory" style="all: unset; box-sizing: border-box; cursor: pointer; width: 34px; height: 6px; background: #4a443a;"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SERVICES (tabs) ================= -->
+  <div id="services" data-screen-label="What We Do For You" style="padding: clamp(40px, 5vw, 72px) clamp(20px, 4vw, 64px);">
+    <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px;">
+      <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">How we can help you</div>
+      <h2 style="margin: 0; font: 900 clamp(32px, 3.8vw, 48px)/1.02 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">What we do for you</h2>
+    </div>
+
+    <div role="tablist" aria-label="What we do for you" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border: 1px solid #201e1d;">
+      <button class="x19" data-tab="0" role="tab" aria-selected="true" aria-controls="panel-0" style="all: unset; box-sizing: border-box; cursor: pointer; min-width: 0; padding: 18px 20px; font: 800 13px/1.25 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; border-right: 1px solid #ddd7c8; background: #201e1d; color: #ffffff;">AI Inventory</button>
+      <button class="x20" data-tab="1" role="tab" aria-selected="false" aria-controls="panel-1" style="all: unset; box-sizing: border-box; cursor: pointer; min-width: 0; padding: 18px 20px; font: 800 13px/1.25 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; border-right: 1px solid #ddd7c8; background: transparent; color: #4a453e;">Governing Agentic Workflows</button>
+      <button class="x21" data-tab="2" role="tab" aria-selected="false" aria-controls="panel-2" style="all: unset; box-sizing: border-box; cursor: pointer; min-width: 0; padding: 18px 20px; font: 800 13px/1.25 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; border-right: 1px solid #ddd7c8; background: transparent; color: #4a453e;">Data Governance and Privacy</button>
+      <button class="x22" data-tab="3" role="tab" aria-selected="false" aria-controls="panel-3" style="all: unset; box-sizing: border-box; cursor: pointer; min-width: 0; padding: 18px 20px; font: 800 13px/1.25 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; border-right: 1px solid #ddd7c8; background: transparent; color: #4a453e;">Operational Resilience</button>
+      <button class="x23" data-tab="4" role="tab" aria-selected="false" aria-controls="panel-4" style="all: unset; box-sizing: border-box; cursor: pointer; min-width: 0; padding: 18px 20px; font: 800 13px/1.25 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; border-right: 1px solid #ddd7c8; background: transparent; color: #4a453e;">Security Governance</button>
+      <button class="x24" data-tab="5" role="tab" aria-selected="false" aria-controls="panel-5" style="all: unset; box-sizing: border-box; cursor: pointer; min-width: 0; padding: 18px 20px; font: 800 13px/1.25 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; background: transparent; color: #4a453e;">Compliance Audits</button>
+    </div>
+
+    <div data-panel="0" id="panel-0" role="tabpanel" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(24px, 3vw, 48px); padding: clamp(28px, 3.4vw, 44px) 0 0;">
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 18px;">
+        <div style="align-self: flex-start; padding: 7px 12px; background: #f7f2e4; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">AI Act</div>
+        <h3 style="margin: 0; font: 900 clamp(24px, 2.6vw, 34px)/1.1 Archivo, sans-serif; letter-spacing: -.025em; text-transform: uppercase;">AI Inventory</h3>
+        <p style="margin: 0; max-width: 54ch; font: 400 18px/1.6 Archivo, sans-serif; color: #4a453e;">Most companies don't have a clear picture of every AI system they've built, bought, or quietly embedded through a vendor. We help you build and maintain a living inventory of these systems, so you always know what you're running, who's responsible for it, and what regulatory role and risk level it carries — the essential first step before anything else can be assessed.</p>
+      </div>
+      <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #fcfbf7; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">What we help you with</div>
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #e6e1d5; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>Inventory of your AI systems — built, bought, or embedded</span></div>
+          <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #e6e1d5; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>Role determination and risk classification</span></div>
+          <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #e6e1d5; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>Conformity documentation and Declaration of Conformity support</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div data-panel="1" id="panel-1" role="tabpanel" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(24px, 3vw, 48px); padding: clamp(28px, 3.4vw, 44px) 0 0; display: none;">
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 18px;">
+        <div style="align-self: flex-start; padding: 7px 12px; background: #f7f2e4; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">AI Act</div>
+        <h3 style="margin: 0; font: 900 clamp(24px, 2.6vw, 34px)/1.1 Archivo, sans-serif; letter-spacing: -.025em; text-transform: uppercase;">Governing Agentic Workflows</h3>
+        <p style="margin: 0; max-width: 54ch; font: 400 18px/1.6 Archivo, sans-serif; color: #4a453e;">Agentic systems make decisions and take actions with less human oversight at every step — which means the compliance questions change too. We help you govern agentic workflows before they become a liability: who's accountable when an agent acts, what guardrails are in place, and how you document it.</p>
+      </div>
+      <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #fcfbf7; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">What we help you with</div>
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #e6e1d5; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>Human oversight design and accountability mapping</span></div>
+          <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #e6e1d5; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>Guardrails and escalation logic for autonomous decisions</span></div>
+          <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #e6e1d5; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>Documentation for agentic system governance</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div data-panel="2" id="panel-2" role="tabpanel" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(24px, 3vw, 48px); padding: clamp(28px, 3.4vw, 44px) 0 0; display: none;">
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 18px;">
+        <div style="align-self: flex-start; padding: 7px 12px; background: #f7f2e4; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">GDPR</div>
+        <h3 style="margin: 0; font: 900 clamp(24px, 2.6vw, 34px)/1.1 Archivo, sans-serif; letter-spacing: -.025em; text-transform: uppercase;">Data Governance and Privacy</h3>
+        <p style="margin: 0; max-width: 54ch; font: 400 18px/1.6 Archivo, sans-serif; color: #4a453e;">Every AI system runs on data, and every dataset carries GDPR obligations that don't disappear just because a model is involved. We help you map your data flows, fix the gaps in your legal basis, and put privacy controls in place that hold up under scrutiny — from regulators and from your own customers.</p>
+      </div>
+      <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #fcfbf7; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">What we help you with</div>
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #e6e1d5; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>Data mapping and legal basis review</span></div>
+          <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #e6e1d5; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>DPIAs and privacy-by-design implementation</span></div>
+          <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #e6e1d5; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>Vendor and data processing agreement review</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div data-panel="3" id="panel-3" role="tabpanel" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(24px, 3vw, 48px); padding: clamp(28px, 3.4vw, 44px) 0 0; display: none;">
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 18px;">
+        <div style="align-self: flex-start; padding: 7px 12px; background: #f7f2e4; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">DORA</div>
+        <h3 style="margin: 0; font: 900 clamp(24px, 2.6vw, 34px)/1.1 Archivo, sans-serif; letter-spacing: -.025em; text-transform: uppercase;">Operational Resilience</h3>
+        <p style="margin: 0; max-width: 54ch; font: 400 18px/1.6 Archivo, sans-serif; color: #4a453e;">Financial entities and their critical ICT providers now have to prove they can withstand and recover from disruption, not just describe their security posture on paper. We help you build the ICT risk management framework, incident reporting processes and testing program DORA actually requires.</p>
+      </div>
+      <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #fcfbf7; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">What we help you with</div>
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #e6e1d5; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>ICT risk management framework design</span></div>
+          <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #e6e1d5; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>Incident classification and reporting readiness</span></div>
+          <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #e6e1d5; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>Resilience testing and third-party risk oversight</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div data-panel="4" id="panel-4" role="tabpanel" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(24px, 3vw, 48px); padding: clamp(28px, 3.4vw, 44px) 0 0; display: none;">
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 18px;">
+        <div style="align-self: flex-start; padding: 7px 12px; background: #f7f2e4; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">NIS2 · ISO 27001</div>
+        <h3 style="margin: 0; font: 900 clamp(24px, 2.6vw, 34px)/1.1 Archivo, sans-serif; letter-spacing: -.025em; text-transform: uppercase;">Security Governance</h3>
+        <p style="margin: 0; max-width: 54ch; font: 400 18px/1.6 Archivo, sans-serif; color: #4a453e;">NIS2 raises the bar on cybersecurity governance — and puts personal liability on management if it's not met. We help you build the security controls, incident response processes and governance structure to meet NIS2 obligations, and get ISO 27001-certified if you need it.</p>
+      </div>
+      <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #fcfbf7; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">What we help you with</div>
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #e6e1d5; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>NIS2 gap assessment and governance structure</span></div>
+          <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #e6e1d5; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>ISO 27001 implementation and certification support</span></div>
+          <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #e6e1d5; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>Incident response planning and testing</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div data-panel="5" id="panel-5" role="tabpanel" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(24px, 3vw, 48px); padding: clamp(28px, 3.4vw, 44px) 0 0; display: none;">
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 18px;">
+        <div style="align-self: flex-start; padding: 7px 12px; background: #f7f2e4; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">AI Act · GDPR · NIS2 · DORA · CRA</div>
+        <h3 style="margin: 0; font: 900 clamp(24px, 2.6vw, 34px)/1.1 Archivo, sans-serif; letter-spacing: -.025em; text-transform: uppercase;">Compliance Audits</h3>
+        <p style="margin: 0; max-width: 54ch; font: 400 18px/1.6 Archivo, sans-serif; color: #4a453e;">Being compliant on paper isn't the same as proving it under pressure — to a regulator, an auditor, or an enterprise customer's security questionnaire. We run structured compliance audits across every regulation that applies to you, testing your documentation and controls against what each framework actually requires, so you find the gaps before someone else does.</p>
+      </div>
+      <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #fcfbf7; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">What we help you with</div>
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #e6e1d5; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>Independent compliance audits across AI Act, GDPR, NIS2, DORA and CRA</span></div>
+          <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #e6e1d5; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>Documentation and evidence review against regulatory requirements</span></div>
+          <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #e6e1d5; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>Audit-readiness support for regulators, enterprise clients, and investor due diligence</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= ENGAGEMENT ================= -->
+  <div id="support" data-screen-label="Engagement" style="padding: clamp(40px, 5vw, 72px) clamp(20px, 4vw, 64px); border-top: 1px solid #e6e1d5;">
+    <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px;">
+      <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">Engagement</div>
+      <h2 style="margin: 0; max-width: 26ch; font: 900 clamp(32px, 3.8vw, 48px)/1.02 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">Choose the level of support you need</h2>
+      <p style="margin: 0; max-width: 52ch; font: 400 17px/1.55 Archivo, sans-serif; color: #4a453e;">Every organization is different. We tailor our engagements to your objectives, internal capabilities and budget.</p>
+    </div>
+    <div data-stagger="true" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
+      <div style="min-width: 0; padding: 24px; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 12px;">
+        <div style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .12em; color: #a37c17;">01</div>
+        <h3 style="margin: 0; font: 800 22px/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Check &amp; Strategy</h3>
+        <div style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #6a6560;">Hourly consulting</div>
+        <div style="margin-top: 6px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a6a1f;">Best for</div>
+        <div style="display: flex; flex-direction: column;">
+          <div style="padding: 11px 0; border-top: 1px solid #eeeae0; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">Scoping a new engagement before committing to a project</div>
+          <div style="padding: 11px 0; border-top: 1px solid #eeeae0; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">A second opinion on a specific compliance question</div>
+          <div style="padding: 11px 0; border-top: 1px solid #eeeae0; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">Ad hoc strategy sessions with our legal and technical team</div>
+        </div>
+        <div style="margin-top: auto; padding-top: 18px; border-top: 1px solid #e6e1d5; font: 700 15px/1.45 Archivo, sans-serif;">You get clear, actionable answers — billed only for the time you use.</div>
+      </div>
+      <div style="min-width: 0; padding: 24px; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 12px;">
+        <div style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .12em; color: #a37c17;">02</div>
+        <h3 style="margin: 0; font: 800 22px/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Project-Based</h3>
+        <div style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #6a6560;">End-to-end compliance projects</div>
+        <div style="margin-top: 6px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a6a1f;">Best for</div>
+        <div style="display: flex; flex-direction: column;">
+          <div style="padding: 11px 0; border-top: 1px solid #eeeae0; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">A defined scope: a gap assessment, a certification push, a full conformity project</div>
+          <div style="padding: 11px 0; border-top: 1px solid #eeeae0; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">Teams that need a fixed timeline and fixed deliverables</div>
+          <div style="padding: 11px 0; border-top: 1px solid #eeeae0; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">Milestones tied to a deal, audit or certification deadline</div>
+        </div>
+        <div style="margin-top: auto; padding-top: 18px; border-top: 1px solid #e6e1d5; font: 700 15px/1.45 Archivo, sans-serif;">You get a fixed-scope project, delivered to a fixed timeline.</div>
+      </div>
+      <div style="min-width: 0; padding: 24px; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 12px;">
+        <div style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .12em; color: #a37c17;">03</div>
+        <h3 style="margin: 0; font: 800 22px/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Retainer</h3>
+        <div style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #6a6560;">Your ongoing compliance partner</div>
+        <div style="margin-top: 6px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a6a1f;">Best for</div>
+        <div style="display: flex; flex-direction: column;">
+          <div style="padding: 11px 0; border-top: 1px solid #eeeae0; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">Continuous legal, technical and security coverage</div>
+          <div style="padding: 11px 0; border-top: 1px solid #eeeae0; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">Fractional CAIO, CISO, or AI/ML support without a full-time hire</div>
+          <div style="padding: 11px 0; border-top: 1px solid #eeeae0; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">Regulatory exposure that keeps evolving as you grow</div>
+        </div>
+        <div style="margin-top: auto; padding-top: 18px; border-top: 1px solid #e6e1d5; font: 700 15px/1.45 Archivo, sans-serif;">You get an ongoing compliance partner, not a one-off engagement.</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px; padding: clamp(22px, 2.6vw, 32px); border: 1px solid #201e1d; background: #fcfbf7; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: clamp(20px, 3vw, 40px);">
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 10px;">
+        <div style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .12em; color: #a37c17;">04</div>
+        <h3 style="margin: 0; font: 800 clamp(24px, 2.4vw, 30px)/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Governance Hub</h3>
+        <div style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #6a6560;">Platform access</div>
+        <div style="margin-top: 8px; padding-top: 16px; border-top: 1px solid #c9a227; font: 700 16px/1.45 Archivo, sans-serif;">You get the SenecAI Governance Hub — compliance you can see, not just documents you're told about.</div>
+      </div>
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 10px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a6a1f;">Best for</div>
+        <div style="padding: 11px 0; border-top: 1px solid #e6ddc4; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">Teams that want to manage compliance in-house, with our platform as the backbone</div>
+        <div style="padding: 11px 0; border-top: 1px solid #e6ddc4; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">Clients who want ongoing visibility, not just deliverables</div>
+      </div>
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 10px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a6a1f;">You track</div>
+        <div style="padding: 11px 0; border-top: 1px solid #e6ddc4; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">Obligations, risks, controls and evidence in one place, continuously</div>
+        <a href="#governance-hub" class="om-cta x25" style="margin-top: auto; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 16px 18px; border: 2px solid #201e1d; color: #201e1d; font: 800 13px/1.2 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;">
+          <span>See the Hub</span>
+          <span style="font-size: 18px;">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TEAM ================= -->
+  <div id="team" data-screen-label="Team" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(24px, 3vw, 56px); padding: clamp(40px, 5vw, 72px) clamp(20px, 4vw, 64px); border-top: 1px solid #e6e1d5;">
+    <div style="min-width: 0; display: flex; flex-direction: column; gap: 16px;">
+      <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">Team</div>
+      <h2 style="margin: 0; max-width: 20ch; font: 900 clamp(32px, 3.8vw, 48px)/1.02 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">The people behind SenecAI</h2>
+    </div>
+    <div style="min-width: 0; display: flex; align-items: flex-start; gap: 22px; padding: 24px; border: 1px solid #ddd7c8;">
+      <div style="flex: none; width: 76px; height: 76px; display: grid; place-items: center; background: #201e1d; color: #c9a227; font: 900 26px/1 Archivo, sans-serif;">MȘ</div>
+      <div style="display: flex; flex-direction: column; gap: 8px; min-width: 0;">
+        <div style="font: 800 24px/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Matei Ștefan</div>
+        <div style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #8a6a1f;">Founder &amp; Legal Consultant</div>
+        <div style="margin-top: 6px; font: 400 16px/1.55 Archivo, sans-serif; color: #6a6560;">Full bio coming soon.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="faq" data-screen-label="FAQ" style="padding: clamp(36px, 4.4vw, 64px) clamp(20px, 4vw, 64px); border-top: 1px solid #e6e1d5; display: flex; flex-direction: column; gap: 18px;">
+    <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">FAQ</div>
+    <h2 style="margin: 0; font: 900 clamp(28px, 3.2vw, 40px)/1.05 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">Frequently asked questions</h2>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 32px; padding: 28px; border: 1px dashed #ddd7c8; background: #fcfbf7;">
+      <span style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">Coming soon</span>
+      <span style="font: 400 15px/1.5 Archivo, sans-serif; color: #6a6560;">The questions we get asked most, answered — in preparation.</span>
+    </div>
+  </div>
+
+  <!-- ================= FINAL CTA ================= -->
+  <div id="cta" data-screen-label="Final CTA" data-tone-band="cta" style="background: #c9a227; padding: clamp(48px, 6vw, 88px) clamp(20px, 4vw, 64px); display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px;">
+    <h2 style="margin: 0; max-width: 20ch; font: 900 clamp(36px, 5.2vw, 72px)/0.96 Archivo, sans-serif; letter-spacing: -.035em; text-transform: uppercase; color: #201e1d;">Ready to get compliant?</h2>
+    <a href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call" class="om-cta x26" style="display: flex; align-items: center; gap: 40px; padding: 20px 22px; border: 2px solid #201e1d; color: #201e1d; font: 800 14px/1 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;">
+      <span>Book a free intro call</span>
+      <span style="font-size: 18px;">→</span>
+    </a>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <div data-screen-label="Footer" style="background: #14120f; color: #ffffff;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; padding: 44px clamp(20px, 4vw, 64px);">
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 14px;">
+        <a href="#top" style="display: flex; align-items: center; gap: 10px; color: #ffffff;">
+          <img src="assets/senecai-logo-trimmed.png" alt="SenecAI Consulting" style="display: block; height: auto; width: clamp(200px, 18vw, 300px); background: #ffffff; padding: 12px 16px;">
+        </a>
+        <div style="font: 400 14px/1.55 Archivo, sans-serif; color: #a8a29a; max-width: 30ch;">EU digital compliance for startups and SMEs.</div>
+      </div>
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 12px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #c9a227;">Navigation</div>
+        <a class="x27" href="#method" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">Our Method</a>
+        <a class="x28" href="#services" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">What We Do</a>
+        <a class="x29" href="#governance-hub" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">Governance Hub</a>
+        <a class="x30" href="#support" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">Support</a>
+        <a class="x31" href="#team" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">Team</a>
+        <a class="x32" href="#faq" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">FAQ</a>
+      </div>
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 12px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #c9a227;">Get in touch</div>
+        <a class="x33" href="mailto:hello@senecai.eu" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">hello@senecai.eu</a>
+        <a class="x34" href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">Book a free intro call</a>
+      </div>
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 12px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #c9a227;">Connect</div>
+        <a class="x35" href="#top" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">LinkedIn</a>
+        <a class="x36" id="substack" href="#top" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">The AI Act Guy — Substack</a>
+      </div>
+    </div>
+    <div style="padding: 16px clamp(20px, 4vw, 64px); border-top: 1px solid #2b2721; font: 600 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #6f6a62;">© SenecAI. All rights reserved.</div>
+  </div>
+</div>
 </body>
 </html>

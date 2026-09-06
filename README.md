@@ -4,11 +4,14 @@ Marketing site for SenecAI — EU digital compliance (AI Act, GDPR, DORA, NIS2) 
 
 ## Stack
 
-Plain static HTML/CSS/JS. No build step, no framework, no dependencies.
+Plain static HTML. No build step, no framework, no dependencies.
 
-- `index.html` — all page content, sectioned and commented (1. Hero, 2. Method, 3. Governance Hub, ... 11. Closing CTA)
-- `assets/css/styles.css` — all styling (colors/spacing are CSS custom properties at the top of the file — edit those to retheme)
-- `assets/js/main.js` — services tab switching, FAQ accordion, mobile nav toggle, language toggle (visual only)
+- `index.html` — all page content and markup, with styling inline on the elements plus one
+  `<style>` block in `<head>` (base reset, CTA hover wipe, nav breakpoint, generated
+  `:hover`/`:focus-visible` rules), and two inline `<script>` blocks (services tabs, platform
+  slideshow, scroll reveals). Type is Archivo from Google Fonts.
+- `assets/` — product screenshots and the logo used on the page.
+- `vercel.json` — long-lived cache headers for `/assets/*`.
 
 ## Local preview
 
@@ -21,12 +24,19 @@ python3 -m http.server 8000
 
 ## Deploying to Vercel
 
-This is a static site, so Vercel needs zero configuration — just import the repo in the Vercel dashboard (or run `vercel` from this directory with the Vercel CLI) and it will deploy as-is.
+This is a static site, so Vercel needs zero configuration — Framework preset **Other**, no
+build command, output directory **/** (repo root). Just import the repo in the Vercel
+dashboard (or run `vercel` from this directory with the Vercel CLI) and it will deploy as-is.
 
 ## Known placeholders to fill in before launch
 
-- **CTA email links** (`#cta` section, and header "Book a free intro call") currently point to `mailto:hello@senecai.eu` as a placeholder — replace with a real contact address, booking link (e.g. Calendly), or contact form.
-- **Governance Hub CTA** ("Explore the SenecAI Governance Hub") currently links to the on-page `#cta` section — update once the Hub product has a public URL.
-- **Testimonials & Partners** section has an honest "coming soon" placeholder rather than empty logo boxes — swap in real quotes/logos once available.
+- **Links**: the Research nav item points at the footer Substack entry (`#substack`), and
+  both Substack and LinkedIn are `#` placeholders. Swap in real URLs.
+- **Governance Hub CTA** links to the on-page `#cta` section — update once the Hub product
+  has a public URL.
+- **Testimonials & Partners** section has a "coming soon" placeholder rather than real
+  quotes/logos.
 - **Team bios** — all four team members currently say "Full bio coming soon."
-- **Language toggle** — EN/RO switch is a visual placeholder only; Romanian copy isn't implemented yet.
+- **Language toggle** — EN/RO switch is a visual placeholder only; Romanian copy isn't
+  implemented yet.
+- **Hero screenshot** is labelled as an illustrative view of the Governance Hub.
