@@ -182,8 +182,11 @@ a { color: inherit; text-decoration: none; }
   height: 100%;
   z-index: 0;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 62%, #000 92%);
-  mask-image: linear-gradient(to right, transparent 0%, transparent 62%, #000 92%);
+}
+.hero-grid-bg #circuitGrid path {
+  stroke: var(--gold);
+  stroke-width: 1;
+  opacity: 0.22;
 }
 .hero-grid-bg .star-grid use {
   fill: var(--gold);
