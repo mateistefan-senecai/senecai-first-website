@@ -174,25 +174,7 @@ a { color: inherit; text-decoration: none; }
 .nav-toggle span { display: block; height: 2px; background: var(--ink); border-radius: 2px; }
 
 /* ===== Hero ===== */
-.hero { padding: 110px 0 90px; position: relative; overflow: hidden; }
-.hero-grid-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-}
-.hero-grid-bg #circuitGrid path {
-  stroke: var(--gold);
-  stroke-width: 1;
-  opacity: 0.22;
-}
-.hero-grid-bg .star-grid use {
-  fill: var(--gold);
-  opacity: 1;
-}
-.hero .container { position: relative; z-index: 1; }
+.hero { padding: 110px 0 90px; }
 .hero-kicker {
   text-transform: uppercase;
   letter-spacing: 0.1em;
