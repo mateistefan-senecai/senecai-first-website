@@ -6,10 +6,13 @@ Marketing site for SenecAI — EU digital compliance (AI Act, GDPR, DORA, NIS2) 
 
 Plain static HTML. No build step, no framework, no dependencies.
 
-- `index.html` — all page content and markup, with styling inline on the elements plus one
+- `index.html` — the main scrolling page (Hero, Challenge, Partners, Testimonials, How We
+  Work, Engagement, Team, FAQ, final CTA), with styling inline on the elements plus one
   `<style>` block in `<head>` (base reset, CTA hover wipe, nav breakpoint, generated
-  `:hover`/`:focus-visible` rules), and two inline `<script>` blocks (services tabs, platform
-  slideshow, scroll reveals). Type is Archivo from Google Fonts.
+  `:hover`/`:focus-visible` rules), and inline `<script>` blocks (services tabs, scroll
+  reveals). Type is Archivo from Google Fonts.
+- `regulations-covered.html` / `research.html` — standalone pages (same nav/footer shell)
+  for the two sections that intentionally sit off the main scroll. Linked from the top nav.
 - `assets/` — product screenshots and the logo used on the page.
 - `vercel.json` — long-lived cache headers for `/assets/*`.
 
@@ -31,8 +34,6 @@ dashboard (or run `vercel` from this directory with the Vercel CLI) and it will 
 ## Known placeholders to fill in before launch
 
 - **Links**: LinkedIn in the footer is still a `#` placeholder. Swap in the real URL.
-- **Governance Hub CTA** links to the on-page `#cta` section — update once the Hub product
-  has a public URL.
 - **Team bios** — all three team members currently say "Full bio coming soon."
 - **Language toggle** — EN/RO switch is a visual placeholder only; Romanian copy isn't
   implemented yet.

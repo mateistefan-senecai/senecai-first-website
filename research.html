@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research — SenecAI</title>
+<meta name="description" content="Writing and data on how AI and digital regulation are evolving, from The AI Act Guy newsletter and the SenecAI policy desk.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; font-family: Archivo, system-ui, sans-serif; color: #201e1d; background: #ffffff; }
+  a { color: #8a6a1f; text-decoration: none; }
+  a:hover { color: #6d5417; }
+  html { scroll-behavior: smooth; }
+  [id] { scroll-margin-top: 210px; }
+  /* Keeps the CTA button in the true top-right corner: below this width the nav
+     links drop to their own row instead of pushing the button down. */
+  @media (max-width: 1100px) { [data-nav-links] { order: 3; flex-basis: 100%; } }
+  .om-cta { position: relative; overflow: hidden; }
+  .om-cta > span { position: relative; z-index: 1; }
+  .om-cta::before { content: ""; position: absolute; inset: 0; background: #201e1d; transform: translateX(-101%); transition: transform .28s cubic-bezier(.2,.7,.2,1); }
+  .om-cta:hover::before { transform: translateX(0); }
+  .om-cta-light::before { background: #ffffff; }
+</style>
+<script>
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest ? e.target.closest("[data-tab]") : null;
+    if (!btn) return;
+    var i = btn.getAttribute("data-tab");
+    document.querySelectorAll("[data-tab]").forEach(function (b) {
+      var on = b.getAttribute("data-tab") === i;
+      b.style.background = on ? "#201e1d" : "transparent";
+      b.style.color = on ? "#ffffff" : "#4a453e";
+      b.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    document.querySelectorAll("[data-panel]").forEach(function (p) {
+      p.style.display = p.getAttribute("data-panel") === i ? "grid" : "none";
+    });
+  });
+
+  /* Additive reveals only — content is never hidden in the styles. */
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function init() {
+      if (reduce || !("IntersectionObserver" in window) || !document.body.animate) return;
+      var targets = [].slice.call(document.querySelectorAll("[data-screen-label]")).slice(1);
+      if (!targets.length) return;
+      var ease = "cubic-bezier(.2,.7,.2,1)";
+      var first = true;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          io.unobserve(e.target);
+          if (!e.isIntersecting || first) return;
+          [].slice.call(e.target.querySelectorAll("[data-stagger] > *")).forEach(function (c, k) {
+            c.animate([{ opacity: 0, transform: "translateY(10px)" }, { opacity: 1, transform: "none" }],
+              { duration: 460, delay: k * 80, easing: ease, fill: "none" });
+          });
+          e.target.animate([{ opacity: 0, transform: "translateY(14px)" }, { opacity: 1, transform: "none" }],
+            { duration: 520, easing: ease, fill: "none" });
+        });
+        first = false;
+      }, { threshold: 0.08 });
+      targets.forEach(function (s) { io.observe(s); });
+      setTimeout(function () { first = false; }, 300);
+    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+    else init();
+  })();
+</script>
+<style>
+.x1:hover { color: #201e1d; border-bottom-color: #c9a227; }
+.x2:hover { color: #201e1d; border-bottom-color: #c9a227; }
+.x3:hover { color: #201e1d; border-bottom-color: #c9a227; }
+.x4:hover { color: #201e1d; border-bottom-color: #c9a227; }
+.x5:hover { color: #201e1d; border-bottom-color: #c9a227; }
+.x6:hover { background: #fcfbf7; }
+.x7:hover { color: #ffffff; }
+.x8:hover { color: #ffffff; }
+.x9:hover { color: #8a6a1f; border-bottom-color: #c9a227; }
+.x10:hover { color: #ffffff; }
+.x11:hover { color: #201e1d; }
+.x12:hover { border-color: #c9a227; color: #c9a227; }
+.x12:focus-visible { outline: 2px solid #c9a227; outline-offset: 2px; }
+.x13:hover { border-color: #c9a227; color: #c9a227; }
+.x13:focus-visible { outline: 2px solid #c9a227; outline-offset: 2px; }
+.x14:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
+.x15:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
+.x16:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
+.x17:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
+.x18:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
+.x19:focus-visible { outline: 2px solid #c9a227; outline-offset: -6px; }
+.x20:hover { background: #fcfbf7; color: #201e1d; }
+.x20:focus-visible { outline: 2px solid #c9a227; outline-offset: -6px; }
+.x21:hover { background: #fcfbf7; color: #201e1d; }
+.x21:focus-visible { outline: 2px solid #c9a227; outline-offset: -6px; }
+.x22:hover { background: #fcfbf7; color: #201e1d; }
+.x22:focus-visible { outline: 2px solid #c9a227; outline-offset: -6px; }
+.x23:hover { background: #fcfbf7; color: #201e1d; }
+.x23:focus-visible { outline: 2px solid #c9a227; outline-offset: -6px; }
+.x24:hover { background: #fcfbf7; color: #201e1d; }
+.x24:focus-visible { outline: 2px solid #c9a227; outline-offset: -6px; }
+.x25:hover { color: #fcfbf7; }
+.x26:hover { color: #c9a227; }
+.x27:hover { color: #c9a227; }
+.x28:hover { color: #c9a227; }
+.x29:hover { color: #c9a227; }
+.x30:hover { color: #c9a227; }
+.x31:hover { color: #c9a227; }
+.x32:hover { color: #c9a227; }
+.x33:hover { color: #c9a227; }
+.x34:hover { color: #c9a227; }
+.x35:hover { color: #c9a227; }
+.x36:hover { color: #c9a227; }
+.faq-q { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; }
+.faq-q::-webkit-details-marker { display: none; }
+.faq-q::after { content: "+"; flex: none; font: 800 20px/1 Archivo, sans-serif; color: #c9a227; }
+.faq-item[open] > .faq-q::after { content: "\2013"; }
+.faq-q:hover { color: #8a6a1f; }
+</style>
+</head>
+<body>
+<div style="background: #ffffff;">
+
+  <!-- ================= NAV ================= -->
+  <div id="top" style="position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: 20px; padding: 16px clamp(16px, 3vw, 48px); border-bottom: 1px solid #ddd7c8; background: #f8f1de;">
+    <a href="index.html" style="display: flex; align-items: center; gap: 10px; color: #201e1d;">
+      <img src="assets/senecai-logo-v2.png" alt="SenecAI Compliance" style="display: block; height: auto; width: clamp(210px, 16vw, 260px);">
+    </a>
+    <div data-nav-links="true" style="display: flex; flex-wrap: wrap; gap: 18px; font: 600 12px/1 Archivo, sans-serif; letter-spacing: .12em; text-transform: uppercase;">
+      <a class="x3" href="index.html#method" style="color: #4a453e; padding-bottom: 4px; border-bottom: 2px solid transparent;">How we work</a>
+      <a class="x2" href="regulations-covered.html" style="color: #4a453e; padding-bottom: 4px; border-bottom: 2px solid transparent;">Regulations covered</a>
+      <a class="x4" href="research.html" style="color: #4a453e; padding-bottom: 4px; border-bottom: 2px solid transparent;">Research</a>
+      <a class="x5" href="index.html#team" style="color: #4a453e; padding-bottom: 4px; border-bottom: 2px solid transparent;">Team</a>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px; margin-left: auto;">
+      <div style="display: flex; border: 1px solid #201e1d; font: 700 12px/1 Archivo, sans-serif; letter-spacing: .1em;">
+        <span style="padding: 8px 12px; background: #201e1d; color: #ffffff;">EN</span>
+        <span class="x6" style="padding: 8px 12px; color: #4a453e; cursor: pointer;">RO</span>
+      </div>
+      <a href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call" class="om-cta x7" style="display: flex; align-items: center; padding: 12px 16px; background: #c9a227; color: #201e1d; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;" data-nav-cta="true">
+        <span>Book a free intro call</span>
+      </a>
+    </div>
+  </div>
+
+
+  <div style="padding: 20px clamp(20px, 4vw, 64px) 0;"><a href="index.html" style="font: 700 13px/1.4 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #8a6a1f;">&larr; Back to home</a></div>
+
+  <!-- ================= RESEARCH ================= -->
+  <div id="research" data-screen-label="Research" style="display: flex; flex-direction: column; gap: 28px; padding: clamp(40px, 5vw, 72px) clamp(20px, 4vw, 64px);">
+    <div style="min-width: 0; display: flex; flex-direction: column; gap: 16px;">
+      <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">Research</div>
+      <h2 style="margin: 0; max-width: 24ch; font: 900 clamp(32px, 3.8vw, 48px)/1.02 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">From our research desk</h2>
+      <p style="margin: 0; max-width: 62ch; font: 400 17px/1.55 Archivo, sans-serif; color: #4a453e;">Writing and data on how AI and digital regulation are actually evolving, from <a href="https://theaiactguy.substack.com/" target="_blank" rel="noopener" style="color: #8a6a1f; font-weight: 700;">The AI Act Guy</a> newsletter and the SenecAI policy desk.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px;">
+      <a href="https://theaiactguy.substack.com/p/how-the-eu-italy-france-spain-and" target="_blank" rel="noopener" style="display: flex; flex-direction: column; gap: 12px; padding: 24px; border: 1px solid #ddd7c8; background: #fcfbf7; color: #201e1d;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">The AI Act Guy · Substack</div>
+        <div style="font: 800 18px/1.3 Archivo, sans-serif;">How the EU, Italy, France, Spain and…</div>
+        <div style="margin-top: auto; font: 700 12px/1 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #8a6a1f;">Read on Substack →</div>
+      </a>
+      <a href="https://theaiactguy.substack.com/p/the-global-ai-policy-report-why-it?r=24r7ki" target="_blank" rel="noopener" style="display: flex; flex-direction: column; gap: 12px; padding: 24px; border: 1px solid #ddd7c8; background: #fcfbf7; color: #201e1d;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">The AI Act Guy · Substack</div>
+        <div style="font: 800 18px/1.3 Archivo, sans-serif;">The Global AI Policy Report — Why It…</div>
+        <div style="margin-top: auto; font: 700 12px/1 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #8a6a1f;">Read on Substack →</div>
+      </a>
+      <a href="https://theaiactguy.substack.com/p/introducing-the-global-ai-policy?r=24r7ki" target="_blank" rel="noopener" style="display: flex; flex-direction: column; gap: 12px; padding: 24px; border: 1px solid #ddd7c8; background: #fcfbf7; color: #201e1d;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">The AI Act Guy · Substack</div>
+        <div style="font: 800 18px/1.3 Archivo, sans-serif;">Introducing the Global AI Policy…</div>
+        <div style="margin-top: auto; font: 700 12px/1 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #8a6a1f;">Read on Substack →</div>
+      </a>
+      <div style="display: flex; flex-direction: column; gap: 12px; padding: 24px; border: 1px solid #201e1d; background: #201e1d; color: #ffffff;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #c9a227;">Flagship report</div>
+        <div style="font: 800 18px/1.3 Archivo, sans-serif;">SenecAI Global Policy Report</div>
+        <div style="font: 400 14px/1.5 Archivo, sans-serif; color: #cfc9bd;">How AI regulation is diverging across jurisdictions worldwide, tracked in one place.</div>
+        <div style="margin-top: auto; display: flex; flex-direction: column; gap: 6px; padding-top: 8px;">
+          <a href="https://www.senecai.eu/SenecAI-Global-AI-Policy-Report-2026.pdf" target="_blank" rel="noopener" style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #c9a227;">Download the PDF →</a>
+          <a href="https://www.senecai.eu/global-ai-policy-map/" target="_blank" rel="noopener" style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #c9a227;">Explore the interactive map →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= FINAL CTA ================= -->
+  <div id="cta" data-screen-label="Final CTA" data-tone-band="cta" style="background: #c9a227; padding: clamp(48px, 6vw, 88px) clamp(20px, 4vw, 64px); display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px;">
+    <h2 style="margin: 0; max-width: 20ch; font: 900 clamp(36px, 5.2vw, 72px)/0.96 Archivo, sans-serif; letter-spacing: -.035em; text-transform: uppercase; color: #201e1d;">Ready to get compliant?</h2>
+    <a href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call" class="om-cta x26" style="display: flex; align-items: center; gap: 40px; padding: 20px 22px; border: 2px solid #201e1d; color: #201e1d; font: 800 14px/1 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;">
+      <span>Book a free intro call</span>
+      <span style="font-size: 18px;">→</span>
+    </a>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <div data-screen-label="Footer" style="background: #201e1d; color: #ffffff;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; padding: 44px clamp(20px, 4vw, 64px);">
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 14px;">
+        <a href="index.html" style="display: flex; align-items: center; gap: 10px; color: #ffffff;">
+          <img src="assets/senecai-logo-v2.png" alt="SenecAI Compliance" style="display: block; height: auto; width: clamp(200px, 18vw, 300px); background: #ffffff; padding: 12px 16px;">
+        </a>
+        <div style="font: 400 14px/1.55 Archivo, sans-serif; color: #a8a29a; max-width: 30ch;">EU digital compliance for startups and SMEs.</div>
+      </div>
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 12px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #c9a227;">Navigation</div>
+        <a class="x27" href="index.html#method" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">Our Method</a>
+        <a class="x28" href="index.html#services" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">What We Do</a>
+        <a class="x30" href="index.html#support" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">Support</a>
+        <a class="x31" href="index.html#team" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">Team</a>
+        <a class="x32" href="index.html#faq" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">FAQ</a>
+      </div>
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 12px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #c9a227;">Get in touch</div>
+        <a class="x33" href="mailto:hello@senecai.eu" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">hello@senecai.eu</a>
+        <a class="x34" href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">Book a free intro call</a>
+      </div>
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 12px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #c9a227;">Connect</div>
+        <a class="x35" href="#top" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">LinkedIn</a>
+        <a class="x36" href="https://theaiactguy.substack.com/" target="_blank" rel="noopener" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">The AI Act Guy — Substack</a>
+      </div>
+    </div>
+    <div style="padding: 16px clamp(20px, 4vw, 64px); border-top: 1px solid #2b2721; font: 600 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #6f6a62;">© SenecAI. All rights reserved.</div>
+  </div>
+</div>
+</body>
+</html>
