@@ -139,6 +139,11 @@
 .x34:hover { color: #c9a227; }
 .x35:hover { color: #c9a227; }
 .x36:hover { color: #c9a227; }
+.faq-q { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; }
+.faq-q::-webkit-details-marker { display: none; }
+.faq-q::after { content: "+"; flex: none; font: 800 20px/1 Archivo, sans-serif; color: #c9a227; }
+.faq-item[open] > .faq-q::after { content: "\2013"; }
+.faq-q:hover { color: #8a6a1f; }
 </style>
 </head>
 <body>
@@ -684,9 +689,69 @@
   <div id="faq" data-screen-label="FAQ" style="padding: clamp(36px, 4.4vw, 64px) clamp(20px, 4vw, 64px); border-top: 1px solid #e6e1d5; display: flex; flex-direction: column; gap: 18px;">
     <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">FAQ</div>
     <h2 style="margin: 0; font: 900 clamp(28px, 3.2vw, 40px)/1.05 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">Frequently asked questions</h2>
-    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 32px; padding: 28px; border: 1px dashed #ddd7c8; background: #fcfbf7;">
-      <span style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">Coming soon</span>
-      <span style="font: 400 15px/1.5 Archivo, sans-serif; color: #6a6560;">The questions we get asked most, answered — in preparation.</span>
+
+    <div style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #a37c17; margin-top: 12px;">About SenecAI &amp; working with us</div>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">What is SenecAI?</summary>
+        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">SenecAI is a compliance partner for startups and SMEs navigating the EU digital regulatory landscape — the AI Act, GDPR, NIS2, DORA, the Cyber Resilience Act and more. We combine legal, technical and cybersecurity expertise with the SenecAI Governance Hub, a platform that lets you monitor and govern your compliance in one place instead of across scattered spreadsheets and law-firm memos.</p>
+      </details>
+      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">Who do you work with?</summary>
+        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">Mostly startups and SMEs building or using AI, though our services extend to any company facing GDPR, NIS2, DORA or CRA obligations — from early-stage teams preparing for investor due diligence to scale-ups closing enterprise clients.</p>
+      </details>
+      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">How does an engagement with SenecAI actually work?</summary>
+        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">Every engagement follows the same four steps: Discover (map your regulatory exposure), Assess (gap analysis against the applicable frameworks), Implement (documentation, technical controls, compliant architecture) and Monitor (keep your compliance current as your business and the law evolve).</p>
+      </details>
+      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">What ways can we work together?</summary>
+        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">Four models, matched to what you need: hourly Check &amp; Strategy consulting for scoping or a second opinion; Project-Based engagements with a fixed scope and timeline; a Retainer for ongoing legal, technical and security coverage — effectively a fractional CAIO or CISO; and standalone access to the Governance Hub if you'd rather run compliance in-house with our platform as the backbone.</p>
+      </details>
+      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">What is the Governance Hub?</summary>
+        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">Our platform, offered as part of engagements or on its own. It aggregates every obligation across every applicable regulation, tracks your compliance score, and gives you dedicated modules — AI system inventory and classification, GDPR processing inventory, and more — so compliance is something you can see, not just a folder of documents someone tells you about.</p>
+      </details>
+      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">How do I get started?</summary>
+        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;"><a href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call" style="color: #8a6a1f; font-weight: 700;">Book a free intro call</a> — we'll do a short discovery conversation to understand your business and regulatory exposure, then scope the right engagement model for you.</p>
+      </details>
+      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">Do you only work with companies based in Romania or the EU?</summary>
+        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">No. We work with any company subject to EU digital regulation, regardless of where it's headquartered — what matters is whether you offer products or services in the EU market, not where your office is.</p>
+      </details>
+    </div>
+
+    <div style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #a37c17; margin-top: 24px;">EU regulations, in plain terms</div>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">What is the EU AI Act, and does it apply to us?</summary>
+        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">The AI Act is the EU's risk-based framework regulating the development, deployment and use of AI systems. Whether — and how — it applies depends on your role (provider, deployer, distributor or importer) and your system's risk classification. Most companies using AI in the EU market carry some obligation, even if it's only transparency requirements. We run inventory and classification exercises to tell you exactly where you stand.</p>
+      </details>
+      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">Does GDPR still apply if we're building AI products?</summary>
+        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">Yes — training data, inference logs and any personal data processed by an AI system are still subject to GDPR. AI doesn't create a carve-out; it usually adds obligations, like DPIAs for higher-risk processing or a clearer legal basis for the data you train on.</p>
+      </details>
+      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">What is NIS2 and who does it apply to?</summary>
+        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">NIS2 is the EU's updated cybersecurity directive. It extends governance and incident-reporting obligations to a much wider set of "essential" and "important" entities than before, and puts personal liability on management for non-compliance. Whether you're in scope is usually the first question we answer in a NIS2 gap assessment.</p>
+      </details>
+      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">What is DORA, and does it only apply to banks?</summary>
+        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">DORA (the Digital Operational Resilience Act) applies to financial entities and their critical ICT providers — so it reaches far beyond banks, into any vendor providing critical ICT services to the financial sector. It requires a documented ICT risk management framework, incident reporting and resilience testing, not just a security policy on paper.</p>
+      </details>
+      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">What is the Cyber Resilience Act (CRA)?</summary>
+        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">The CRA sets cybersecurity requirements for products with digital elements sold in the EU — hardware and software alike — covering secure-by-design development, vulnerability handling and incident reporting throughout the product's lifecycle.</p>
+      </details>
+      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">What happens if we don't comply?</summary>
+        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">Penalties vary by regulation: the AI Act allows fines up to €35M or 7% of global annual turnover, GDPR up to €20M or 4%, and NIS2 puts personal liability on management. Beyond fines, non-compliance increasingly shows up in investor due diligence and enterprise procurement — it's a commercial risk, not just a legal one.</p>
+      </details>
+      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">How do I know which regulations actually apply to my business?</summary>
+        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">That depends on your products, business model, and how you use data and AI — there's no one-size-fits-all answer. Try the <a href="#cta" style="color: #8a6a1f; font-weight: 700;">compliance checker</a> above, or book a free intro call and we'll map your exposure in a Discover session.</p>
+      </details>
     </div>
   </div>
 
