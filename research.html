@@ -145,15 +145,17 @@
   </div>
 
 
-  <div style="padding: 20px clamp(20px, 4vw, 64px) 0;"><a href="index.html" style="font: 700 13px/1.4 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #8a6a1f;">&larr; Back to home</a></div>
-
   <!-- ================= RESEARCH ================= -->
-  <div id="research" data-screen-label="Research" style="display: flex; flex-direction: column; gap: 28px; padding: clamp(40px, 5vw, 72px) clamp(20px, 4vw, 64px);">
-    <div style="min-width: 0; display: flex; flex-direction: column; gap: 16px;">
+  <div id="research" data-screen-label="Research" style="position: relative; overflow: hidden; background: #f8f1de;">
+    <div aria-hidden="true" style="position: absolute; inset: 0; background-image: url('assets/hero-pattern.svg'); background-repeat: no-repeat; background-size: cover; background-position: right center; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 45%); mask-image: linear-gradient(to right, transparent 0%, black 45%); pointer-events: none;"></div>
+    <div style="position: relative; z-index: 1; padding: 20px clamp(20px, 4vw, 64px) 0;"><a href="index.html" style="font: 700 13px/1.4 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #8a6a1f;">&larr; Back to home</a></div>
+    <div style="position: relative; z-index: 1; display: flex; flex-direction: column; gap: 16px; padding: clamp(40px, 5vw, 72px) clamp(20px, 4vw, 64px);">
       <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">Research</div>
       <h2 style="margin: 0; max-width: 24ch; font: 900 clamp(32px, 3.8vw, 48px)/1.02 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">From our research desk</h2>
       <p style="margin: 0; max-width: 62ch; font: 400 17px/1.55 Archivo, sans-serif; color: #4a453e;">Writing and data on how AI and digital regulation are actually evolving, from <a href="https://theaiactguy.substack.com/" target="_blank" rel="noopener" style="color: #8a6a1f; font-weight: 700;">The AI Act Guy</a> newsletter and the SenecAI policy desk.</p>
     </div>
+  </div>
+  <div style="padding: clamp(28px, 3.4vw, 40px) clamp(20px, 4vw, 64px) clamp(40px, 5vw, 72px);">
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px;">
       <a href="https://theaiactguy.substack.com/p/how-the-eu-italy-france-spain-and" target="_blank" rel="noopener" style="display: flex; flex-direction: column; gap: 12px; padding: 24px; border: 1px solid #ddd7c8; background: #fcfbf7; color: #201e1d;">
         <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">The AI Act Guy · Substack</div>
