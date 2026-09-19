@@ -30,13 +30,12 @@ dashboard (or run `vercel` from this directory with the Vercel CLI) and it will 
 
 ## Known placeholders to fill in before launch
 
-- **Links**: the Research nav item points at the footer Substack entry (`#substack`), and
-  both Substack and LinkedIn are `#` placeholders. Swap in real URLs.
+- **Links**: LinkedIn in the footer is still a `#` placeholder. Swap in the real URL.
 - **Governance Hub CTA** links to the on-page `#cta` section — update once the Hub product
   has a public URL.
-- **Testimonials & Partners** section has a "coming soon" placeholder rather than real
-  quotes/logos.
-- **Team bios** — all four team members currently say "Full bio coming soon."
+- **Team bios** — all three team members currently say "Full bio coming soon."
 - **Language toggle** — EN/RO switch is a visual placeholder only; Romanian copy isn't
   implemented yet.
-- **Hero screenshot** is labelled as an illustrative view of the Governance Hub.
+- **Substack article titles** in the Research section are derived from the article URLs
+  (Substack truncates slugs), not fetched from the live pages — verify wording against the
+  published titles.
