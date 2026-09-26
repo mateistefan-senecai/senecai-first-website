@@ -203,6 +203,16 @@
   .faq-item p { margin: 0 0 10px; } .faq-item p:last-child { margin: 0; }
   .faq-item ul, .faq-item ol { margin: 0 0 10px; padding-left: 20px; }
   .faq-item a { color: #d5aa4b; font-weight: 700; }
+  /* FAQ categories: each one folds open to show its questions. */
+  .faq-groups { display: flex; flex-direction: column; border-bottom: 1px solid rgba(250,243,227,.18); }
+  .faq-group { border-top: 1px solid rgba(250,243,227,.18); }
+  .faq-group-q { list-style: none; display: flex; align-items: center; gap: 16px; padding: 24px 0; cursor: pointer; font: 800 clamp(20px, 2.2vw, 26px)/1.2 Archivo, sans-serif; letter-spacing: -.01em; text-transform: uppercase; color: #faf3e3; transition: color .18s ease; }
+  .faq-group-q::-webkit-details-marker { display: none; }
+  .faq-group-q::after { content: "+"; margin-left: 16px; flex: none; width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid #d5aa4b; color: #d5aa4b; font: 800 20px/1 Archivo, sans-serif; }
+  .faq-group[open] > .faq-group-q::after { content: "\2013"; background: #d5aa4b; color: #17160f; }
+  .faq-group-q:hover { color: #d5aa4b; }
+  .faq-group-q:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 4px; }
+  .faq-count { margin-left: auto; font: 600 12px/1 Archivo, sans-serif; letter-spacing: .12em; color: rgba(250,243,227,.55); }
 </style>
 <script src="assets/dot-wave.v1.js" defer></script>
 </head>
@@ -632,98 +642,105 @@
 
   <div id="faq" class="bg-black" data-screen-label="FAQ" style="padding: clamp(36px, 4.4vw, 64px) clamp(20px, 4vw, 64px); display: flex; flex-direction: column; gap: 18px;">
     <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">FAQ</div>
-    <h2 style="margin: 0; font: 900 clamp(28px, 3.2vw, 40px)/1.05 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">Frequently asked questions</h2>
+    <h2 style="margin: 0 0 12px; font: 900 clamp(28px, 3.2vw, 40px)/1.05 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">Frequently asked questions</h2>
+    <div class="faq-groups">
+    <details class="faq-group">
+      <summary class="faq-group-q"><span>About SenecAI</span><span class="faq-count">6 questions</span></summary>
+      <div style="display: flex; flex-direction: column; gap: 10px; padding-bottom: 24px;">
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">What is SenecAI?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>SenecAI is a compliance partner for startups and SMEs. We bring legal, technical and cybersecurity expertise together in one team, so you can understand which rules apply to your business, close the gaps, and stay compliant as you grow.</p></div>
+        </details>
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Who do you work with?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Mostly startups and SMEs building or using AI — from early-stage teams preparing for investor due diligence to scale-ups closing their first enterprise clients. If digital regulation affects how you build, sell or operate, we can help.</p></div>
+        </details>
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">What makes SenecAI different from a law firm or a traditional consultancy?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Most firms give you either a legal opinion or a technical implementation, and leave you to connect the two. Our lawyers, engineers and security specialists work as one team, so the legal analysis turns directly into documentation, architecture and controls you can actually run. We write for founders, not for other lawyers.</p></div>
+        </details>
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Who is on the team?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>SenecAI is led by Matei Ștefan (Founder &amp; Legal Consultant), together with Vlad Tudor (Technical Lead) and Marius Petcu (Cybersecurity Lead), supported by a network of partners across AI, cybersecurity and applied research.</p></div>
+        </details>
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Do you only work with companies based in Romania or the EU?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>No. We work with companies wherever they are headquartered. What matters is whether you offer products or services in the EU market, not where your office is.</p></div>
+        </details>
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">What languages do you work in?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>We work in English and Romanian.</p></div>
+        </details>
+      </div>
+    </details>
 
-    <div style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #d5aa4b; margin-top: 12px;">About SenecAI</div>
-    <div style="display: flex; flex-direction: column; gap: 10px;">
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">What is SenecAI?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>SenecAI is a compliance partner for startups and SMEs. We bring legal, technical and cybersecurity expertise together in one team, so you can understand which rules apply to your business, close the gaps, and stay compliant as you grow.</p></div>
-      </details>
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Who do you work with?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Mostly startups and SMEs building or using AI — from early-stage teams preparing for investor due diligence to scale-ups closing their first enterprise clients. If digital regulation affects how you build, sell or operate, we can help.</p></div>
-      </details>
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">What makes SenecAI different from a law firm or a traditional consultancy?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Most firms give you either a legal opinion or a technical implementation, and leave you to connect the two. Our lawyers, engineers and security specialists work as one team, so the legal analysis turns directly into documentation, architecture and controls you can actually run. We write for founders, not for other lawyers.</p></div>
-      </details>
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Who is on the team?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>SenecAI is led by Matei Ștefan (Founder &amp; Legal Consultant), together with Vlad Tudor (Technical Lead) and Marius Petcu (Cybersecurity Lead), supported by a network of partners across AI, cybersecurity and applied research.</p></div>
-      </details>
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Do you only work with companies based in Romania or the EU?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>No. We work with companies wherever they are headquartered. What matters is whether you offer products or services in the EU market, not where your office is.</p></div>
-      </details>
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">What languages do you work in?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>We work in English and Romanian.</p></div>
-      </details>
-    </div>
+    <details class="faq-group">
+      <summary class="faq-group-q"><span>Working with us</span><span class="faq-count">10 questions</span></summary>
+      <div style="display: flex; flex-direction: column; gap: 10px; padding-bottom: 24px;">
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">How does an engagement work?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Every engagement follows the same four steps:</p><ol><li><strong>Discover</strong> — we map your regulatory exposure.</li><li><strong>Assess</strong> — we run a gap analysis against the frameworks that apply to you.</li><li><strong>Implement</strong> — we do the work: documentation, compliant architecture, security controls.</li><li><strong>Monitor</strong> — we keep your compliance current as your business and the law evolve.</li></ol></div>
+        </details>
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">What ways can we work together?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Three models, matched to what you need:</p><ul><li><strong>Check &amp; Strategy</strong> — hourly consulting for scoping or a second opinion.</li><li><strong>Project-Based</strong> — a fixed scope delivered to a fixed timeline, such as a gap assessment or a certification push.</li><li><strong>Retainer</strong> — ongoing legal, technical and security coverage, effectively a fractional CAIO or CISO without a full-time hire.</li></ul></div>
+        </details>
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">How much does it cost?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>It depends on your scope and the engagement model. Check &amp; Strategy is billed only for the hours you use; projects are quoted as a fixed price before any work starts; retainers are a predictable monthly fee. After a free intro call, we send you a clear proposal — no surprises.</p></div>
+        </details>
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">How long does it take?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>A focused question can be answered in days. A gap assessment or a full compliance project typically takes a few weeks to a few months, depending on scope and how quickly we can access the information we need. If you have a hard deadline — a funding round, an enterprise deal, an audit — tell us early and we'll plan milestones around it.</p></div>
+        </details>
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">How much of our team's time will this take?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>As little as possible. We do the heavy lifting. We'll need access to the right people and documents, mostly during Discover and Assess; after that, most of the work sits with us, with regular check-ins and reviews.</p></div>
+        </details>
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">We have a deadline — a funding round or an enterprise deal. Can you help quickly?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Yes. This is one of the most common reasons founders come to us. We can prioritise what investors or procurement teams will actually ask for — due diligence answers, security questionnaires, policies and evidence — and then handle the longer-term work at a sensible pace.</p></div>
+        </details>
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Can you work alongside our existing legal, engineering or security team?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Absolutely. We can lead end to end, or plug in to support your in-house team, external counsel or DPO where they need extra expertise.</p></div>
+        </details>
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Do we keep the documents and policies you produce?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Yes. The policies, documentation, inventories and assessments we produce for you are yours to use in your business.</p></div>
+        </details>
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Is our information kept confidential?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Yes. Everything you share with us is treated as confidential, and we're happy to sign an NDA before any detailed discussion.</p></div>
+        </details>
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Do you offer a guarantee or certification?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>No one can honestly guarantee a regulator's or auditor's decision. What we guarantee is rigorous work, a clear view of your residual risks, and documentation that holds up to scrutiny. Where a formal certification is needed (e.g. ISO 27001), we prepare you for the audit, which is carried out by an accredited certification body.</p></div>
+        </details>
+      </div>
+    </details>
 
-    <div style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #d5aa4b; margin-top: 24px;">Working with us</div>
-    <div style="display: flex; flex-direction: column; gap: 10px;">
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">How does an engagement work?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Every engagement follows the same four steps:</p><ol><li><strong>Discover</strong> — we map your regulatory exposure.</li><li><strong>Assess</strong> — we run a gap analysis against the frameworks that apply to you.</li><li><strong>Implement</strong> — we do the work: documentation, compliant architecture, security controls.</li><li><strong>Monitor</strong> — we keep your compliance current as your business and the law evolve.</li></ol></div>
-      </details>
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">What ways can we work together?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Three models, matched to what you need:</p><ul><li><strong>Check &amp; Strategy</strong> — hourly consulting for scoping or a second opinion.</li><li><strong>Project-Based</strong> — a fixed scope delivered to a fixed timeline, such as a gap assessment or a certification push.</li><li><strong>Retainer</strong> — ongoing legal, technical and security coverage, effectively a fractional CAIO or CISO without a full-time hire.</li></ul></div>
-      </details>
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">How much does it cost?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>It depends on your scope and the engagement model. Check &amp; Strategy is billed only for the hours you use; projects are quoted as a fixed price before any work starts; retainers are a predictable monthly fee. After a free intro call, we send you a clear proposal — no surprises.</p></div>
-      </details>
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">How long does it take?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>A focused question can be answered in days. A gap assessment or a full compliance project typically takes a few weeks to a few months, depending on scope and how quickly we can access the information we need. If you have a hard deadline — a funding round, an enterprise deal, an audit — tell us early and we'll plan milestones around it.</p></div>
-      </details>
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">How much of our team's time will this take?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>As little as possible. We do the heavy lifting. We'll need access to the right people and documents, mostly during Discover and Assess; after that, most of the work sits with us, with regular check-ins and reviews.</p></div>
-      </details>
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">We have a deadline — a funding round or an enterprise deal. Can you help quickly?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Yes. This is one of the most common reasons founders come to us. We can prioritise what investors or procurement teams will actually ask for — due diligence answers, security questionnaires, policies and evidence — and then handle the longer-term work at a sensible pace.</p></div>
-      </details>
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Can you work alongside our existing legal, engineering or security team?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Absolutely. We can lead end to end, or plug in to support your in-house team, external counsel or DPO where they need extra expertise.</p></div>
-      </details>
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Do we keep the documents and policies you produce?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Yes. The policies, documentation, inventories and assessments we produce for you are yours to use in your business.</p></div>
-      </details>
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Is our information kept confidential?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Yes. Everything you share with us is treated as confidential, and we're happy to sign an NDA before any detailed discussion.</p></div>
-      </details>
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Do you offer a guarantee or certification?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>No one can honestly guarantee a regulator's or auditor's decision. What we guarantee is rigorous work, a clear view of your residual risks, and documentation that holds up to scrutiny. Where a formal certification is needed (e.g. ISO 27001), we prepare you for the audit, which is carried out by an accredited certification body.</p></div>
-      </details>
-    </div>
-
-    <div style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #d5aa4b; margin-top: 24px;">Getting started</div>
-    <div style="display: flex; flex-direction: column; gap: 10px;">
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">How do I get started?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p><a href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call">Book a free intro call</a>. We'll have a short conversation to understand your business and needs, then recommend the right engagement model.</p></div>
-      </details>
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Is the intro call really free? Is there any obligation?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Yes, it's free, and there's no obligation. It's a chance for both sides to see whether we're a good fit.</p></div>
-      </details>
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">What should we prepare for the first call?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Nothing formal. A short description of what you build, who your customers are, and what prompted you to reach out — an investor question, a client request, a deadline — is plenty.</p></div>
-      </details>
-      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Where can I learn more before reaching out?</summary>
-        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Our <a href="research.html">Research</a> page and our Substack newsletter, <a href="https://theaiactguy.substack.com/" target="_blank" rel="noopener"><em>The AI Act Guy</em></a>, are free resources for founders and compliance teams. For regulation-specific questions, see the FAQ on our <a href="regulations-covered.html#reg-faq">Regulations covered</a> page.</p></div>
-      </details>
+    <details class="faq-group">
+      <summary class="faq-group-q"><span>Getting started</span><span class="faq-count">4 questions</span></summary>
+      <div style="display: flex; flex-direction: column; gap: 10px; padding-bottom: 24px;">
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">How do I get started?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p><a href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call">Book a free intro call</a>. We'll have a short conversation to understand your business and needs, then recommend the right engagement model.</p></div>
+        </details>
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Is the intro call really free? Is there any obligation?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Yes, it's free, and there's no obligation. It's a chance for both sides to see whether we're a good fit.</p></div>
+        </details>
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">What should we prepare for the first call?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Nothing formal. A short description of what you build, who your customers are, and what prompted you to reach out — an investor question, a client request, a deadline — is plenty.</p></div>
+        </details>
+        <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+          <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Where can I learn more before reaching out?</summary>
+          <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Our <a href="research.html">Research</a> page and our Substack newsletter, <a href="https://theaiactguy.substack.com/" target="_blank" rel="noopener"><em>The AI Act Guy</em></a>, are free resources for founders and compliance teams. For regulation-specific questions, see the FAQ on our <a href="regulations-covered.html#reg-faq">Regulations covered</a> page.</p></div>
+        </details>
+      </div>
+    </details>
     </div>
   </div>
 
