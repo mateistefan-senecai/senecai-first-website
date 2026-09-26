@@ -30,10 +30,10 @@
   .ink-focus:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
 
   /* ---- Palette: black (#17160f) and gold (#f8f1de) are the only section backgrounds.
-     Every gold section carries a faint gold grid, fading in from the right. ---- */
+     Every gold section carries a faint legal-pad artwork (ruled lines, margin rule, § marks), fading in from the right. ---- */
   .bg-black { background: #17160f; color: #faf3e3; }
   .bg-gold { position: relative; background: #f8f1de; color: #201e1d; }
-  .bg-gold::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(163,124,23,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(163,124,23,.09) 1px, transparent 1px); background-size: 56px 56px; -webkit-mask-image: radial-gradient(ellipse 70% 90% at 100% 50%, black 0%, transparent 75%); mask-image: radial-gradient(ellipse 70% 90% at 100% 50%, black 0%, transparent 75%); pointer-events: none; }
+  .bg-gold::before { content: ""; position: absolute; inset: 0; background: url('assets/gold-legal-pad.svg') right top / 1200px 640px repeat-y; -webkit-mask-image: radial-gradient(ellipse 70% 90% at 100% 50%, black 0%, transparent 75%); mask-image: radial-gradient(ellipse 70% 90% at 100% 50%, black 0%, transparent 75%); pointer-events: none; }
   .bg-gold > * { position: relative; z-index: 1; }
   /* ---- Horizontal scroll band (partners, testimonials) ---- */
   .hscroll { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 14px; scrollbar-width: thin; scrollbar-color: #c9a227 transparent; overscroll-behavior-x: contain; }
@@ -102,7 +102,7 @@
         <span class="ink-focus" style="padding: 7px 12px; color: #faf3e3; cursor: pointer;">RO</span>
       </div>
       <a href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call" class="ink-nav-cta ink-focus" style="display: flex; align-items: center; padding: 12px 18px; background: #d5aa4b; color: #17160f; font: 800 12.5px/1 Archivo, sans-serif; letter-spacing: .07em; text-transform: uppercase;" data-nav-cta="true">
-        <span>Tell us what you build, book your intro call</span>
+        <span>Book your intro call</span>
       </a>
     </div>
   </div>
