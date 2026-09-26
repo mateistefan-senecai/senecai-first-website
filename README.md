@@ -41,8 +41,8 @@ dashboard (or run `vercel` from this directory with the Vercel CLI) and it will 
 ## Known placeholders to fill in before launch
 
 - **Links**: LinkedIn in the footer is still a `#` placeholder. Swap in the real URL.
-- **Partner logos** — AI Advy, AIVERGENT and ICI still show text placeholders (`data-partner` tiles in
-  `index.html`); swap each for an `<img>` once the logo files are supplied.
+- **Partner logos** — AIVERGENT still shows a text placeholder (`data-partner` tiles in
+  `index.html`); swap it for an `<img>` once the logo file is supplied.
 - **Legal pages** — Legal Notice, Privacy Policy and Terms of Use contain placeholder text.
 - **OSIM registration number** — the footer reads `[REGISTRATION NUMBER]` on every page.
 - **Team bios** — all three team members currently say "Full bio coming soon."
