@@ -13,6 +13,11 @@ Plain static HTML. No build step, no framework, no dependencies.
   reveals). Type is Archivo from Google Fonts.
 - `regulations-covered.html` / `research.html` — standalone pages (same nav/footer shell)
   for the two sections that intentionally sit off the main scroll. Linked from the top nav.
+  The Regulations page has its own regulation-specific FAQ at the bottom.
+- `legal-notice.html` / `privacy-policy.html` / `terms-of-use.html` — legal pages linked from
+  the footer, currently structured placeholders.
+- Palette: black `#17160f` and gold `#f8f1de` are the only section backgrounds; every gold
+  section (`.bg-gold`) carries the dotted `assets/hero-pattern.svg` artwork.
 - `assets/` — product screenshots and the logo used on the page.
 - `vercel.json` — long-lived cache headers for `/assets/*`.
 
@@ -34,6 +39,10 @@ dashboard (or run `vercel` from this directory with the Vercel CLI) and it will 
 ## Known placeholders to fill in before launch
 
 - **Links**: LinkedIn in the footer is still a `#` placeholder. Swap in the real URL.
+- **Partner logos** — the Partners band shows text placeholders (`data-partner` tiles in
+  `index.html`); swap each for an `<img>` once the logo files are supplied.
+- **Legal pages** — Legal Notice, Privacy Policy and Terms of Use contain placeholder text.
+- **OSIM registration number** — the footer reads `[REGISTRATION NUMBER]` on every page.
 - **Team bios** — all three team members currently say "Full bio coming soon."
 - **Language toggle** — EN/RO switch is a visual placeholder only; Romanian copy isn't
   implemented yet.

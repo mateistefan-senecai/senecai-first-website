@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  body { margin: 0; font-family: Archivo, system-ui, sans-serif; color: #201e1d; background: #ffffff; }
+  body { margin: 0; font-family: Archivo, system-ui, sans-serif; color: #201e1d; background: #17160f; }
   a { color: #8a6a1f; text-decoration: none; }
   a:hover { color: #6d5417; }
   html { scroll-behavior: smooth; }
@@ -19,7 +19,7 @@
   @media (max-width: 1100px) { [data-nav-links] { order: 3; flex-basis: 100%; } }
   .om-cta { position: relative; overflow: hidden; }
   .om-cta > span { position: relative; z-index: 1; }
-  .om-cta::before { content: ""; position: absolute; inset: 0; background: #201e1d; transform: translateX(-101%); transition: transform .28s cubic-bezier(.2,.7,.2,1); }
+  .om-cta::before { content: ""; position: absolute; inset: 0; background: #17160f; transform: translateX(-101%); transition: transform .28s cubic-bezier(.2,.7,.2,1); }
   .om-cta:hover::before { transform: translateX(0); }
   .om-cta-light::before { background: #ffffff; }
 
@@ -50,6 +50,23 @@
     .eng-ladder { grid-template-columns: 1fr !important; }
     .eng-ladder > div { margin-top: 0 !important; }
   }
+
+  /* ---- Palette: black (#17160f) and gold (#f8f1de) are the only section backgrounds.
+     Every gold section carries the dotted pattern from the Regulations header. ---- */
+  .bg-black { background: #17160f; color: #faf3e3; }
+  .bg-gold { position: relative; background: #f8f1de; color: #201e1d; }
+  .bg-gold::before { content: ""; position: absolute; inset: 0; background: url('assets/hero-pattern.svg') no-repeat right center / cover; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 45%); mask-image: linear-gradient(to right, transparent 0%, black 45%); pointer-events: none; }
+  .bg-gold > * { position: relative; z-index: 1; }
+  /* ---- Horizontal scroll band (partners, testimonials) ---- */
+  .hscroll { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 14px; scrollbar-width: thin; scrollbar-color: #c9a227 transparent; overscroll-behavior-x: contain; }
+  .hscroll > * { flex: 0 0 auto; scroll-snap-align: start; }
+  .hscroll::-webkit-scrollbar { height: 6px; }
+  .hscroll::-webkit-scrollbar-thumb { background: #c9a227; }
+  .hscroll-btn { all: unset; box-sizing: border-box; width: 44px; height: 44px; display: grid; place-items: center; cursor: pointer; font: 800 18px/1 Archivo, sans-serif; border: 1px solid currentColor; transition: background .18s ease, color .18s ease; }
+  .hscroll-btn:hover { background: #d5aa4b; border-color: #d5aa4b; color: #17160f; }
+  .hscroll-btn:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
+  .footer-link { color: rgba(250,243,227,.72); font: 600 14px/1.3 Archivo, sans-serif; transition: color .18s ease; }
+  .footer-link:hover { color: #d5aa4b; }
 </style>
 <script>
   document.addEventListener("click", function (e) {
@@ -58,13 +75,21 @@
     var i = btn.getAttribute("data-tab");
     document.querySelectorAll("[data-tab]").forEach(function (b) {
       var on = b.getAttribute("data-tab") === i;
-      b.style.background = on ? "#201e1d" : "transparent";
+      b.style.background = on ? "#17160f" : "transparent";
       b.style.color = on ? "#ffffff" : "#4a453e";
       b.setAttribute("aria-selected", on ? "true" : "false");
     });
     document.querySelectorAll("[data-panel]").forEach(function (p) {
       p.style.display = p.getAttribute("data-panel") === i ? "grid" : "none";
     });
+  });
+
+  /* Arrow buttons for the horizontal scroll bands. */
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest ? e.target.closest("[data-scroll]") : null;
+    if (!b) return;
+    var band = document.getElementById(b.getAttribute("data-scroll"));
+    if (band) band.scrollBy({ left: (b.getAttribute("data-dir") === "prev" ? -1 : 1) * band.clientWidth * 0.8, behavior: "smooth" });
   });
 
   /* Additive reveals only — content is never hidden in the styles. */
@@ -141,23 +166,26 @@
 .x34:hover { color: #c9a227; }
 .x35:hover { color: #c9a227; }
 .x36:hover { color: #c9a227; }
-.faq-q { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; }
-.faq-q::-webkit-details-marker { display: none; }
-.faq-q::after { content: "+"; flex: none; font: 800 20px/1 Archivo, sans-serif; color: #c9a227; }
-.faq-item[open] > .faq-q::after { content: "\2013"; }
-.faq-q:hover { color: #8a6a1f; }
+  .faq-q { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; }
+  .faq-q::-webkit-details-marker { display: none; }
+  .faq-q::after { content: "+"; flex: none; font: 800 20px/1 Archivo, sans-serif; color: #d5aa4b; }
+  .faq-item[open] > .faq-q::after { content: "\2013"; }
+  .faq-q:hover { color: #d5aa4b !important; }
+  .faq-item p { margin: 0 0 10px; } .faq-item p:last-child { margin: 0; }
+  .faq-item ul, .faq-item ol { margin: 0 0 10px; padding-left: 20px; }
+  .faq-item a { color: #d5aa4b; font-weight: 700; }
 </style>
 </head>
 <body>
-<div style="background: #ffffff;">
+<div style="background: #17160f;">
 
   <!-- ================= NAV ================= -->
-  <div id="top" style="position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: 20px; padding: 20px clamp(20px, 4vw, 56px); border-bottom: 1px solid rgba(250,243,227,.16); background: #17160f;">
+  <div id="top" style="position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: 20px; padding: 16px clamp(20px, 4vw, 56px); border-bottom: 1px solid rgba(250,243,227,.16); background: #17160f;">
     <a href="#top" style="display: flex; align-items: center; gap: 10px;">
-      <img src="assets/senecai-logo-dark.png" alt="SenecAI Consulting" style="display: block; height: 34px; width: auto;">
+      <img src="assets/senecai-logo-dark.png" alt="SenecAI Consulting" style="display: block; height: 56px; width: auto;">
     </a>
     <div data-nav-links="true" style="display: flex; flex-wrap: wrap; gap: 26px; font: 700 12.5px/1 Archivo, sans-serif; letter-spacing: .11em; text-transform: uppercase;">
-      <a class="ink-nav-link ink-focus" href="#method" style="color: rgba(250,243,227,.82);">How we work</a>
+      <a class="ink-nav-link ink-focus" href="#services" style="color: rgba(250,243,227,.82);">What we can do for you</a>
       <a class="ink-nav-link ink-focus" href="regulations-covered.html" style="color: rgba(250,243,227,.82);">Regulations covered</a>
       <a class="ink-nav-link ink-focus" href="research.html" style="color: rgba(250,243,227,.82);">Research</a>
       <a class="ink-nav-link ink-focus" href="#team" style="color: rgba(250,243,227,.82);">Team</a>
@@ -168,7 +196,7 @@
         <span class="ink-focus" style="padding: 7px 12px; color: #faf3e3; cursor: pointer;">RO</span>
       </div>
       <a href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call" class="ink-nav-cta ink-focus" style="display: flex; align-items: center; padding: 12px 20px; background: #d5aa4b; color: #17160f; font: 800 12.5px/1 Archivo, sans-serif; letter-spacing: .09em; text-transform: uppercase;" data-nav-cta="true">
-        <span>Book a free intro call</span>
+        <span>Tell us what you build, book your intro call</span>
       </a>
     </div>
   </div>
@@ -190,11 +218,11 @@
         EU digital <span style="color: #d5aa4b;">compliance</span><br class="hero-break"> for startups &amp; SMEs
       </h1>
       <p style="margin: 0; max-width: 52ch; font: 500 19px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.8);">
-        Legal, technical and cybersecurity expertise for navigating the EU digital regulatory landscape.
+        We offer legal, technical and cybersecurity expertise helping companies navigate the EU digital regulatory landscape.
       </p>
       <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 4px;">
         <a href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call" class="ink-cta ink-focus" style="box-sizing: border-box; display: inline-flex; align-items: center; gap: 52px; padding: 19px 32px; background: #d5aa4b; color: #17160f; font: 800 13.5px/1.3 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase;">
-          <span>Book a free intro call</span>
+          <span>Tell us what you build, book your intro call</span>
           <span class="ink-arrow" style="font-size: 17px;">→</span>
         </a>
         <a class="ink-secondary ink-focus" href="#cta" style="font: 800 13px/1.4 Archivo, sans-serif; letter-spacing: .09em; text-transform: uppercase; color: rgba(250,243,227,.88); border-bottom: 1px solid #d5aa4b; padding-bottom: 5px;">
@@ -205,7 +233,7 @@
   </div>
 
   <!-- ================= THE CHALLENGE ================= -->
-  <div id="why-compliance" data-screen-label="The Challenge" style="background: #f8f1de; padding: clamp(56px, 7vw, 96px) clamp(20px, 6vw, 96px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); align-items: center; gap: clamp(32px, 5vw, 64px);">
+  <div id="why-compliance" class="bg-gold" data-screen-label="The Challenge" style="padding: clamp(56px, 7vw, 96px) clamp(20px, 6vw, 96px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); align-items: center; gap: clamp(32px, 5vw, 64px);">
     <div style="min-width: 0; display: flex; flex-direction: column; gap: 22px;">
     <div style="font: 800 14px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #a37c17;">The Challenge</div>
     <h2 style="margin: 0; max-width: 16ch; font: 800 clamp(36px, 5.2vw, 64px)/1.08 Archivo, sans-serif; letter-spacing: -.03em; color: #201e1d;">Compliance shouldn't be a burden.</h2>
@@ -261,121 +289,145 @@
     </div>
   </div>
 
-  <div id="partners" data-screen-label="Partners" style="padding: clamp(36px, 4.4vw, 64px) clamp(20px, 4vw, 64px); border-top: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 18px;">
-    <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">Partners</div>
-    <h2 style="margin: 0; font: 900 clamp(28px, 3.2vw, 40px)/1.05 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">Our Partners</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 14px;">
-      <div style="padding: 18px 22px; border: 1px solid #ddd7c8; background: #fcfbf7; font: 800 17px/1.2 Archivo, sans-serif; color: #201e1d;">AI Leaders</div>
-      <a href="http://sapio.ai" target="_blank" rel="noopener" style="padding: 18px 22px; border: 1px solid #ddd7c8; background: #fcfbf7; font: 800 17px/1.2 Archivo, sans-serif; color: #201e1d;">Sapio.ai</a>
-      <div style="padding: 18px 22px; border: 1px solid #ddd7c8; background: #fcfbf7; font: 800 17px/1.2 Archivo, sans-serif; color: #201e1d;">So Cyber</div>
-      <div style="padding: 18px 22px; border: 1px solid #ddd7c8; background: #fcfbf7; font: 800 17px/1.2 Archivo, sans-serif; color: #201e1d;">Tales of Security</div>
-      <div style="padding: 18px 22px; border: 1px solid #ddd7c8; background: #fcfbf7; font: 800 17px/1.2 Archivo, sans-serif; color: #201e1d;">AI Advy</div>
-      <div style="padding: 18px 22px; border: 1px solid #ddd7c8; background: #fcfbf7; font: 800 17px/1.2 Archivo, sans-serif; color: #201e1d;">AIVERGENT</div>
-      <div style="padding: 18px 22px; border: 1px solid #ddd7c8; background: #fcfbf7; font: 800 17px/1.2 Archivo, sans-serif; color: #201e1d;">Institute of Applied AI</div>
+  <div id="partners" class="bg-black" data-screen-label="Partners" style="padding: clamp(36px, 4.4vw, 64px) clamp(20px, 4vw, 64px); display: flex; flex-direction: column; gap: 18px;">
+    <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 18px;">
+      <div style="display: flex; flex-direction: column; gap: 18px;">
+        <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">Partners</div>
+        <h2 style="margin: 0; font: 900 clamp(28px, 3.2vw, 40px)/1.05 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">Our Partners</h2>
+      </div>
+      <div style="display: flex; gap: 8px; color: #faf3e3;">
+        <button class="hscroll-btn" type="button" data-scroll="partners-band" data-dir="prev" aria-label="Scroll partners left">←</button>
+        <button class="hscroll-btn" type="button" data-scroll="partners-band" data-dir="next" aria-label="Scroll partners right">→</button>
+      </div>
+    </div>
+    <div id="partners-band" class="hscroll" role="list" tabindex="0" aria-label="Our partners">
+      <div role="listitem" data-partner="AI Leaders" style="box-sizing: border-box; width: 240px; height: 120px; padding: 18px 22px; display: grid; place-items: center; text-align: center; background: #f8f1de; color: #201e1d; font: 800 16px/1.25 Archivo, sans-serif;"><!-- logo placeholder: swap for <img> --><span>AI Leaders</span></div>
+      <a href="http://sapio.ai" target="_blank" rel="noopener" role="listitem" data-partner="Sapio.ai" style="box-sizing: border-box; width: 240px; height: 120px; padding: 18px 22px; display: grid; place-items: center; text-align: center; background: #f8f1de; color: #201e1d; font: 800 16px/1.25 Archivo, sans-serif;"><!-- logo placeholder: swap for <img> --><span>Sapio.ai</span></a>
+      <div role="listitem" data-partner="So Cyber" style="box-sizing: border-box; width: 240px; height: 120px; padding: 18px 22px; display: grid; place-items: center; text-align: center; background: #f8f1de; color: #201e1d; font: 800 16px/1.25 Archivo, sans-serif;"><!-- logo placeholder: swap for <img> --><span>So Cyber</span></div>
+      <div role="listitem" data-partner="Tales of Security" style="box-sizing: border-box; width: 240px; height: 120px; padding: 18px 22px; display: grid; place-items: center; text-align: center; background: #f8f1de; color: #201e1d; font: 800 16px/1.25 Archivo, sans-serif;"><!-- logo placeholder: swap for <img> --><span>Tales of Security</span></div>
+      <div role="listitem" data-partner="AI Advy" style="box-sizing: border-box; width: 240px; height: 120px; padding: 18px 22px; display: grid; place-items: center; text-align: center; background: #f8f1de; color: #201e1d; font: 800 16px/1.25 Archivo, sans-serif;"><!-- logo placeholder: swap for <img> --><span>AI Advy</span></div>
+      <div role="listitem" data-partner="AIVERGENT" style="box-sizing: border-box; width: 240px; height: 120px; padding: 18px 22px; display: grid; place-items: center; text-align: center; background: #f8f1de; color: #201e1d; font: 800 16px/1.25 Archivo, sans-serif;"><!-- logo placeholder: swap for <img> --><span>AIVERGENT</span></div>
+      <div role="listitem" data-partner="Institute of Applied AI" style="box-sizing: border-box; width: 240px; height: 120px; padding: 18px 22px; display: grid; place-items: center; text-align: center; background: #f8f1de; color: #201e1d; font: 800 16px/1.25 Archivo, sans-serif;"><!-- logo placeholder: swap for <img> --><span>Institute of Applied AI</span></div>
+      <div role="listitem" data-partner="Institutul de Cercetare Informatică (ICI)" style="box-sizing: border-box; width: 240px; height: 120px; padding: 18px 22px; display: grid; place-items: center; text-align: center; background: #f8f1de; color: #201e1d; font: 800 16px/1.25 Archivo, sans-serif;"><!-- logo placeholder: swap for <img> --><span>Institutul de Cercetare Informatică (ICI)</span></div>
     </div>
   </div>
 
-  <div id="testimonials" data-screen-label="Testimonials" style="padding: clamp(36px, 4.4vw, 64px) clamp(20px, 4vw, 64px); border-top: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 18px;">
-    <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">Testimonials</div>
-    <h2 style="margin: 0; font: 900 clamp(28px, 3.2vw, 40px)/1.05 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">What our clients say</h2>
-    <p style="margin: 0; font: 400 17px/1.5 Archivo, sans-serif; color: #4a453e;">What founders say about working with us.</p>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
-      <div style="display: flex; flex-direction: column; gap: 16px; padding: 28px; border: 1px solid #ddd7c8; background: #fcfbf7;">
+  <div id="testimonials" class="bg-gold" data-screen-label="Testimonials" style="padding: clamp(36px, 4.4vw, 64px) clamp(20px, 4vw, 64px); display: flex; flex-direction: column; gap: 18px;">
+    <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 18px;">
+      <div style="display: flex; flex-direction: column; gap: 18px;">
+        <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">Testimonials</div>
+        <h2 style="margin: 0; font: 900 clamp(28px, 3.2vw, 40px)/1.05 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">What our clients say</h2>
+        <p style="margin: 0; font: 400 17px/1.5 Archivo, sans-serif; color: #4a453e;">What founders say about working with us.</p>
+      </div>
+      <div style="display: flex; gap: 8px; color: #201e1d;">
+        <button class="hscroll-btn" type="button" data-scroll="testimonials-band" data-dir="prev" aria-label="Scroll testimonials left">←</button>
+        <button class="hscroll-btn" type="button" data-scroll="testimonials-band" data-dir="next" aria-label="Scroll testimonials right">→</button>
+      </div>
+    </div>
+    <div id="testimonials-band" class="hscroll" role="list" tabindex="0" aria-label="Client testimonials" style="align-items: stretch;">
+      <div role="listitem" style="box-sizing: border-box; width: min(420px, 82vw); display: flex; flex-direction: column; gap: 16px; padding: 28px; border: 1px solid #ddd7c8; background: #f8f1de;">
         <p style="margin: 0; font: 400 17px/1.6 Archivo, sans-serif; color: #201e1d; font-style: italic;">“Before launching WebHunt.io we needed a data-protection opinion we could actually build on. SenecAI delivered it in days: precise, honest about the limits, and written for founders, not for lawyers. We shipped with confidence and we still follow that memo.”</p>
-        <div style="display: flex; flex-direction: column; gap: 2px; padding-top: 12px; border-top: 1px solid #ddd7c8;">
+        <div style="margin-top: auto; display: flex; flex-direction: column; gap: 2px; padding-top: 12px; border-top: 1px solid #ddd7c8;">
           <div style="font: 800 15px/1.3 Archivo, sans-serif; color: #201e1d;">Leo Dumitru</div>
           <div style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: #8a6a1f;">Founder, WebHunt.io</div>
         </div>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 16px; padding: 28px; border: 1px solid #ddd7c8; background: #fcfbf7;">
-        <p style="margin: 0; font: 400 17px/1.6 Archivo, sans-serif; color: #201e1d; font-style: italic;">“I highly recommend SenecAI Consulting. As a fellow founder, working with them on our AI Act compliance strategy was seamless. He guided us step by step, offered full support, great resources and helped us draft a comprehensive AI governance policy that we feature on our website.”</p>
-        <div style="display: flex; flex-direction: column; gap: 2px; padding-top: 12px; border-top: 1px solid #ddd7c8;">
+      <div role="listitem" style="box-sizing: border-box; width: min(420px, 82vw); display: flex; flex-direction: column; gap: 16px; padding: 28px; border: 1px solid #ddd7c8; background: #f8f1de;">
+        <p style="margin: 0; font: 400 17px/1.6 Archivo, sans-serif; color: #201e1d; font-style: italic;">“I highly recommend SenecAI Consulting. As a fellow founder, working with them on our AI Act compliance strategy was seamless. They guided us step by step, offered full support, great resources and helped us draft a comprehensive AI governance policy that we feature on our website.”</p>
+        <div style="margin-top: auto; display: flex; flex-direction: column; gap: 2px; padding-top: 12px; border-top: 1px solid #ddd7c8;">
           <div style="font: 800 15px/1.3 Archivo, sans-serif; color: #201e1d;">Cristi Irimiea</div>
           <div style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: #8a6a1f;">Ed-tech entrepreneur, founder of ClassMap</div>
         </div>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 16px; padding: 28px; border: 1px solid #ddd7c8; background: #fcfbf7;">
+      <div role="listitem" style="box-sizing: border-box; width: min(420px, 82vw); display: flex; flex-direction: column; gap: 16px; padding: 28px; border: 1px solid #ddd7c8; background: #f8f1de;">
         <p style="margin: 0; font: 400 17px/1.6 Archivo, sans-serif; color: #201e1d; font-style: italic;">“As builders, we move fast and often overlook the compliance implications of what we ship. It's great to have Matei Ștefan and his SenecAI team in our community helping make those conversations more accessible, practical, and founder-friendly.”</p>
-        <div style="display: flex; flex-direction: column; gap: 2px; padding-top: 12px; border-top: 1px solid #ddd7c8;">
+        <div style="margin-top: auto; display: flex; flex-direction: column; gap: 2px; padding-top: 12px; border-top: 1px solid #ddd7c8;">
           <div style="font: 800 15px/1.3 Archivo, sans-serif; color: #201e1d;">Bogdan Iasinovschi &amp; Matei Oprea</div>
           <div style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: #8a6a1f;">Co-founders of DevNights — AI developers community</div>
+        </div>
+      </div>
+      <div role="listitem" style="box-sizing: border-box; width: min(420px, 82vw); display: flex; flex-direction: column; gap: 16px; padding: 28px; border: 1px solid #ddd7c8; background: #f8f1de;">
+        <p style="margin: 0; font: 400 17px/1.6 Archivo, sans-serif; color: #201e1d; font-style: italic;">“We worked with SenecAI on our GDPR documentation and T&amp;C. I expected a long, expensive process, but it was faster than anticipated, with clear pricing upfront and the option to pay in two instalments. SenecAI also answered my follow-up questions after the project ended, patiently explaining why some privacy clauses that US platforms skip are necessary for a business operating in Europe, at no extra cost. Highly recommended.”</p>
+        <div style="margin-top: auto; display: flex; flex-direction: column; gap: 2px; padding-top: 12px; border-top: 1px solid #ddd7c8;">
+          <div style="font: 800 15px/1.3 Archivo, sans-serif; color: #201e1d;">Adrian Șuteu</div>
+          <div style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: #8a6a1f;">Founder of One Dinner Away</div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- ================= METHOD ================= -->
-  <div id="method" data-screen-label="Our Method" style="padding: clamp(40px, 5vw, 72px) clamp(20px, 4vw, 64px); border-top: 1px solid #ddd7c8;">
+  <div id="method" class="bg-black" data-screen-label="Our Method" style="padding: clamp(40px, 5vw, 72px) clamp(20px, 4vw, 64px);">
     <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px;">
-      <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">Our Method</div>
+      <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">Our Method</div>
       <h2 style="margin: 0; max-width: 26ch; font: 900 clamp(32px, 3.8vw, 48px)/1.02 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">From exposure to compliant, step by step.</h2>
       <div style="display: flex; align-items: center; margin-top: 8px;">
         <span style="width: 10px; height: 10px; background: #c9a227; flex: none;"></span>
-        <span style="flex: 1; height: 2px; background: #ddd7c8;"></span>
+        <span style="flex: 1; height: 2px; background: rgba(250,243,227,.18);"></span>
         <span style="width: 10px; height: 10px; background: #c9a227; flex: none;"></span>
-        <span style="flex: 1; height: 2px; background: #ddd7c8;"></span>
+        <span style="flex: 1; height: 2px; background: rgba(250,243,227,.18);"></span>
         <span style="width: 10px; height: 10px; background: #c9a227; flex: none;"></span>
-        <span style="flex: 1; height: 2px; background: #ddd7c8;"></span>
-        <span style="width: 10px; height: 10px; background: #201e1d; flex: none;"></span>
+        <span style="flex: 1; height: 2px; background: rgba(250,243,227,.18);"></span>
+        <span style="width: 10px; height: 10px; background: #faf3e3; flex: none;"></span>
       </div>
     </div>
-    <div data-stagger="true" style="display: flex; flex-direction: column; border-top: 1px solid #ddd7c8;">
-      <div style="display: grid; grid-template-columns: 84px minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); align-items: start; padding: clamp(24px, 3vw, 34px) 0; border-bottom: 1px solid #ddd7c8;">
-        <div style="font: 800 clamp(28px, 3vw, 40px)/1 Archivo, sans-serif; letter-spacing: -.02em; color: #ddd7c8;">01</div>
+    <div data-stagger="true" style="display: flex; flex-direction: column; border-top: 1px solid rgba(250,243,227,.18);">
+      <div style="display: grid; grid-template-columns: 84px minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); align-items: start; padding: clamp(24px, 3vw, 34px) 0; border-bottom: 1px solid rgba(250,243,227,.18);">
+        <div style="font: 800 clamp(28px, 3vw, 40px)/1 Archivo, sans-serif; letter-spacing: -.02em; color: rgba(250,243,227,.3);">01</div>
         <div style="min-width: 0; display: flex; flex-direction: column; gap: 10px;">
           <h3 style="margin: 0; font: 800 clamp(22px, 2.2vw, 28px)/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Discover</h3>
-          <p style="margin: 0; max-width: 56ch; font: 400 17px/1.55 Archivo, sans-serif; color: #4a453e;">We do a deep dive into your business, products and operations to understand your regulatory exposure.</p>
+          <p style="margin: 0; max-width: 56ch; font: 400 17px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.74);">We do a deep dive into your business, products and operations to understand your regulatory exposure.</p>
         </div>
-        <div style="min-width: 0; padding-left: clamp(16px, 2vw, 28px); border-left: 2px solid #ddd7c8; font: 600 15px/1.5 Archivo, sans-serif;">
-          <span style="display: block; margin-bottom: 6px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a6a1f;">Outcome</span>
+        <div style="min-width: 0; padding-left: clamp(16px, 2vw, 28px); border-left: 2px solid rgba(250,243,227,.18); font: 600 15px/1.5 Archivo, sans-serif;">
+          <span style="display: block; margin-bottom: 6px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #d5aa4b;">Outcome</span>
           You have a clear picture of which regulatory requirements apply to you.
         </div>
       </div>
-      <div style="display: grid; grid-template-columns: 84px minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); align-items: start; padding: clamp(24px, 3vw, 34px) 0; border-bottom: 1px solid #ddd7c8;">
-        <div style="font: 800 clamp(28px, 3vw, 40px)/1 Archivo, sans-serif; letter-spacing: -.02em; color: #ddd7c8;">02</div>
+      <div style="display: grid; grid-template-columns: 84px minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); align-items: start; padding: clamp(24px, 3vw, 34px) 0; border-bottom: 1px solid rgba(250,243,227,.18);">
+        <div style="font: 800 clamp(28px, 3vw, 40px)/1 Archivo, sans-serif; letter-spacing: -.02em; color: rgba(250,243,227,.3);">02</div>
         <div style="min-width: 0; display: flex; flex-direction: column; gap: 10px;">
           <h3 style="margin: 0; font: 800 clamp(22px, 2.2vw, 28px)/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Assess</h3>
-          <p style="margin: 0; max-width: 56ch; font: 400 17px/1.55 Archivo, sans-serif; color: #4a453e;">We analyze your compliance readiness against the applicable regulatory frameworks and conduct a gap analysis.</p>
+          <p style="margin: 0; max-width: 56ch; font: 400 17px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.74);">We analyze your compliance readiness against the applicable regulatory frameworks and conduct a gap analysis.</p>
         </div>
-        <div style="min-width: 0; padding-left: clamp(16px, 2vw, 28px); border-left: 2px solid #ddd7c8; font: 600 15px/1.5 Archivo, sans-serif;">
-          <span style="display: block; margin-bottom: 6px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a6a1f;">Outcome</span>
+        <div style="min-width: 0; padding-left: clamp(16px, 2vw, 28px); border-left: 2px solid rgba(250,243,227,.18); font: 600 15px/1.5 Archivo, sans-serif;">
+          <span style="display: block; margin-bottom: 6px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #d5aa4b;">Outcome</span>
           You know what needs to be revised to reduce your regulatory risk.
         </div>
       </div>
-      <div style="display: grid; grid-template-columns: 84px minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); align-items: start; padding: clamp(24px, 3vw, 34px) 0; border-bottom: 1px solid #ddd7c8;">
-        <div style="font: 800 clamp(28px, 3vw, 40px)/1 Archivo, sans-serif; letter-spacing: -.02em; color: #ddd7c8;">03</div>
+      <div style="display: grid; grid-template-columns: 84px minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); align-items: start; padding: clamp(24px, 3vw, 34px) 0; border-bottom: 1px solid rgba(250,243,227,.18);">
+        <div style="font: 800 clamp(28px, 3vw, 40px)/1 Archivo, sans-serif; letter-spacing: -.02em; color: rgba(250,243,227,.3);">03</div>
         <div style="min-width: 0; display: flex; flex-direction: column; gap: 10px;">
           <h3 style="margin: 0; font: 800 clamp(22px, 2.2vw, 28px)/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Implement</h3>
-          <p style="margin: 0; max-width: 56ch; font: 400 17px/1.55 Archivo, sans-serif; color: #4a453e;">We do the compliance work: documentation, compliant architecture, security controls and more.</p>
+          <p style="margin: 0; max-width: 56ch; font: 400 17px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.74);">We do the compliance work: documentation, compliant architecture, security controls and more.</p>
         </div>
-        <div style="min-width: 0; padding-left: clamp(16px, 2vw, 28px); border-left: 2px solid #ddd7c8; font: 600 15px/1.5 Archivo, sans-serif;">
-          <span style="display: block; margin-bottom: 6px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a6a1f;">Outcome</span>
+        <div style="min-width: 0; padding-left: clamp(16px, 2vw, 28px); border-left: 2px solid rgba(250,243,227,.18); font: 600 15px/1.5 Archivo, sans-serif;">
+          <span style="display: block; margin-bottom: 6px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #d5aa4b;">Outcome</span>
           You become compliant.
         </div>
       </div>
-      <div style="display: grid; grid-template-columns: 84px minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); align-items: start; padding: clamp(24px, 3vw, 34px) 0; border-bottom: 1px solid #ddd7c8;">
-        <div style="font: 800 clamp(28px, 3vw, 40px)/1 Archivo, sans-serif; letter-spacing: -.02em; color: #ddd7c8;">04</div>
+      <div style="display: grid; grid-template-columns: 84px minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); align-items: start; padding: clamp(24px, 3vw, 34px) 0; border-bottom: 1px solid rgba(250,243,227,.18);">
+        <div style="font: 800 clamp(28px, 3vw, 40px)/1 Archivo, sans-serif; letter-spacing: -.02em; color: rgba(250,243,227,.3);">04</div>
         <div style="min-width: 0; display: flex; flex-direction: column; gap: 10px;">
           <h3 style="margin: 0; font: 800 clamp(22px, 2.2vw, 28px)/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Monitor</h3>
-          <p style="margin: 0; max-width: 56ch; font: 400 17px/1.55 Archivo, sans-serif; color: #4a453e;">We ensure your compliance stays up to date as your business, technology and the regulatory landscape evolve.</p>
+          <p style="margin: 0; max-width: 56ch; font: 400 17px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.74);">We ensure your compliance stays up to date as your business, technology and the regulatory landscape evolve.</p>
         </div>
-        <div style="min-width: 0; padding-left: clamp(16px, 2vw, 28px); border-left: 2px solid #ddd7c8; font: 600 15px/1.5 Archivo, sans-serif;">
-          <span style="display: block; margin-bottom: 6px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a6a1f;">Outcome</span>
+        <div style="min-width: 0; padding-left: clamp(16px, 2vw, 28px); border-left: 2px solid rgba(250,243,227,.18); font: 600 15px/1.5 Archivo, sans-serif;">
+          <span style="display: block; margin-bottom: 6px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #d5aa4b;">Outcome</span>
           You maintain your compliance posture over time.
         </div>
       </div>
     </div>
   </div>
 
-  <div id="services" data-screen-label="What We Do For You" style="padding: clamp(40px, 5vw, 72px) clamp(20px, 4vw, 64px);">
+  <div id="services" class="bg-gold" data-screen-label="What We Do For You" style="padding: clamp(40px, 5vw, 72px) clamp(20px, 4vw, 64px);">
     <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px;">
-      <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">How we can help you</div>
+      <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">Our portfolio of services</div>
       <h2 style="margin: 0; font: 900 clamp(32px, 3.8vw, 48px)/1.02 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">What we do for you</h2>
     </div>
 
-    <div class="svc-rail-grid" style="display: grid; grid-template-columns: 300px 1fr; border: 1px solid #201e1d;">
+    <div class="svc-rail-grid" style="display: grid; grid-template-columns: 300px 1fr; border: 1px solid #201e1d; background: #f8f1de;">
       <div class="svc-rail" role="tablist" aria-label="What we do for you" aria-orientation="vertical" style="display: flex; flex-direction: column; border-right: 1px solid #201e1d;">
-      <button class="x19" data-tab="0" role="tab" aria-selected="true" aria-controls="panel-0" style="all: unset; box-sizing: border-box; cursor: pointer; padding: 20px 22px; font: 800 13px/1.3 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; background: #201e1d; color: #ffffff;">AI Inventory &amp; Risk Classification</button>
+      <button class="x19" data-tab="0" role="tab" aria-selected="true" aria-controls="panel-0" style="all: unset; box-sizing: border-box; cursor: pointer; padding: 20px 22px; font: 800 13px/1.3 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; background: #17160f; color: #ffffff;">AI Inventory &amp; Risk Classification</button>
       <button class="x20" data-tab="1" role="tab" aria-selected="false" aria-controls="panel-1" style="all: unset; box-sizing: border-box; cursor: pointer; padding: 20px 22px; font: 800 13px/1.3 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; border-top: 1px solid #ddd7c8; background: transparent; color: #4a453e;">Governing Agentic Workflows</button>
       <button class="x21" data-tab="2" role="tab" aria-selected="false" aria-controls="panel-2" style="all: unset; box-sizing: border-box; cursor: pointer; padding: 20px 22px; font: 800 13px/1.3 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; border-top: 1px solid #ddd7c8; background: transparent; color: #4a453e;">Data Governance and Privacy</button>
       <button class="x22" data-tab="3" role="tab" aria-selected="false" aria-controls="panel-3" style="all: unset; box-sizing: border-box; cursor: pointer; padding: 20px 22px; font: 800 13px/1.3 Archivo, sans-serif; letter-spacing: .06em; text-transform: uppercase; border-top: 1px solid #ddd7c8; background: transparent; color: #4a453e;">Operational Resilience</button>
@@ -385,11 +437,11 @@
       <div style="padding: clamp(24px, 3vw, 40px) clamp(20px, 3vw, 40px);">
       <div data-panel="0" id="panel-0" role="tabpanel" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(24px, 3vw, 48px); ">
       <div style="min-width: 0; display: flex; flex-direction: column; gap: 18px;">
-        <div style="align-self: flex-start; padding: 7px 12px; background: #fcfbf7; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">AI Act · ISO 42001</div>
+        <div style="align-self: flex-start; padding: 7px 12px; border: 1px solid #ddd7c8; background: #f8f1de; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">AI Act · ISO 42001</div>
         <h3 style="margin: 0; font: 900 clamp(24px, 2.6vw, 34px)/1.1 Archivo, sans-serif; letter-spacing: -.025em; text-transform: uppercase;">AI Inventory &amp; Risk Classification</h3>
         <p style="margin: 0; max-width: 54ch; font: 400 18px/1.6 Archivo, sans-serif; color: #4a453e;">Most companies don't have a clear picture of every AI system they've built, bought, or quietly embedded through a vendor. We help you build and maintain a living inventory of these systems, so you always know what you're running, who's responsible for it, and what regulatory role and risk level it carries — the essential first step before anything else can be assessed.</p>
       </div>
-      <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #fcfbf7; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
+      <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #f8f1de; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
         <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">What we help you with</div>
         <div style="display: flex; flex-direction: column;">
           <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #ddd7c8; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>Inventory of your AI systems — built, bought, or embedded</span></div>
@@ -401,11 +453,11 @@
 
       <div data-panel="1" id="panel-1" role="tabpanel" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(24px, 3vw, 48px);  display: none;">
       <div style="min-width: 0; display: flex; flex-direction: column; gap: 18px;">
-        <div style="align-self: flex-start; padding: 7px 12px; background: #fcfbf7; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">AI Act</div>
+        <div style="align-self: flex-start; padding: 7px 12px; border: 1px solid #ddd7c8; background: #f8f1de; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">AI Act</div>
         <h3 style="margin: 0; font: 900 clamp(24px, 2.6vw, 34px)/1.1 Archivo, sans-serif; letter-spacing: -.025em; text-transform: uppercase;">Governing Agentic Workflows</h3>
         <p style="margin: 0; max-width: 54ch; font: 400 18px/1.6 Archivo, sans-serif; color: #4a453e;">Agentic systems make decisions and take actions with less human oversight at every step — which means the compliance questions change too. We help you govern agentic workflows before they become a liability: who's accountable when an agent acts, what guardrails are in place, and how you document it.</p>
       </div>
-      <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #fcfbf7; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
+      <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #f8f1de; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
         <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">What we help you with</div>
         <div style="display: flex; flex-direction: column;">
           <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #ddd7c8; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>Human oversight design and accountability mapping</span></div>
@@ -417,11 +469,11 @@
 
       <div data-panel="2" id="panel-2" role="tabpanel" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(24px, 3vw, 48px);  display: none;">
       <div style="min-width: 0; display: flex; flex-direction: column; gap: 18px;">
-        <div style="align-self: flex-start; padding: 7px 12px; background: #fcfbf7; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">GDPR</div>
+        <div style="align-self: flex-start; padding: 7px 12px; border: 1px solid #ddd7c8; background: #f8f1de; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">GDPR</div>
         <h3 style="margin: 0; font: 900 clamp(24px, 2.6vw, 34px)/1.1 Archivo, sans-serif; letter-spacing: -.025em; text-transform: uppercase;">Data Governance and Privacy</h3>
         <p style="margin: 0; max-width: 54ch; font: 400 18px/1.6 Archivo, sans-serif; color: #4a453e;">Every AI system runs on data, and every dataset carries GDPR obligations that don't disappear just because a model is involved. We help you map your data flows, fix the gaps in your legal basis, and put privacy controls in place that hold up under scrutiny — from regulators and from your own customers.</p>
       </div>
-      <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #fcfbf7; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
+      <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #f8f1de; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
         <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">What we help you with</div>
         <div style="display: flex; flex-direction: column;">
           <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #ddd7c8; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>Data mapping and legal basis review</span></div>
@@ -433,11 +485,11 @@
 
       <div data-panel="3" id="panel-3" role="tabpanel" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(24px, 3vw, 48px);  display: none;">
       <div style="min-width: 0; display: flex; flex-direction: column; gap: 18px;">
-        <div style="align-self: flex-start; padding: 7px 12px; background: #fcfbf7; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">DORA</div>
+        <div style="align-self: flex-start; padding: 7px 12px; border: 1px solid #ddd7c8; background: #f8f1de; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">DORA</div>
         <h3 style="margin: 0; font: 900 clamp(24px, 2.6vw, 34px)/1.1 Archivo, sans-serif; letter-spacing: -.025em; text-transform: uppercase;">Operational Resilience</h3>
         <p style="margin: 0; max-width: 54ch; font: 400 18px/1.6 Archivo, sans-serif; color: #4a453e;">Financial entities and their critical ICT providers now have to prove they can withstand and recover from disruption, not just describe their security posture on paper. We help you build the ICT risk management framework, incident reporting processes and testing program DORA actually requires.</p>
       </div>
-      <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #fcfbf7; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
+      <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #f8f1de; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
         <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">What we help you with</div>
         <div style="display: flex; flex-direction: column;">
           <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #ddd7c8; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>ICT risk management framework design</span></div>
@@ -449,11 +501,11 @@
 
       <div data-panel="4" id="panel-4" role="tabpanel" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(24px, 3vw, 48px);  display: none;">
       <div style="min-width: 0; display: flex; flex-direction: column; gap: 18px;">
-        <div style="align-self: flex-start; padding: 7px 12px; background: #fcfbf7; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">NIS2 · ISO 27001</div>
+        <div style="align-self: flex-start; padding: 7px 12px; border: 1px solid #ddd7c8; background: #f8f1de; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">NIS2 · ISO 27001</div>
         <h3 style="margin: 0; font: 900 clamp(24px, 2.6vw, 34px)/1.1 Archivo, sans-serif; letter-spacing: -.025em; text-transform: uppercase;">Security Governance</h3>
         <p style="margin: 0; max-width: 54ch; font: 400 18px/1.6 Archivo, sans-serif; color: #4a453e;">NIS2 raises the bar on cybersecurity governance — and puts personal liability on management if it's not met. We help you build the security controls, incident response processes and governance structure to meet NIS2 obligations, and get ISO 27001-certified if you need it.</p>
       </div>
-      <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #fcfbf7; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
+      <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #f8f1de; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
         <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">What we help you with</div>
         <div style="display: flex; flex-direction: column;">
           <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #ddd7c8; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>NIS2 gap assessment and governance structure</span></div>
@@ -465,11 +517,11 @@
 
       <div data-panel="5" id="panel-5" role="tabpanel" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(24px, 3vw, 48px);  display: none;">
       <div style="min-width: 0; display: flex; flex-direction: column; gap: 18px;">
-        <div style="align-self: flex-start; padding: 7px 12px; background: #fcfbf7; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">AI Act · GDPR · NIS2 · DORA · CRA</div>
+        <div style="align-self: flex-start; padding: 7px 12px; border: 1px solid #ddd7c8; background: #f8f1de; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f;">AI Act · GDPR · NIS2 · DORA · CRA</div>
         <h3 style="margin: 0; font: 900 clamp(24px, 2.6vw, 34px)/1.1 Archivo, sans-serif; letter-spacing: -.025em; text-transform: uppercase;">Compliance Audits</h3>
         <p style="margin: 0; max-width: 54ch; font: 400 18px/1.6 Archivo, sans-serif; color: #4a453e;">Being compliant on paper isn't the same as proving it under pressure — to a regulator, an auditor, or an enterprise customer's security questionnaire. We run structured compliance audits across every regulation that applies to you, testing your documentation and controls against what each framework actually requires, so you find the gaps before someone else does.</p>
       </div>
-      <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #fcfbf7; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
+      <div style="min-width: 0; padding: clamp(20px, 2.4vw, 32px); background: #f8f1de; border: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 16px;">
         <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">What we help you with</div>
         <div style="display: flex; flex-direction: column;">
           <div style="display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid #ddd7c8; font: 600 16px/1.45 Archivo, sans-serif;"><span style="flex: none; width: 8px; height: 8px; margin-top: 8px; background: #c9a227;"></span><span>Independent compliance audits across AI Act, GDPR, NIS2, DORA and CRA</span></div>
@@ -483,85 +535,85 @@
   </div>
 
   <!-- ================= ENGAGEMENT ================= -->
-  <div id="support" data-screen-label="Engagement" style="padding: clamp(40px, 5vw, 72px) clamp(20px, 4vw, 64px); border-top: 1px solid #ddd7c8;">
+  <div id="support" class="bg-black" data-screen-label="Engagement" style="padding: clamp(40px, 5vw, 72px) clamp(20px, 4vw, 64px);">
     <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px;">
-      <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">Engagement</div>
+      <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">Engagement</div>
       <h2 style="margin: 0; max-width: 26ch; font: 900 clamp(32px, 3.8vw, 48px)/1.02 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">Choose the level of support you need</h2>
-      <p style="margin: 0; max-width: 52ch; font: 400 17px/1.55 Archivo, sans-serif; color: #4a453e;">Every organization is different. We tailor our engagements to your objectives, internal capabilities and budget.</p>
+      <p style="margin: 0; max-width: 52ch; font: 400 17px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.74);">Every organization is different. We tailor our engagements to your objectives, internal capabilities and budget.</p>
     </div>
     <div data-stagger="true" class="eng-ladder" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: start;">
       <div style="display: flex; flex-direction: column; margin-top: 56px;">
-        <div style="border: 1px solid #ddd7c8; border-bottom: none; padding: 26px 26px 22px; display: flex; flex-direction: column; gap: 10px;">
-          <span style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .12em; color: #8a6a1f;">01</span>
+        <div style="border: 1px solid rgba(250,243,227,.18); border-bottom: none; padding: 26px 26px 22px; display: flex; flex-direction: column; gap: 10px;">
+          <span style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .12em; color: #d5aa4b;">01</span>
           <h3 style="margin: 0; font: 800 26px/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Check &amp; Strategy</h3>
-          <span style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #4a453e;">Hourly consulting</span>
-          <span style="margin-top: 8px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a6a1f;">Best for</span>
+          <span style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: rgba(250,243,227,.74);">Hourly consulting</span>
+          <span style="margin-top: 8px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #d5aa4b;">Best for</span>
           <div style="display: flex; flex-direction: column;">
-            <div style="padding: 11px 0; border-top: 1px solid #ddd7c8; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">Scoping a new engagement before committing to a project</div>
-            <div style="padding: 11px 0; border-top: 1px solid #ddd7c8; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">A second opinion on a specific compliance question</div>
-            <div style="padding: 11px 0; border-top: 1px solid #ddd7c8; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">Ad hoc strategy sessions with our legal and technical team</div>
+            <div style="padding: 11px 0; border-top: 1px solid rgba(250,243,227,.18); font: 400 15px/1.5 Archivo, sans-serif; color: rgba(250,243,227,.74);">Scoping a new engagement before committing to a project</div>
+            <div style="padding: 11px 0; border-top: 1px solid rgba(250,243,227,.18); font: 400 15px/1.5 Archivo, sans-serif; color: rgba(250,243,227,.74);">A second opinion on a specific compliance question</div>
+            <div style="padding: 11px 0; border-top: 1px solid rgba(250,243,227,.18); font: 400 15px/1.5 Archivo, sans-serif; color: rgba(250,243,227,.74);">Ad hoc strategy sessions with our legal and technical team</div>
           </div>
         </div>
-        <div style="background: #fcfbf7; border: 1px solid #ddd7c8; padding: 20px 26px; font: 700 15px/1.45 Archivo, sans-serif;">You get clear, actionable answers — billed only for the time you use.</div>
+        <div style="background: #17160f; border: 1px solid rgba(250,243,227,.18); padding: 20px 26px; font: 700 15px/1.45 Archivo, sans-serif;">You get clear, actionable answers — billed only for the time you use.</div>
       </div>
       <div style="display: flex; flex-direction: column; margin-top: 28px;">
-        <div style="border: 1px solid #ddd7c8; border-bottom: none; padding: 26px 26px 22px; display: flex; flex-direction: column; gap: 10px;">
-          <span style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .12em; color: #8a6a1f;">02</span>
+        <div style="border: 1px solid rgba(250,243,227,.18); border-bottom: none; padding: 26px 26px 22px; display: flex; flex-direction: column; gap: 10px;">
+          <span style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .12em; color: #d5aa4b;">02</span>
           <h3 style="margin: 0; font: 800 26px/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Project-Based</h3>
-          <span style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #4a453e;">End-to-end compliance projects</span>
-          <span style="margin-top: 8px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a6a1f;">Best for</span>
+          <span style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: rgba(250,243,227,.74);">End-to-end compliance projects</span>
+          <span style="margin-top: 8px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #d5aa4b;">Best for</span>
           <div style="display: flex; flex-direction: column;">
-            <div style="padding: 11px 0; border-top: 1px solid #ddd7c8; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">A defined scope: a gap assessment, a certification push, a full conformity project</div>
-            <div style="padding: 11px 0; border-top: 1px solid #ddd7c8; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">Teams that need a fixed timeline and fixed deliverables</div>
-            <div style="padding: 11px 0; border-top: 1px solid #ddd7c8; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">Milestones tied to a deal, audit or certification deadline</div>
+            <div style="padding: 11px 0; border-top: 1px solid rgba(250,243,227,.18); font: 400 15px/1.5 Archivo, sans-serif; color: rgba(250,243,227,.74);">A defined scope: a gap assessment, a certification push, a full conformity project</div>
+            <div style="padding: 11px 0; border-top: 1px solid rgba(250,243,227,.18); font: 400 15px/1.5 Archivo, sans-serif; color: rgba(250,243,227,.74);">Teams that need a fixed timeline and fixed deliverables</div>
+            <div style="padding: 11px 0; border-top: 1px solid rgba(250,243,227,.18); font: 400 15px/1.5 Archivo, sans-serif; color: rgba(250,243,227,.74);">Milestones tied to a deal, audit or certification deadline</div>
           </div>
         </div>
-        <div style="background: #fcfbf7; border: 1px solid #ddd7c8; padding: 20px 26px; font: 700 15px/1.45 Archivo, sans-serif;">You get a fixed-scope project, delivered to a fixed timeline.</div>
+        <div style="background: #17160f; border: 1px solid rgba(250,243,227,.18); padding: 20px 26px; font: 700 15px/1.45 Archivo, sans-serif;">You get a fixed-scope project, delivered to a fixed timeline.</div>
       </div>
       <div style="display: flex; flex-direction: column;">
         <div style="border: 2px solid #c9a227; border-bottom: none; padding: 26px 26px 22px; display: flex; flex-direction: column; gap: 10px;">
-          <span style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .12em; color: #8a6a1f;">03</span>
+          <span style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .12em; color: #d5aa4b;">03</span>
           <h3 style="margin: 0; font: 800 26px/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Retainer</h3>
-          <span style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #4a453e;">Your ongoing compliance partner</span>
-          <span style="margin-top: 8px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a6a1f;">Best for</span>
+          <span style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: rgba(250,243,227,.74);">Your ongoing compliance partner</span>
+          <span style="margin-top: 8px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #d5aa4b;">Best for</span>
           <div style="display: flex; flex-direction: column;">
-            <div style="padding: 11px 0; border-top: 1px solid #ddd7c8; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">Continuous legal, technical and security coverage</div>
-            <div style="padding: 11px 0; border-top: 1px solid #ddd7c8; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">Fractional CAIO, CISO, or AI/ML support without a full-time hire</div>
-            <div style="padding: 11px 0; border-top: 1px solid #ddd7c8; font: 400 15px/1.5 Archivo, sans-serif; color: #4a453e;">Regulatory exposure that keeps evolving as you grow</div>
+            <div style="padding: 11px 0; border-top: 1px solid rgba(250,243,227,.18); font: 400 15px/1.5 Archivo, sans-serif; color: rgba(250,243,227,.74);">Continuous legal, technical and security coverage</div>
+            <div style="padding: 11px 0; border-top: 1px solid rgba(250,243,227,.18); font: 400 15px/1.5 Archivo, sans-serif; color: rgba(250,243,227,.74);">Fractional CAIO, CISO, or AI/ML support without a full-time hire</div>
+            <div style="padding: 11px 0; border-top: 1px solid rgba(250,243,227,.18); font: 400 15px/1.5 Archivo, sans-serif; color: rgba(250,243,227,.74);">Regulatory exposure that keeps evolving as you grow</div>
           </div>
         </div>
-        <div style="background: #c9a227; border: 2px solid #c9a227; padding: 20px 26px; font: 700 15px/1.45 Archivo, sans-serif; color: #17160f;">You get an ongoing compliance partner, not a one-off engagement.</div>
+        <div style="background: #f8f1de; border: 2px solid #c9a227; padding: 20px 26px; font: 700 15px/1.45 Archivo, sans-serif; color: #17160f;">You get an ongoing compliance partner, not a one-off engagement.</div>
       </div>
     </div>
   </div>
 
   <!-- ================= TEAM ================= -->
-  <div id="team" data-screen-label="Team" style="display: flex; flex-direction: column; gap: 28px; padding: clamp(40px, 5vw, 72px) clamp(20px, 4vw, 64px); border-top: 1px solid #ddd7c8;">
+  <div id="team" class="bg-gold" data-screen-label="Team" style="display: flex; flex-direction: column; gap: 28px; padding: clamp(40px, 5vw, 72px) clamp(20px, 4vw, 64px);">
     <div style="min-width: 0; display: flex; flex-direction: column; gap: 16px;">
       <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">Team</div>
       <h2 style="margin: 0; max-width: 20ch; font: 900 clamp(32px, 3.8vw, 48px)/1.02 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">The people behind SenecAI</h2>
     </div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(20px, 2.6vw, 28px);">
-      <div style="min-width: 0; display: flex; align-items: flex-start; gap: 22px; padding: 24px; border: 1px solid #ddd7c8;">
-        <div style="flex: none; width: 76px; height: 76px; display: grid; place-items: center; background: #201e1d; color: #c9a227; font: 900 26px/1 Archivo, sans-serif;">MȘ</div>
+      <div style="min-width: 0; display: flex; align-items: flex-start; gap: 22px; padding: 24px; border: 1px solid #ddd7c8; background: #f8f1de;">
+        <div style="flex: none; width: 76px; height: 76px; display: grid; place-items: center; background: #17160f; color: #c9a227; font: 900 26px/1 Archivo, sans-serif;">MȘ</div>
         <div style="display: flex; flex-direction: column; gap: 8px; min-width: 0;">
           <div style="font: 800 24px/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Matei Ștefan</div>
           <div style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #8a6a1f;">Founder &amp; Legal Consultant</div>
           <div style="margin-top: 6px; font: 400 16px/1.55 Archivo, sans-serif; color: #4a453e;">Full bio coming soon.</div>
         </div>
       </div>
-      <div style="min-width: 0; display: flex; align-items: flex-start; gap: 22px; padding: 24px; border: 1px solid #ddd7c8;">
-        <div style="flex: none; width: 76px; height: 76px; display: grid; place-items: center; background: #201e1d; color: #c9a227; font: 900 26px/1 Archivo, sans-serif;">VT</div>
+      <div style="min-width: 0; display: flex; align-items: flex-start; gap: 22px; padding: 24px; border: 1px solid #ddd7c8; background: #f8f1de;">
+        <div style="flex: none; width: 76px; height: 76px; display: grid; place-items: center; background: #17160f; color: #c9a227; font: 900 26px/1 Archivo, sans-serif;">VT</div>
         <div style="display: flex; flex-direction: column; gap: 8px; min-width: 0;">
           <div style="font: 800 24px/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Vlad Tudor</div>
           <div style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #8a6a1f;">Technical Lead</div>
           <div style="margin-top: 6px; font: 400 16px/1.55 Archivo, sans-serif; color: #4a453e;">Full bio coming soon.</div>
         </div>
       </div>
-      <div style="min-width: 0; display: flex; align-items: flex-start; gap: 22px; padding: 24px; border: 1px solid #ddd7c8;">
-        <div style="flex: none; width: 76px; height: 76px; display: grid; place-items: center; background: #201e1d; color: #c9a227; font: 900 26px/1 Archivo, sans-serif;">MC</div>
+      <div style="min-width: 0; display: flex; align-items: flex-start; gap: 22px; padding: 24px; border: 1px solid #ddd7c8; background: #f8f1de;">
+        <div style="flex: none; width: 76px; height: 76px; display: grid; place-items: center; background: #17160f; color: #c9a227; font: 900 26px/1 Archivo, sans-serif;">MP</div>
         <div style="display: flex; flex-direction: column; gap: 8px; min-width: 0;">
-          <div style="font: 800 24px/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Marius Cyber</div>
+          <div style="font: 800 24px/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Marius Petcu</div>
           <div style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #8a6a1f;">Cybersecurity Lead</div>
           <div style="margin-top: 6px; font: 400 16px/1.55 Archivo, sans-serif; color: #4a453e;">Full bio coming soon.</div>
         </div>
@@ -569,109 +621,147 @@
     </div>
   </div>
 
-  <div id="faq" data-screen-label="FAQ" style="padding: clamp(36px, 4.4vw, 64px) clamp(20px, 4vw, 64px); border-top: 1px solid #ddd7c8; display: flex; flex-direction: column; gap: 18px;">
-    <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">FAQ</div>
+  <div id="faq" class="bg-black" data-screen-label="FAQ" style="padding: clamp(36px, 4.4vw, 64px) clamp(20px, 4vw, 64px); display: flex; flex-direction: column; gap: 18px;">
+    <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">FAQ</div>
     <h2 style="margin: 0; font: 900 clamp(28px, 3.2vw, 40px)/1.05 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">Frequently asked questions</h2>
 
-    <div style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #a37c17; margin-top: 12px;">About SenecAI &amp; working with us</div>
+    <div style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #d5aa4b; margin-top: 12px;">About SenecAI</div>
     <div style="display: flex; flex-direction: column; gap: 10px;">
-      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">What is SenecAI?</summary>
-        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">SenecAI is a compliance partner for startups and SMEs navigating the EU digital regulatory landscape — the AI Act, GDPR, NIS2, DORA, the Cyber Resilience Act and more. We combine legal, technical and cybersecurity expertise to take you from "what applies to us?" to fully compliant.</p>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">What is SenecAI?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>SenecAI is a compliance partner for startups and SMEs. We bring legal, technical and cybersecurity expertise together in one team, so you can understand which rules apply to your business, close the gaps, and stay compliant as you grow.</p></div>
       </details>
-      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">Who do you work with?</summary>
-        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">Mostly startups and SMEs building or using AI, though our services extend to any company facing GDPR, NIS2, DORA or CRA obligations — from early-stage teams preparing for investor due diligence to scale-ups closing enterprise clients.</p>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Who do you work with?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Mostly startups and SMEs building or using AI — from early-stage teams preparing for investor due diligence to scale-ups closing their first enterprise clients. If digital regulation affects how you build, sell or operate, we can help.</p></div>
       </details>
-      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">How does an engagement with SenecAI actually work?</summary>
-        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">Every engagement follows the same four steps: Discover (map your regulatory exposure), Assess (gap analysis against the applicable frameworks), Implement (documentation, technical controls, compliant architecture) and Monitor (keep your compliance current as your business and the law evolve).</p>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">What makes SenecAI different from a law firm or a traditional consultancy?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Most firms give you either a legal opinion or a technical implementation, and leave you to connect the two. Our lawyers, engineers and security specialists work as one team, so the legal analysis turns directly into documentation, architecture and controls you can actually run. We write for founders, not for other lawyers.</p></div>
       </details>
-      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">What ways can we work together?</summary>
-        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">Three models, matched to what you need: hourly Check &amp; Strategy consulting for scoping or a second opinion; Project-Based engagements with a fixed scope and timeline; or a Retainer for ongoing legal, technical and security coverage — effectively a fractional CAIO or CISO.</p>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Who is on the team?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>SenecAI is led by Matei Ștefan (Founder &amp; Legal Consultant), together with Vlad Tudor (Technical Lead) and Marius Petcu (Cybersecurity Lead), supported by a network of partners across AI, cybersecurity and applied research.</p></div>
       </details>
-      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">How do I get started?</summary>
-        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;"><a href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call" style="color: #8a6a1f; font-weight: 700;">Book a free intro call</a> — we'll do a short discovery conversation to understand your business and regulatory exposure, then scope the right engagement model for you.</p>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Do you only work with companies based in Romania or the EU?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>No. We work with companies wherever they are headquartered. What matters is whether you offer products or services in the EU market, not where your office is.</p></div>
       </details>
-      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">Do you only work with companies based in Romania or the EU?</summary>
-        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">No. We work with any company subject to EU digital regulation, regardless of where it's headquartered — what matters is whether you offer products or services in the EU market, not where your office is.</p>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">What languages do you work in?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>We work in English and Romanian.</p></div>
       </details>
     </div>
 
-    <div style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #a37c17; margin-top: 24px;">EU regulations, in plain terms</div>
+    <div style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #d5aa4b; margin-top: 24px;">Working with us</div>
     <div style="display: flex; flex-direction: column; gap: 10px;">
-      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">What is the EU AI Act, and does it apply to us?</summary>
-        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">The AI Act is the EU's risk-based framework regulating the development, deployment and use of AI systems. Whether — and how — it applies depends on your role (provider, deployer, distributor or importer) and your system's risk classification. Most companies using AI in the EU market carry some obligation, even if it's only transparency requirements. We run inventory and classification exercises to tell you exactly where you stand.</p>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">How does an engagement work?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Every engagement follows the same four steps:</p><ol><li><strong>Discover</strong> — we map your regulatory exposure.</li><li><strong>Assess</strong> — we run a gap analysis against the frameworks that apply to you.</li><li><strong>Implement</strong> — we do the work: documentation, compliant architecture, security controls.</li><li><strong>Monitor</strong> — we keep your compliance current as your business and the law evolve.</li></ol></div>
       </details>
-      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">Does GDPR still apply if we're building AI products?</summary>
-        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">Yes — training data, inference logs and any personal data processed by an AI system are still subject to GDPR. AI doesn't create a carve-out; it usually adds obligations, like DPIAs for higher-risk processing or a clearer legal basis for the data you train on.</p>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">What ways can we work together?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Three models, matched to what you need:</p><ul><li><strong>Check &amp; Strategy</strong> — hourly consulting for scoping or a second opinion.</li><li><strong>Project-Based</strong> — a fixed scope delivered to a fixed timeline, such as a gap assessment or a certification push.</li><li><strong>Retainer</strong> — ongoing legal, technical and security coverage, effectively a fractional CAIO or CISO without a full-time hire.</li></ul></div>
       </details>
-      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">What is NIS2 and who does it apply to?</summary>
-        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">NIS2 is the EU's updated cybersecurity directive. It extends governance and incident-reporting obligations to a much wider set of "essential" and "important" entities than before, and puts personal liability on management for non-compliance. Whether you're in scope is usually the first question we answer in a NIS2 gap assessment.</p>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">How much does it cost?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>It depends on your scope and the engagement model. Check &amp; Strategy is billed only for the hours you use; projects are quoted as a fixed price before any work starts; retainers are a predictable monthly fee. After a free intro call, we send you a clear proposal — no surprises.</p></div>
       </details>
-      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">What is DORA, and does it only apply to banks?</summary>
-        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">DORA (the Digital Operational Resilience Act) applies to financial entities and their critical ICT providers — so it reaches far beyond banks, into any vendor providing critical ICT services to the financial sector. It requires a documented ICT risk management framework, incident reporting and resilience testing, not just a security policy on paper.</p>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">How long does it take?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>A focused question can be answered in days. A gap assessment or a full compliance project typically takes a few weeks to a few months, depending on scope and how quickly we can access the information we need. If you have a hard deadline — a funding round, an enterprise deal, an audit — tell us early and we'll plan milestones around it.</p></div>
       </details>
-      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">What is the Cyber Resilience Act (CRA)?</summary>
-        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">The CRA sets cybersecurity requirements for products with digital elements sold in the EU — hardware and software alike — covering secure-by-design development, vulnerability handling and incident reporting throughout the product's lifecycle.</p>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">How much of our team's time will this take?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>As little as possible. We do the heavy lifting. We'll need access to the right people and documents, mostly during Discover and Assess; after that, most of the work sits with us, with regular check-ins and reviews.</p></div>
       </details>
-      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">What happens if we don't comply?</summary>
-        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">Penalties vary by regulation: the AI Act allows fines up to €35M or 7% of global annual turnover, GDPR up to €20M or 4%, and NIS2 puts personal liability on management. Beyond fines, non-compliance increasingly shows up in investor due diligence and enterprise procurement — it's a commercial risk, not just a legal one.</p>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">We have a deadline — a funding round or an enterprise deal. Can you help quickly?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Yes. This is one of the most common reasons founders come to us. We can prioritise what investors or procurement teams will actually ask for — due diligence answers, security questionnaires, policies and evidence — and then handle the longer-term work at a sensible pace.</p></div>
       </details>
-      <details class="faq-item" style="border: 1px solid #ddd7c8; background: #fcfbf7;">
-        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #201e1d;">How do I know which regulations actually apply to my business?</summary>
-        <p style="margin: 0; padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e;">That depends on your products, business model, and how you use data and AI — there's no one-size-fits-all answer. Try the <a href="#cta" style="color: #8a6a1f; font-weight: 700;">compliance checker</a> above, or book a free intro call and we'll map your exposure in a Discover session.</p>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Can you work alongside our existing legal, engineering or security team?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Absolutely. We can lead end to end, or plug in to support your in-house team, external counsel or DPO where they need extra expertise.</p></div>
+      </details>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Do we keep the documents and policies you produce?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Yes. The policies, documentation, inventories and assessments we produce for you are yours to use in your business.</p></div>
+      </details>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Is our information kept confidential?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Yes. Everything you share with us is treated as confidential, and we're happy to sign an NDA before any detailed discussion.</p></div>
+      </details>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Do you offer a guarantee or certification?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>No one can honestly guarantee a regulator's or auditor's decision. What we guarantee is rigorous work, a clear view of your residual risks, and documentation that holds up to scrutiny. Where a formal certification is needed (e.g. ISO 27001), we prepare you for the audit, which is carried out by an accredited certification body.</p></div>
+      </details>
+    </div>
+
+    <div style="font: 800 13px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #d5aa4b; margin-top: 24px;">Getting started</div>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">How do I get started?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p><a href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call">Book a free intro call</a>. We'll have a short conversation to understand your business and needs, then recommend the right engagement model.</p></div>
+      </details>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Is the intro call really free? Is there any obligation?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Yes, it's free, and there's no obligation. It's a chance for both sides to see whether we're a good fit.</p></div>
+      </details>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">What should we prepare for the first call?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Nothing formal. A short description of what you build, who your customers are, and what prompted you to reach out — an investor question, a client request, a deadline — is plenty.</p></div>
+      </details>
+      <details class="faq-item" style="border: 1px solid rgba(250,243,227,.18);">
+        <summary class="faq-q" style="padding: 18px 20px; font: 700 16px/1.4 Archivo, sans-serif; color: #faf3e3;">Where can I learn more before reaching out?</summary>
+        <div style="padding: 0 20px 20px; max-width: 64ch; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);"><p>Our <a href="research.html">Research</a> page and our Substack newsletter, <a href="https://theaiactguy.substack.com/" target="_blank" rel="noopener"><em>The AI Act Guy</em></a>, are free resources for founders and compliance teams. For regulation-specific questions, see the FAQ on our <a href="regulations-covered.html#reg-faq">Regulations covered</a> page.</p></div>
       </details>
     </div>
   </div>
 
   <!-- ================= FINAL CTA ================= -->
-  <div id="cta" data-screen-label="Final CTA" data-tone-band="cta" style="background: #c9a227; padding: clamp(48px, 6vw, 88px) clamp(20px, 4vw, 64px); display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px;">
+  <div id="cta" class="bg-gold" data-screen-label="Final CTA" data-tone-band="cta" style="border-top: 1px solid #ddd7c8; padding: clamp(48px, 6vw, 88px) clamp(20px, 4vw, 64px); display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px;">
     <h2 style="margin: 0; max-width: 20ch; font: 900 clamp(36px, 5.2vw, 72px)/0.96 Archivo, sans-serif; letter-spacing: -.035em; text-transform: uppercase; color: #201e1d;">Ready to get compliant?</h2>
-    <a href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call" class="om-cta x26" style="display: flex; align-items: center; gap: 40px; padding: 20px 22px; border: 2px solid #201e1d; color: #201e1d; font: 800 14px/1 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;">
-      <span>Book a free intro call</span>
+    <a href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call" class="om-cta x26" style="display: flex; align-items: center; gap: 40px; max-width: 46ch; padding: 20px 22px; border: 2px solid #201e1d; background: #f8f1de; color: #201e1d; font: 800 14px/1.35 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;">
+      <span>Tell us what you build, and we'll tell you how exposed you are</span>
       <span style="font-size: 18px;">→</span>
     </a>
   </div>
 
   <!-- ================= FOOTER ================= -->
-  <div data-screen-label="Footer" style="background: #201e1d; color: #ffffff;">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; padding: 44px clamp(20px, 4vw, 64px);">
+  <div data-screen-label="Footer" style="background: #17160f; color: #faf3e3; border-top: 1px solid rgba(250,243,227,.16);">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 28px; padding: 44px clamp(20px, 4vw, 64px);">
       <div style="min-width: 0; display: flex; flex-direction: column; gap: 14px;">
-        <a href="#top" style="display: flex; align-items: center; gap: 10px; color: #ffffff;">
-          <img src="assets/senecai-logo-v2.png" alt="SenecAI Compliance" style="display: block; height: auto; width: clamp(200px, 18vw, 300px); background: #ffffff; padding: 12px 16px;">
+        <a href="#top" style="display: flex; align-items: center; gap: 10px;">
+          <img src="assets/senecai-logo-footer.png" alt="SenecAI Consulting" style="display: block; height: auto; width: clamp(200px, 18vw, 280px);">
         </a>
-        <div style="font: 400 14px/1.55 Archivo, sans-serif; color: #a8a29a; max-width: 30ch;">EU digital compliance for startups and SMEs.</div>
+        <div style="font: 400 14px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.6); max-width: 30ch;">EU digital compliance for startups and SMEs.</div>
       </div>
       <div style="min-width: 0; display: flex; flex-direction: column; gap: 12px;">
-        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #c9a227;">Navigation</div>
-        <a class="x27" href="#method" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">Our Method</a>
-        <a class="x28" href="#services" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">What We Do</a>
-        <a class="x30" href="#support" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">Support</a>
-        <a class="x31" href="#team" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">Team</a>
-        <a class="x32" href="#faq" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">FAQ</a>
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">Navigation</div>
+        <a class="footer-link" href="#method">Our Method</a>
+        <a class="footer-link" href="#services">What We Do</a>
+        <a class="footer-link" href="#support">Support</a>
+        <a class="footer-link" href="#team">Team</a>
+        <a class="footer-link" href="#faq">FAQ</a>
       </div>
       <div style="min-width: 0; display: flex; flex-direction: column; gap: 12px;">
-        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #c9a227;">Get in touch</div>
-        <a class="x33" href="mailto:hello@senecai.eu" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">hello@senecai.eu</a>
-        <a class="x34" href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">Book a free intro call</a>
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">Get in touch</div>
+        <a class="footer-link" href="mailto:hello@senecai.eu">hello@senecai.eu</a>
+        <a class="footer-link" href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call">Book a free intro call</a>
       </div>
       <div style="min-width: 0; display: flex; flex-direction: column; gap: 12px;">
-        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #c9a227;">Connect</div>
-        <a class="x35" href="#top" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">LinkedIn</a>
-        <a class="x36" href="https://theaiactguy.substack.com/" target="_blank" rel="noopener" style="color: #cfc9bd; font: 600 14px/1.3 Archivo, sans-serif;">The AI Act Guy — Substack</a>
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">Connect</div>
+        <a class="footer-link" href="#top">LinkedIn</a>
+        <a class="footer-link" href="https://theaiactguy.substack.com/" target="_blank" rel="noopener">The AI Act Guy — Substack</a>
+      </div>
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 12px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">Legal</div>
+        <a class="footer-link" href="legal-notice.html">Legal Notice</a>
+        <a class="footer-link" href="privacy-policy.html">Privacy Policy</a>
+        <a class="footer-link" href="terms-of-use.html">Terms of Use</a>
       </div>
     </div>
-    <div style="padding: 16px clamp(20px, 4vw, 64px); border-top: 1px solid #2b2721; font: 600 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #6f6a62;">© SenecAI. All rights reserved.</div>
+    <div style="padding: 16px clamp(20px, 4vw, 64px); border-top: 1px solid rgba(250,243,227,.12); font: 600 11px/1.5 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: rgba(250,243,227,.5);">SenecAI – brand registered at OSIM [REGISTRATION NUMBER]</div>
   </div>
 </div>
 </body>
