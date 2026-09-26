@@ -17,8 +17,9 @@ Plain static HTML. No build step, no framework, no dependencies.
 - `legal-notice.html` / `privacy-policy.html` / `terms-of-use.html` — legal pages linked from
   the footer, currently structured placeholders.
 - Palette: black `#17160f` and gold `#f8f1de` are the only section backgrounds; every gold
-  section (`.bg-gold`) carries the faint legal-pad artwork
-  (`assets/gold-legal-pad.svg`), fading in from the right.
+  section (`.bg-gold`) gets the animated gold dot wave
+  (`assets/dot-wave.v1.js`, from the design handoff). The file name is versioned because
+  `/assets/*` is cached as immutable: rename it (v2, …) whenever it changes.
 - `assets/` — product screenshots and the logo used on the page.
 - `vercel.json` — long-lived cache headers for `/assets/*`.
 
