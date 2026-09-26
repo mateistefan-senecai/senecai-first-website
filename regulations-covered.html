@@ -16,7 +16,7 @@
   [id] { scroll-margin-top: 140px; }
   /* Keeps the CTA button in the true top-right corner: below this width the nav
      links drop to their own row instead of pushing the button down. */
-  @media (max-width: 1100px) { [data-nav-links] { order: 3; flex-basis: 100%; } }
+  @media (max-width: 1420px) { [data-nav-links] { order: 3; flex-basis: 100%; } }
   .om-cta { position: relative; overflow: hidden; }
   .om-cta > span { position: relative; z-index: 1; }
   .om-cta::before { content: ""; position: absolute; inset: 0; background: #17160f; transform: translateX(-101%); transition: transform .28s cubic-bezier(.2,.7,.2,1); }
@@ -30,10 +30,10 @@
   .ink-focus:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
 
   /* ---- Palette: black (#17160f) and gold (#f8f1de) are the only section backgrounds.
-     Every gold section carries the dotted pattern from the Regulations header. ---- */
+     Every gold section carries a faint gold grid, fading in from the right. ---- */
   .bg-black { background: #17160f; color: #faf3e3; }
   .bg-gold { position: relative; background: #f8f1de; color: #201e1d; }
-  .bg-gold::before { content: ""; position: absolute; inset: 0; background: url('assets/hero-pattern.svg') no-repeat right center / cover; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 45%); mask-image: linear-gradient(to right, transparent 0%, black 45%); pointer-events: none; }
+  .bg-gold::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(163,124,23,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(163,124,23,.09) 1px, transparent 1px); background-size: 56px 56px; -webkit-mask-image: radial-gradient(ellipse 70% 90% at 100% 50%, black 0%, transparent 75%); mask-image: radial-gradient(ellipse 70% 90% at 100% 50%, black 0%, transparent 75%); pointer-events: none; }
   .bg-gold > * { position: relative; z-index: 1; }
   /* ---- Horizontal scroll band (partners, testimonials) ---- */
   .hscroll { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 14px; scrollbar-width: thin; scrollbar-color: #c9a227 transparent; overscroll-behavior-x: contain; }
@@ -103,9 +103,9 @@
   <!-- ================= NAV ================= -->
   <div id="top" style="position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: 20px; padding: 16px clamp(20px, 4vw, 56px); border-bottom: 1px solid rgba(250,243,227,.16); background: #17160f;">
     <a href="index.html" style="display: flex; align-items: center; gap: 10px;">
-      <img src="assets/senecai-logo-dark.png" alt="SenecAI Consulting" style="display: block; height: 56px; width: auto;">
+      <img src="assets/senecai-compliance-logo-light.png" alt="SenecAI Compliance" style="display: block; height: 50px; width: auto;">
     </a>
-    <div data-nav-links="true" style="display: flex; flex-wrap: wrap; gap: 26px; font: 700 12.5px/1 Archivo, sans-serif; letter-spacing: .11em; text-transform: uppercase;">
+    <div data-nav-links="true" style="display: flex; flex-wrap: wrap; gap: 22px; font: 700 12.5px/1 Archivo, sans-serif; letter-spacing: .09em; text-transform: uppercase;">
       <a class="ink-nav-link ink-focus" href="index.html#services" style="color: rgba(250,243,227,.82);">What we can do for you</a>
       <a class="ink-nav-link ink-focus" href="regulations-covered.html" style="color: rgba(250,243,227,.82);">Regulations covered</a>
       <a class="ink-nav-link ink-focus" href="research.html" style="color: rgba(250,243,227,.82);">Research</a>
@@ -116,7 +116,7 @@
         <span style="padding: 7px 12px; background: #faf3e3; color: #17160f;">EN</span>
         <span class="ink-focus" style="padding: 7px 12px; color: #faf3e3; cursor: pointer;">RO</span>
       </div>
-      <a href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call" class="ink-nav-cta ink-focus" style="display: flex; align-items: center; padding: 12px 20px; background: #d5aa4b; color: #17160f; font: 800 12.5px/1 Archivo, sans-serif; letter-spacing: .09em; text-transform: uppercase;" data-nav-cta="true">
+      <a href="mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call" class="ink-nav-cta ink-focus" style="display: flex; align-items: center; padding: 12px 18px; background: #d5aa4b; color: #17160f; font: 800 12.5px/1 Archivo, sans-serif; letter-spacing: .07em; text-transform: uppercase;" data-nav-cta="true">
         <span>Tell us what you build, book your intro call</span>
       </a>
     </div>
@@ -438,7 +438,7 @@
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 28px; padding: 44px clamp(20px, 4vw, 64px);">
       <div style="min-width: 0; display: flex; flex-direction: column; gap: 14px;">
         <a href="index.html" style="display: flex; align-items: center; gap: 10px;">
-          <img src="assets/senecai-logo-footer.png" alt="SenecAI Consulting" style="display: block; height: auto; width: clamp(200px, 18vw, 280px);">
+          <img src="assets/senecai-compliance-logo-light.png" alt="SenecAI Compliance" style="display: block; height: auto; width: clamp(200px, 18vw, 280px);">
         </a>
         <div style="font: 400 14px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.6); max-width: 30ch;">EU digital compliance for startups and SMEs.</div>
       </div>
