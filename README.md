@@ -14,6 +14,12 @@ Plain static HTML. No build step, no framework, no dependencies.
 - `regulations-covered.html` / `research.html` — standalone pages (same nav/footer shell)
   for the two sections that intentionally sit off the main scroll. Linked from the top nav.
   The Regulations page has its own regulation-specific FAQ at the bottom.
+- Compliance checkers — three rules-based decision trees on `research.html`
+  (`#compliance-checkers`): general applicability (AI Act, GDPR, NIS2, DORA, CRA), AI Act
+  risk class & role, and NIS2 essential / important. Trees, rules and the UI engine live in
+  `assets/checkers.v1.js` (versioned like the dot wave — rename on change). Deep links:
+  `research.html#general-checker`, `#aiact-checker`, `#nis2-checker`; the hero's
+  "Try the compliance checker" link opens the general one. Legal position: October 2026.
 - `legal-notice.html` / `privacy-policy.html` / `terms-of-use.html` — legal pages linked from
   the footer, currently structured placeholders.
 - Palette: black `#17160f` and gold `#f8f1de` are the only section backgrounds; every gold
