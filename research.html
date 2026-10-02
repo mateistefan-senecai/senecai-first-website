@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Research — SenecAI</title>
-<meta name="description" content="Writing and data on how AI and digital regulation are evolving, from The AI Act Guy newsletter and the SenecAI policy desk.">
+<title>Research &amp; Compliance Checkers — SenecAI</title>
+<meta name="description" content="Free compliance checkers for the EU AI Act, GDPR, NIS2, DORA and the Cyber Resilience Act, plus writing and data on how AI and digital regulation are evolving.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -55,6 +55,93 @@
   .faq-item p { margin: 0 0 10px; } .faq-item p:last-child { margin: 0; }
   .faq-item ul, .faq-item ol { margin: 0 0 10px; padding-left: 20px; }
   .faq-item a { color: #d5aa4b; font-weight: 700; }
+
+  /* ---- Compliance checkers (assets/checkers.v1.js renders into [data-ck-mount]) ---- */
+  .ck-tabs { display: flex; flex-wrap: wrap; gap: 0; border: 1px solid rgba(250,243,227,.22); }
+  .ck-tab { all: unset; box-sizing: border-box; flex: 1 1 220px; cursor: pointer; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; color: rgba(250,243,227,.78); border-right: 1px solid rgba(250,243,227,.22); transition: background .18s ease, color .18s ease; }
+  .ck-tab:last-child { border-right: 0; }
+  .ck-tab:hover { color: #faf3e3; background: rgba(250,243,227,.05); }
+  .ck-tab:focus-visible { outline: 2px solid #d5aa4b; outline-offset: -2px; }
+  .ck-tab .ck-tab-n { font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #d5aa4b; }
+  .ck-tab .ck-tab-t { font: 800 16px/1.25 Archivo, sans-serif; }
+  .ck-tab.is-active { background: #d5aa4b; color: #17160f; }
+  .ck-tab.is-active .ck-tab-n { color: #17160f; }
+  @media (max-width: 720px) { .ck-tab { border-right: 0; border-bottom: 1px solid rgba(250,243,227,.22); } .ck-tab:last-child { border-bottom: 0; } }
+  .ck-panel { border: 1px solid rgba(250,243,227,.22); border-top: 0; padding: clamp(20px, 3vw, 40px); }
+  .ck-intro { margin: 0 0 22px; max-width: 70ch; font: 400 16px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.78); }
+  .ck-steps { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-bottom: 10px; font: 700 10.5px/1.4 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: rgba(250,243,227,.4); }
+  .ck-step.is-done { color: rgba(213,170,75,.75); }
+  .ck-step.is-current { color: #d5aa4b; }
+  .ck-bar { height: 3px; background: rgba(250,243,227,.12); margin-bottom: 28px; }
+  .ck-bar > span { display: block; height: 100%; background: #d5aa4b; transition: width .3s ease; }
+  .ck-eyebrow { font: 700 11.5px/1.3 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #d5aa4b; margin-bottom: 10px; }
+  .ck-title { margin: 0 0 14px; max-width: 46ch; font: 800 clamp(20px, 2.2vw, 26px)/1.25 Archivo, sans-serif; letter-spacing: -.01em; color: #faf3e3; outline: none; }
+  .ck-help { margin: 0 0 18px; max-width: 76ch; font: 400 14.5px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74); }
+  .ck-help summary { cursor: pointer; font: 700 12px/1.4 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #e6c477; }
+  .ck-help summary:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
+  .ck-help p { margin: 10px 0 0; }
+  .ck-hint { margin: 0 0 10px; font: 600 13px/1.4 Archivo, sans-serif; color: rgba(250,243,227,.6); }
+  .ck-opts { display: flex; flex-direction: column; gap: 8px; max-width: 860px; }
+  .ck-group { margin: 12px 0 2px; font: 700 11px/1.3 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: rgba(213,170,75,.85); }
+  .ck-opt { all: unset; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 16px; border: 1px solid rgba(250,243,227,.22); cursor: pointer; color: #faf3e3; transition: border-color .15s ease, background .15s ease; }
+  .ck-opt:hover { border-color: #d5aa4b; background: rgba(213,170,75,.06); }
+  .ck-opt:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
+  .ck-opt.is-on { border-color: #d5aa4b; background: rgba(213,170,75,.14); }
+  .ck-check { justify-content: flex-start; }
+  .ck-ol { display: block; font: 600 15.5px/1.45 Archivo, sans-serif; }
+  .ck-od { display: block; margin-top: 3px; font: 400 13px/1.45 Archivo, sans-serif; color: rgba(250,243,227,.6); }
+  .ck-arrow { flex: none; color: #d5aa4b; font: 800 16px/1 Archivo, sans-serif; }
+  .ck-box { flex: none; width: 18px; height: 18px; border: 2px solid rgba(250,243,227,.55); display: grid; place-items: center; }
+  .ck-opt.is-on .ck-box { border-color: #d5aa4b; background: #d5aa4b; }
+  .ck-opt.is-on .ck-box::after { content: ""; width: 5px; height: 9px; border: solid #17160f; border-width: 0 2px 2px 0; transform: translateY(-1px) rotate(45deg); }
+  .ck-none { margin-top: 4px; border-style: dashed; }
+  .ck-label { display: block; margin-bottom: 8px; font: 700 12px/1.4 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: rgba(250,243,227,.6); }
+  .ck-select { box-sizing: border-box; width: 100%; max-width: 860px; padding: 14px 12px; background: #17160f; color: #faf3e3; border: 1px solid rgba(250,243,227,.35); font: 500 15px/1.4 Archivo, sans-serif; border-radius: 0; }
+  .ck-select:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
+  .ck-sel-desc { min-height: 1.4em; margin-top: 8px; font: 400 13px/1.45 Archivo, sans-serif; color: rgba(250,243,227,.6); }
+  .ck-nav { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 22px; }
+  .ck-btn { all: unset; box-sizing: border-box; cursor: pointer; display: inline-flex; align-items: center; padding: 14px 20px; font: 800 12.5px/1.2 Archivo, sans-serif; letter-spacing: .09em; text-transform: uppercase; transition: background .18s ease, color .18s ease, opacity .18s ease; }
+  .ck-btn:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
+  .ck-primary { background: #d5aa4b; color: #17160f; }
+  .ck-primary:hover { background: #e6c477; color: #17160f; }
+  .ck-primary[disabled] { opacity: .4; cursor: not-allowed; }
+  .ck-ghost { color: rgba(250,243,227,.85); border: 1px solid rgba(250,243,227,.3); }
+  .ck-ghost:hover { border-color: #d5aa4b; color: #d5aa4b; }
+  .ck-ref { margin-top: 20px; font: 600 12px/1.5 Archivo, sans-serif; color: rgba(250,243,227,.48); }
+  .ck-head { padding: 22px 24px; border-left: 4px solid #d5aa4b; background: rgba(250,243,227,.04); margin-bottom: 20px; }
+  .ck-head p { margin: 0; max-width: 78ch; font: 400 16px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.82); }
+  .ck-head.ck-s-no { border-left-color: rgba(250,243,227,.35); }
+  .ck-head.ck-s-prohibited { border-left-color: #e0745f; }
+  .ck-head.ck-s-review, .ck-head.ck-s-likely, .ck-head.ck-s-important { border-left-color: #e6c477; }
+  .ck-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 14px; }
+  .ck-card { display: flex; flex-direction: column; gap: 10px; padding: 20px; border: 1px solid rgba(250,243,227,.18); }
+  .ck-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .ck-reg { font: 800 11.5px/1.2 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #d5aa4b; }
+  .ck-card-title { margin-top: 4px; font: 800 17px/1.3 Archivo, sans-serif; color: #faf3e3; }
+  .ck-pill { flex: none; padding: 6px 9px; font: 800 10.5px/1 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; border: 1px solid currentColor; white-space: nowrap; }
+  .ck-pill.ck-s-applies, .ck-pill.ck-s-high, .ck-pill.ck-s-essential { background: #d5aa4b; border-color: #d5aa4b; color: #17160f; }
+  .ck-pill.ck-s-likely, .ck-pill.ck-s-important, .ck-pill.ck-s-indirect, .ck-pill.ck-s-review { color: #e6c477; }
+  .ck-pill.ck-s-no { color: rgba(250,243,227,.5); }
+  .ck-pill.ck-s-prohibited { background: #e0745f; border-color: #e0745f; color: #17160f; }
+  .ck-why, .ck-acts { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 7px; font: 400 14.5px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.84); }
+  .ck-cite { display: inline-block; font: 700 11.5px/1.4 Archivo, sans-serif; color: #d5aa4b; }
+  .ck-sub { margin-top: 6px; font: 700 11px/1.3 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: rgba(250,243,227,.55); }
+  .ck-link { margin-top: auto; padding-top: 6px; font: 800 12px/1.3 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #d5aa4b; }
+  .ck-link:hover { color: #e6c477; }
+  .ck-recap { margin-top: 20px; font: 400 14px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.74); }
+  .ck-recap summary { cursor: pointer; font: 700 12px/1.4 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #e6c477; }
+  .ck-recap ol { margin: 12px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .ck-recap strong { color: #faf3e3; font-weight: 700; }
+  .ck-disclaimer { margin: 22px 0 0; max-width: 90ch; font: 400 12.5px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.5); }
+  @media print {
+    body, .bg-black { background: #fff !important; color: #000 !important; }
+    [data-nav-links], #top, .bg-gold, [data-screen-label="Footer"], [data-screen-label="Research articles"], .ck-tabs, .ck-nav, .ck-steps, .ck-bar, .ck-intro { display: none !important; }
+    .ck-panel { border: 0; padding: 0; }
+    .ck-head, .ck-card { border-color: #999 !important; background: none !important; break-inside: avoid; }
+    .ck-title, .ck-card-title, .ck-head p, .ck-why, .ck-acts, .ck-recap, .ck-recap strong, .ck-disclaimer { color: #000 !important; }
+    .ck-recap ol { display: block; }
+    details.ck-recap > *:not(summary) { display: block !important; }
+  }
 </style>
 <script>
   /* Additive reveals only — content is never hidden in the styles. */
@@ -83,6 +170,7 @@
   })();
 </script>
 <script src="assets/dot-wave.v1.js" defer></script>
+<script src="assets/checkers.v1.js" defer></script>
 </head>
 <body>
 <div style="background: #17160f;">
@@ -117,6 +205,35 @@
       <p style="margin: 0; max-width: 62ch; font: 400 17px/1.55 Archivo, sans-serif; color: #4a453e;">Writing and data on how AI and digital regulation are actually evolving, from <a href="https://theaiactguy.substack.com/" target="_blank" rel="noopener" style="color: #8a6a1f; font-weight: 700;">The AI Act Guy</a> newsletter and the SenecAI policy desk.</p>
     </div>
   </div>
+
+
+  <!-- ================= COMPLIANCE CHECKERS ================= -->
+  <section id="compliance-checkers" class="bg-black" data-screen-label="Compliance checkers" style="padding: clamp(40px, 5vw, 72px) clamp(20px, 4vw, 64px) clamp(28px, 3.4vw, 40px);">
+    <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px;">
+      <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">Free tools</div>
+      <h2 style="margin: 0; max-width: 24ch; font: 900 clamp(28px, 3.2vw, 42px)/1.02 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase; color: #faf3e3;">Compliance checkers</h2>
+      <p style="margin: 0; max-width: 64ch; font: 400 17px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.78);">Rules-based decision trees built on the text of the regulations. Answer the questions and see what applies to you, why, and what follows, with every finding traced to its article. Your answers stay in your browser.</p>
+    </div>
+    <div data-checkers>
+      <div class="ck-tabs" role="tablist" aria-label="Compliance checkers">
+        <button type="button" class="ck-tab is-active" role="tab" id="ck-tab-general" aria-controls="ck-panel-general" aria-selected="true" data-ck-tab="general"><span class="ck-tab-n">01 · All five regulations</span><span class="ck-tab-t">Which regulations apply to you?</span></button>
+        <button type="button" class="ck-tab" role="tab" id="ck-tab-aiact" aria-controls="ck-panel-aiact" aria-selected="false" tabindex="-1" data-ck-tab="aiact"><span class="ck-tab-n">02 · EU AI Act</span><span class="ck-tab-t">Risk class &amp; provider / deployer role</span></button>
+        <button type="button" class="ck-tab" role="tab" id="ck-tab-nis2" aria-controls="ck-panel-nis2" aria-selected="false" tabindex="-1" data-ck-tab="nis2"><span class="ck-tab-n">03 · NIS2</span><span class="ck-tab-t">In scope? Essential or important?</span></button>
+      </div>
+      <div class="ck-panel" id="ck-panel-general" role="tabpanel" aria-labelledby="ck-tab-general" data-checker="general">
+        <p class="ck-intro">Answer a few questions about your organisation and we&rsquo;ll map which of the EU AI Act, GDPR, NIS2, DORA and the Cyber Resilience Act apply to you, and why. Takes about 3 minutes.</p>
+        <div data-ck-mount><noscript>The compliance checkers need JavaScript enabled.</noscript></div>
+      </div>
+      <div class="ck-panel" id="ck-panel-aiact" role="tabpanel" aria-labelledby="ck-tab-aiact" data-checker="aiact" hidden>
+        <p class="ck-intro">Classify one AI system or general-purpose AI model under the EU AI Act (as amended by the 2026 Digital Omnibus), find out whether you are its provider, deployer, importer or distributor, and see your obligations and deadlines. Run it once per system.</p>
+        <div data-ck-mount></div>
+      </div>
+      <div class="ck-panel" id="ck-panel-nis2" role="tabpanel" aria-labelledby="ck-tab-nis2" data-checker="nis2" hidden>
+        <p class="ck-intro">Find out whether your organisation is covered by the NIS2 Directive and whether it is an essential or an important entity. The tier decides how you are supervised and how high fines can go.</p>
+        <div data-ck-mount></div>
+      </div>
+    </div>
+  </section>
 
   <div class="bg-black" data-screen-label="Research articles" style="padding: clamp(28px, 3.4vw, 40px) clamp(20px, 4vw, 64px) clamp(40px, 5vw, 72px);">
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px;">
