@@ -51,7 +51,7 @@ dashboard (or run `vercel` from this directory with the Vercel CLI) and it will 
   `index.html`); swap it for an `<img>` once the logo file is supplied.
 - **Legal pages** — Legal Notice, Privacy Policy and Terms of Use contain placeholder text.
 - **OSIM registration number** — the footer reads `[REGISTRATION NUMBER]` on every page.
-- **Team bios** — all three team members currently say "Full bio coming soon."
+- **Team bios** — all four team members currently say "Full bio coming soon."
 - **Language toggle** — EN/RO switch is a visual placeholder only; Romanian copy isn't
   implemented yet.
 - **Substack article titles** in the Research section are derived from the article URLs
