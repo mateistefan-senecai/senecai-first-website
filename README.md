@@ -11,14 +11,14 @@ Plain static HTML. No build step, no framework, no dependencies.
   `<style>` block in `<head>` (base reset, CTA hover wipe, nav breakpoint, generated
   `:hover`/`:focus-visible` rules), and inline `<script>` blocks (services tabs, scroll
   reveals). Type is Archivo from Google Fonts.
-- `regulations-covered.html` / `research.html` — standalone pages (same nav/footer shell)
+- `regulations-covered.html` / `resources.html` — standalone pages (same nav/footer shell)
   for the two sections that intentionally sit off the main scroll. Linked from the top nav.
   The Regulations page has its own regulation-specific FAQ at the bottom.
-- Compliance checkers — three rules-based decision trees on `research.html`
+- Compliance checkers — three rules-based decision trees on `resources.html`
   (`#compliance-checkers`): general applicability (AI Act, GDPR, NIS2, DORA, CRA), AI Act
-  risk class & role, and NIS2 essential / important. Trees, rules and the UI engine live in
-  `assets/checkers.v1.js` (versioned like the dot wave — rename on change). Deep links:
-  `research.html#general-checker`, `#aiact-checker`, `#nis2-checker`; the hero's
+  risk class & role (AI systems only; GPAI models are deliberately out of scope), and NIS2 essential / important. Trees, rules and the UI engine live in
+  `assets/checkers.v2.js` (versioned like the dot wave — rename on change). Deep links:
+  `resources.html#general-checker`, `#aiact-checker`, `#nis2-checker`; the hero's
   "Try the compliance checker" link opens the general one. Legal position: October 2026.
 - `legal-notice.html` / `privacy-policy.html` / `terms-of-use.html` — legal pages linked from
   the footer, currently structured placeholders.

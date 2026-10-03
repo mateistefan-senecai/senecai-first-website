@@ -8,7 +8,7 @@
  * and an evaluate(answers) function that turns the answers into results with a rule
  * trace (every result line cites the article it rests on). No answer leaves the browser.
  *
- * The file name is versioned because /assets/* is cached as immutable: rename it (v2, …)
+ * The file name is versioned because /assets/* is cached as immutable: rename it (v3, …)
  * whenever it changes, and update the <script> tag in research.html.
  *
  * Legal position as of October 2026: AI Act as amended by Regulation (EU) 2026/1744
@@ -130,7 +130,7 @@
         help: "An AI system is a machine-based system that, with some autonomy, infers from its input how to generate outputs such as predictions, content, recommendations or decisions (machine learning, LLMs, computer vision, knowledge-based reasoning). Using third-party AI tools at work, such as ChatGPT, Copilot or AI recruitment software, counts: that makes you a deployer. Software that only executes rules written by people, or performs basic data processing, is not an AI system.",
         ref: "Art. 3(1) AI Act · Commission Guidelines on the AI system definition (2025)",
         options: [
-          { v: "yes", l: "Yes: we build, buy, use or resell AI systems or models" },
+          { v: "yes", l: "Yes: we build, buy, use or resell AI systems" },
           { v: "unsure", l: "Not sure" },
           { v: "no", l: "No: only conventional, rule-based software" }
         ],
@@ -161,7 +161,7 @@
         help: "The AI Act reaches non-EU providers that place AI on the EU market or put it into service in the EU, and non-EU providers and deployers whose AI output is used in the EU.",
         ref: "Art. 2(1)(a), (c) AI Act",
         options: [
-          { v: "market", l: "We place AI systems or general-purpose AI models on the EU market, or put them into service in the EU" },
+          { v: "market", l: "We place AI systems on the EU market, or put them into service in the EU" },
           { v: "output", l: "The output produced by our AI is used in the EU" },
           NONE
         ],
@@ -172,12 +172,11 @@
         multi: true,
         q: "What do you do with AI?",
         help: "Select every role that applies; most organisations hold more than one. Building an AI tool and using it internally makes you both its provider and its deployer.",
-        ref: "Art. 3(3)–(7), (63) AI Act",
+        ref: "Art. 3(3)–(7) AI Act",
         options: [
           { v: "provider", l: "We develop AI (or have it developed) and offer it under our own name, to customers or for our own use", d: "Provider" },
           { v: "deployer", l: "We use AI systems in a professional context, including third-party tools", d: "Deployer" },
-          { v: "impdist", l: "We import or resell AI systems made by others", d: "Importer / distributor" },
-          { v: "gpai", l: "We develop, or substantially modify, general-purpose AI models (foundation models, LLMs)", d: "GPAI model provider" }
+          { v: "impdist", l: "We import or resell AI systems made by others", d: "Importer / distributor" }
         ],
         next: function () { return "ai_flags"; }
       },
@@ -377,7 +376,7 @@
           c.reasons.push(r("No EU market, users or output use.", "Art. 2(1) AI Act"));
         } else if (is(a, "ai_sys", "no")) {
           c.status = "no"; c.label = "Does not apply";
-          c.reasons.push(r("You do not develop, use or distribute AI systems or general-purpose AI models. Re-check if you adopt AI tools, including off-the-shelf assistants.", "Art. 2–3 AI Act"));
+          c.reasons.push(r("You do not develop, use or distribute AI systems. Re-check if you adopt AI tools, including off-the-shelf assistants.", "Art. 2–3 AI Act"));
         } else if (anyPicked(a, "ai_excl")) {
           c.status = "no"; c.label = "Does not apply";
           if (picked(a, "ai_excl", "military")) c.reasons.push(r("Exclusively military, defence or national-security AI is excluded.", "Art. 2(3) AI Act"));
@@ -395,7 +394,6 @@
           if (picked(a, "ai_role", "provider")) roles.push("provider");
           if (picked(a, "ai_role", "deployer")) roles.push("deployer");
           if (picked(a, "ai_role", "impdist")) roles.push("importer / distributor");
-          if (picked(a, "ai_role", "gpai")) roles.push("GPAI model provider");
           if (roles.length) c.reasons.push(r("Your role(s): " + roles.join(", ") + ".", "Art. 3 AI Act"));
           c.actions.push("Take measures to support the AI literacy of staff who operate or use AI on your behalf (Art. 4, as rewritten by Regulation (EU) 2026/1744).");
           c.actions.push("Confirm that none of your AI falls under the Art. 5 prohibitions, in force since 2 February 2025.");
@@ -410,13 +408,10 @@
           if (picked(a, "ai_flags", "art50")) {
             c.reasons.push(r("Chatbots, generated content and deepfakes trigger transparency duties, applicable since 2 August 2026.", "Art. 50 AI Act"));
           }
-          if (picked(a, "ai_role", "gpai")) {
-            c.reasons.push(r("General-purpose AI model providers have had obligations since 2 August 2025.", "Art. 53–55 AI Act"));
+          if (is(a, "est", "non") && picked(a, "ai_role", "provider")) {
+            c.actions.push("As a non-EU provider of high-risk AI systems, appoint an authorised representative in the EU (Art. 22).");
           }
-          if (is(a, "est", "non") && (picked(a, "ai_role", "provider") || picked(a, "ai_role", "gpai"))) {
-            c.actions.push("As a non-EU provider of high-risk AI or GPAI models, appoint an authorised representative in the EU (Arts. 22, 54).");
-          }
-          c.dates.push("Prohibitions and AI literacy: 2 Feb 2025 · GPAI: 2 Aug 2025 · Transparency (Art. 50): 2 Aug 2026 · New prohibition on non-consensual intimate imagery: 2 Dec 2026 · High-risk, Annex III: 2 Dec 2027 · High-risk, Annex I: 2 Aug 2028 (Regulation (EU) 2026/1744).");
+          c.dates.push("Prohibitions and AI literacy: 2 Feb 2025 · Transparency (Art. 50): 2 Aug 2026 · New prohibition on non-consensual intimate imagery: 2 Dec 2026 · High-risk, Annex III: 2 Dec 2027 · High-risk, Annex I: 2 Aug 2028 (Regulation (EU) 2026/1744).");
         }
         cards.push(c);
       })();
@@ -557,21 +552,10 @@
     id: "aiact",
     title: "AI Act risk classification & role",
     short: "AI Act checker",
-    intro: "Classify one AI system (or general-purpose AI model) under the EU AI Act, find out whether you are its provider, deployer, importer or distributor, and see the obligations and deadlines that follow. Run it once per system.",
-    sections: ["What you assess", "Scope", "Your role", "Prohibited", "High-risk", "Transparency", "GPAI model"],
-    start: "what",
+    intro: "Classify one AI system under the EU AI Act, find out whether you are its provider, deployer, importer or distributor, and see the obligations and deadlines that follow. Run it once per system.",
+    sections: ["Scope", "Your role", "Prohibited", "High-risk", "Transparency"],
+    start: "def",
     nodes: {
-      what: {
-        section: "What you assess",
-        q: "What are you assessing?",
-        help: "An AI system is an application or product that uses AI, such as a CV-screening tool, a chatbot or a credit-scoring engine. A general-purpose AI model is the underlying model itself, for example an LLM trained on broad data that can perform a wide range of tasks and is integrated into many systems. If you build both, run the checker twice.",
-        ref: "Art. 3(1), (63) AI Act",
-        options: [
-          { v: "system", l: "An AI system: an application, product or feature that uses AI" },
-          { v: "model", l: "A general-purpose AI model: a foundation model or LLM itself" }
-        ],
-        next: function (a) { return is(a, "what", "model") ? "gp_rel" : "def"; }
-      },
       def: {
         section: "Scope",
         q: "Does the system infer from its inputs how to generate outputs?",
@@ -739,95 +723,14 @@
         options: [
           { v: "brand", l: "Put our name or trademark on a high-risk AI system already on the market" },
           { v: "subst", l: "Made a substantial modification to a high-risk AI system so that it remains high-risk" },
-          { v: "purpose", l: "Changed the intended purpose of an AI system (including a general-purpose AI system) so that it became high-risk", d: "e.g. using a general chatbot to screen job applicants" },
+          { v: "purpose", l: "Changed the intended purpose of an AI system so that it became high-risk", d: "e.g. using a general chatbot to screen job applicants" },
           NONE
-        ],
-        next: function () { return null; }
-      },
-
-      /* ---- GPAI model branch ---- */
-      gp_rel: {
-        section: "GPAI model",
-        q: "What is your relationship with the model?",
-        ref: "Art. 3(3), (63) AI Act · Commission Guidelines on GPAI providers (July 2025)",
-        options: [
-          { v: "own", l: "We developed or trained it and place it on the EU market (download, API, or integrated into our own products)" },
-          { v: "modify", l: "We fine-tuned or otherwise modified someone else’s general-purpose model" },
-          { v: "use", l: "We only integrate a third-party model into our own AI system or application" }
-        ],
-        next: function (a) {
-          if (is(a, "gp_rel", "own")) return "gp_def";
-          if (is(a, "gp_rel", "modify")) return "gp_mod";
-          return null;
-        }
-      },
-      gp_mod: {
-        section: "GPAI model",
-        q: "Did the modification use more than one third of the training compute of the original model?",
-        help: "Per the Commission guidelines, a downstream modifier becomes the provider of the modified model when the modification uses more than one third of the original model’s training compute. If you don’t know the original compute, the guidelines use one third of the relevant threshold instead (10²³ FLOP, or 10²⁵ FLOP for models with systemic risk).",
-        ref: "Commission Guidelines on the scope of GPAI obligations (July 2025)",
-        options: [
-          { v: "yes", l: "Yes, more than one third" },
-          { v: "no", l: "No, a lighter modification (e.g. small fine-tune, LoRA, prompt engineering)" }
-        ],
-        next: function (a) { return is(a, "gp_mod", "yes") ? "gp_def" : null; }
-      },
-      gp_def: {
-        section: "GPAI model",
-        q: "Was the model trained with more than 10²³ FLOP, and can it generate language (text or audio), text-to-image or text-to-video?",
-        help: "The Commission uses this as the indicative criterion for “significant generality”. Models below it can still be general-purpose if they display significant generality and perform a wide range of distinct tasks competently.",
-        ref: "Art. 3(63) AI Act · Commission GPAI Guidelines",
-        options: [
-          { v: "yes", l: "Yes" },
-          { v: "unsure", l: "Not sure" },
-          { v: "no", l: "No, it is a narrow, task-specific model" }
-        ],
-        next: function (a) { return is(a, "gp_def", "no") ? null : "gp_sys"; }
-      },
-      gp_sys: {
-        section: "GPAI model",
-        q: "Was it trained with more than 10²⁵ FLOP of cumulative compute, or has the Commission designated it as having systemic risk?",
-        ref: "Art. 51–52 AI Act",
-        options: [
-          { v: "yes", l: "Yes" },
-          { v: "no", l: "No" }
-        ],
-        next: function () { return "gp_oss"; }
-      },
-      gp_oss: {
-        section: "GPAI model",
-        q: "Is the model released under a free and open-source licence, with its weights, architecture and usage information publicly available, and not monetised?",
-        ref: "Art. 53(2), 54(6) AI Act",
-        options: [
-          { v: "yes", l: "Yes" },
-          { v: "no", l: "No" }
-        ],
-        next: function () { return "gp_est"; }
-      },
-      gp_est: {
-        section: "GPAI model",
-        q: "Where is your organisation established?",
-        ref: "Art. 54 AI Act",
-        options: [
-          { v: "eu", l: "In the EU" },
-          { v: "non", l: "Outside the EU" }
-        ],
-        next: function () { return "gp_date"; }
-      },
-      gp_date: {
-        section: "GPAI model",
-        q: "Was the model placed on the EU market before 2 August 2025?",
-        ref: "Art. 111(3) AI Act",
-        options: [
-          { v: "yes", l: "Yes" },
-          { v: "no", l: "No, on or after 2 August 2025 (or not yet)" }
         ],
         next: function () { return null; }
       }
     },
 
     evaluate: function (a) {
-      if (val(a, "what") === "model") return evaluateGpai(a);
       var out = { cards: [] };
       var why = [];
 
@@ -977,53 +880,6 @@
     }
   };
 
-  function evaluateGpai(a) {
-    var out = { cards: [] };
-    if (is(a, "gp_rel", "use")) {
-      out.headline = { status: "review", title: "Downstream provider: assess your AI system", text: "Integrating a third-party general-purpose model does not make you a GPAI model provider. You are the provider of the AI system you build on it (and its deployer if you use it). Run this checker again for that system, choosing “An AI system”." };
-      out.cards.push({ reg: "Rule trace", title: "Why", status: "review", label: "Downstream provider", reasons: [r("The GPAI model provider must give you information and documentation to integrate the model and comply with your own obligations.", "Art. 53(1)(b), Annex XII"), r("You are the provider of your own AI system, including a general-purpose AI system.", "Art. 3(3), (66), 25")], actions: [], dates: [] });
-      return out;
-    }
-    if (is(a, "gp_mod", "no")) {
-      out.headline = { status: "no", title: "Not the provider of the model", text: "A modification below one third of the original training compute does not make you the provider of a general-purpose AI model. Your obligations attach to the AI system you build or use. Run this checker again for that system." };
-      out.cards.push({ reg: "Rule trace", title: "Why", status: "no", label: "Light modification", reasons: [r("Below the one-third compute criterion for becoming a provider of the modified model.", "Commission GPAI Guidelines (July 2025)")], actions: [], dates: [] });
-      return out;
-    }
-    if (is(a, "gp_def", "no")) {
-      out.headline = { status: "no", title: "Probably not a general-purpose AI model", text: "A narrow, task-specific model is not a general-purpose AI model. Obligations attach to the AI system it is used in. Run this checker for that system." };
-      out.cards.push({ reg: "Rule trace", title: "Why", status: "no", label: "Not GPAI", reasons: [r("Lacks significant generality and the ability to perform a wide range of distinct tasks.", "Art. 3(63) AI Act")], actions: [], dates: [] });
-      return out;
-    }
-    var systemic = is(a, "gp_sys", "yes"), oss = is(a, "gp_oss", "yes") && !systemic, nonEu = is(a, "gp_est", "non");
-    out.headline = systemic
-      ? { status: "high", title: "General-purpose AI model with systemic risk", text: "Full Art. 53 obligations plus the Art. 55 systemic-risk obligations. The open-source exemption does not apply to models with systemic risk." }
-      : oss
-        ? { status: "likely", title: "Open-source general-purpose AI model", text: "Reduced obligations: you must still have a copyright policy and publish a training-content summary; technical documentation duties and the authorised-representative requirement are lifted." }
-        : { status: "applies", title: "General-purpose AI model", text: "The Art. 53 provider obligations apply." };
-    if (is(a, "gp_def", "unsure")) out.headline.text += " You were unsure whether the model is general-purpose. Confirm against the Commission’s indicative criterion.";
-    var why = [];
-    if (is(a, "gp_rel", "own")) why.push(r("You developed the model and place it on the EU market.", "Art. 3(3), 2(1)(a)"));
-    if (is(a, "gp_mod", "yes")) why.push(r("Your modification exceeds one third of the original training compute, so you are provider of the modified model; obligations are limited to the modification.", "Commission GPAI Guidelines"));
-    if (systemic) why.push(r("Training compute above 10²⁵ FLOP (or Commission designation) triggers the systemic-risk presumption.", "Art. 51(2), 52"));
-    if (oss) why.push(r("Free and open-source release with public weights and no monetisation.", "Art. 53(2), 54(6)"));
-    out.cards.push({ reg: "Classification", title: "Why this result", status: out.headline.status, label: out.headline.title, reasons: why, actions: [], dates: [] });
-    var act = [];
-    if (!oss) act.push("Draw up and keep up to date the technical documentation of the model, including training and testing, for the AI Office (Art. 53(1)(a), Annex XI).");
-    if (!oss) act.push("Provide information and documentation to downstream AI-system providers (Art. 53(1)(b), Annex XII).");
-    act.push("Put in place a policy to comply with EU copyright law, including respecting text-and-data-mining opt-outs (Art. 53(1)(c)).");
-    act.push("Publish a sufficiently detailed summary of training content using the AI Office template (Art. 53(1)(d)).");
-    if (systemic) {
-      act.push("Notify the Commission within two weeks of meeting the systemic-risk threshold (Art. 52(1)).");
-      act.push("Perform model evaluations including adversarial testing, assess and mitigate systemic risks, track and report serious incidents to the AI Office, and ensure adequate cybersecurity (Art. 55).");
-    }
-    if (nonEu && (!oss || systemic)) act.push("Appoint an authorised representative in the EU by written mandate before placing the model on the market (Art. 54).");
-    act.push("Consider signing the GPAI Code of Practice (July 2025) to demonstrate compliance (Art. 56).");
-    out.cards.push({ reg: "Obligations", title: "What you need to do", status: out.headline.status, label: "Obligations", reasons: [], actions: act, dates: [] });
-    var dates = ["2 Aug 2025: GPAI obligations apply to models placed on the market from this date.", "2 Aug 2026: Commission enforcement powers, including fines of up to €15m or 3% of turnover (Art. 101), apply."];
-    if (is(a, "gp_date", "yes")) dates.push("2 Aug 2027: deadline for models placed on the market before 2 Aug 2025 to comply (Art. 111(3)).");
-    out.cards.push({ reg: "Timeline", title: "Key dates", status: "applies", label: "Dates", reasons: [], actions: [], dates: dates });
-    return out;
-  }
 
   /* =================================================================== TOOL 3
    * NIS2: scope and essential / important classification
