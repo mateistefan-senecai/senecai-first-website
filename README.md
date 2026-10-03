@@ -29,6 +29,16 @@ Plain static HTML. No build step, no framework, no dependencies.
 - `assets/` — product screenshots and the logo used on the page.
 - `vercel.json` — long-lived cache headers for `/assets/*`.
 
+## Romanian version
+
+The Romanian site lives in `ro/` (served at `/ro/…`) and is **generated** from the English
+pages: `python3 tools/i18n/build_ro.py` translates every text node and attribute using the
+dictionaries in `tools/i18n/ro_pages.py` (pages) and `tools/i18n/ro_checkers.py` (compliance
+checkers → `assets/checkers.ro.v1.js`), rewrites asset paths and wires the EN/RO switch.
+After editing any English page or `assets/checkers.v2.js`, re-run the script: it fails and
+lists every string that has no Romanian translation yet, so add those to the dictionaries.
+Never edit `ro/*.html` or `assets/checkers.ro.*.js` by hand.
+
 ## Local preview
 
 Open `index.html` directly in a browser, or serve it locally:
@@ -52,8 +62,6 @@ dashboard (or run `vercel` from this directory with the Vercel CLI) and it will 
 - **Legal pages** — Legal Notice, Privacy Policy and Terms of Use contain placeholder text.
 - **OSIM registration number** — the footer reads `[REGISTRATION NUMBER]` on every page.
 - **Team bios** — all four team members currently say "Full bio coming soon." Team photos live in `assets/team/`.
-- **Language toggle** — EN/RO switch is a visual placeholder only; Romanian copy isn't
-  implemented yet.
 - **Substack article titles** in the Research section are derived from the article URLs
   (Substack truncates slugs), not fetched from the live pages — verify wording against the
   published titles.
