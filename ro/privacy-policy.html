@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Politica de confidențialitate — SenecAI</title>
+<link rel="alternate" hreflang="en" href="https://www.senecai.eu/privacy-policy">
+<link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/privacy-policy">
+<meta name="description" content="Politica de confidențialitate SenecAI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; font-family: Archivo, system-ui, sans-serif; color: #faf3e3; background: #17160f; }
+  a { color: #8a6a1f; text-decoration: none; }
+  a:hover { color: #6d5417; }
+  html { scroll-behavior: smooth; }
+  [id] { scroll-margin-top: 140px; }
+  /* Keeps the CTA button in the true top-right corner: below this width the nav
+     links drop to their own row instead of pushing the button down. */
+  @media (max-width: 1420px) { [data-nav-links] { order: 3; flex-basis: 100%; } }
+  .om-cta { position: relative; overflow: hidden; }
+  .om-cta > span { position: relative; z-index: 1; }
+  .om-cta::before { content: ""; position: absolute; inset: 0; background: #17160f; transform: translateX(-101%); transition: transform .28s cubic-bezier(.2,.7,.2,1); }
+  .om-cta:hover::before { transform: translateX(0); }
+  .x26:hover { color: #d5aa4b; }
+
+  .ink-nav-link { transition: color .18s ease; }
+  .ink-nav-link:hover { color: #d5aa4b; }
+  .ink-nav-cta { transition: background .18s ease; }
+  .ink-nav-cta:hover { background: #e6c477; }
+  .ink-focus:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
+
+  /* ---- Palette: black (#17160f) and gold (#f8f1de) are the only section backgrounds.
+     Every gold section carries the animated gold dot wave. ---- */
+  .bg-black { background: #17160f; color: #faf3e3; }
+  .bg-gold { position: relative; overflow: hidden; background: #f8f1de; color: #201e1d; }
+  .bg-gold > * { position: relative; z-index: 1; }
+  /* Animated gold dot wave (assets/dot-wave.v1.js injects the canvas into every .bg-gold). */
+  .bg-gold > canvas[data-dot-wave] { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+  /* ---- Horizontal scroll band (partners, testimonials) ---- */
+  .hscroll { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 14px; scrollbar-width: thin; scrollbar-color: #c9a227 transparent; overscroll-behavior-x: contain; }
+  .hscroll > * { flex: 0 0 auto; scroll-snap-align: start; }
+  .hscroll::-webkit-scrollbar { height: 6px; }
+  .hscroll::-webkit-scrollbar-thumb { background: #c9a227; }
+  .hscroll-btn { all: unset; box-sizing: border-box; width: 44px; height: 44px; display: grid; place-items: center; cursor: pointer; font: 800 18px/1 Archivo, sans-serif; border: 1px solid currentColor; transition: background .18s ease, color .18s ease; }
+  .hscroll-btn:hover { background: #d5aa4b; border-color: #d5aa4b; color: #17160f; }
+  .hscroll-btn:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
+  .footer-link { color: rgba(250,243,227,.72); font: 600 14px/1.3 Archivo, sans-serif; transition: color .18s ease; }
+  .footer-link:hover { color: #d5aa4b; }
+
+  .faq-q { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; }
+  .faq-q::-webkit-details-marker { display: none; }
+  .faq-q::after { content: "+"; flex: none; font: 800 20px/1 Archivo, sans-serif; color: #d5aa4b; }
+  .faq-item[open] > .faq-q::after { content: "\2013"; }
+  .faq-q:hover { color: #d5aa4b !important; }
+  .faq-item p { margin: 0 0 10px; } .faq-item p:last-child { margin: 0; }
+  .faq-item ul, .faq-item ol { margin: 0 0 10px; padding-left: 20px; }
+  .faq-item a { color: #d5aa4b; font-weight: 700; }
+</style>
+<script>
+  /* Additive reveals only — content is never hidden in the styles. */
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function init() {
+      if (reduce || !("IntersectionObserver" in window) || !document.body.animate) return;
+      var targets = [].slice.call(document.querySelectorAll("[data-screen-label]")).slice(1);
+      if (!targets.length) return;
+      var ease = "cubic-bezier(.2,.7,.2,1)";
+      var first = true;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          io.unobserve(e.target);
+          if (!e.isIntersecting || first) return;
+          e.target.animate([{ opacity: 0, transform: "translateY(14px)" }, { opacity: 1, transform: "none" }],
+            { duration: 520, easing: ease, fill: "none" });
+        });
+        first = false;
+      }, { threshold: 0.08 });
+      targets.forEach(function (s) { io.observe(s); });
+      setTimeout(function () { first = false; }, 300);
+    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+    else init();
+  })();
+</script>
+<script src="../assets/dot-wave.v1.js" defer></script>
+</head>
+<body>
+<div style="background: #17160f;">
+
+  <!-- ================= NAV ================= -->
+  <div id="top" style="position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: 20px; padding: 16px clamp(20px, 4vw, 56px); border-bottom: 1px solid rgba(250,243,227,.16); background: #17160f;">
+    <a href="index.html" style="display: flex; align-items: center; gap: 10px;">
+      <img src="../assets/senecai-compliance-logo-light.png" alt="SenecAI Compliance" style="display: block; height: 50px; width: auto;">
+    </a>
+    <div data-nav-links="true" style="display: flex; flex-wrap: wrap; gap: 22px; font: 700 12.5px/1 Archivo, sans-serif; letter-spacing: .09em; text-transform: uppercase;">
+      <a class="ink-nav-link ink-focus" href="index.html#services" style="color: rgba(250,243,227,.82);">Ce putem face pentru dvs.</a>
+      <a class="ink-nav-link ink-focus" href="regulations-covered.html" style="color: rgba(250,243,227,.82);">Reglementări acoperite</a>
+      <a class="ink-nav-link ink-focus" href="resources.html" style="color: rgba(250,243,227,.82);">Resurse</a>
+      <a class="ink-nav-link ink-focus" href="index.html#team" style="color: rgba(250,243,227,.82);">Echipa</a>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px; margin-left: auto;">
+      <div style="display: flex; border: 1px solid rgba(250,243,227,.5); font: 700 12px/1 Archivo, sans-serif; letter-spacing: .08em;">
+        <a class="ink-focus" href="../privacy-policy.html" hreflang="en" lang="en" style="padding: 7px 12px; color: #faf3e3;">EN</a>
+        <span style="padding: 7px 12px; background: #faf3e3; color: #17160f;" aria-current="true">RO</span>
+      </div>
+      <a href="mailto:hello@senecai.eu?subject=Programare%20apel%20introductiv%20gratuit" class="ink-nav-cta ink-focus" style="display: flex; align-items: center; padding: 12px 18px; background: #d5aa4b; color: #17160f; font: 800 12.5px/1 Archivo, sans-serif; letter-spacing: .07em; text-transform: uppercase;" data-nav-cta="true">
+        <span>Programați un apel introductiv</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="bg-gold" data-screen-label="Legal" style="padding-bottom: clamp(28px, 3.4vw, 40px);">
+    <div style="padding: 20px clamp(20px, 4vw, 64px) 0;"><a href="index.html" style="font: 700 13px/1.4 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #8a6a1f;">← Înapoi la pagina principală</a></div>
+    <div style="display: flex; flex-direction: column; gap: 16px; padding: clamp(40px, 5vw, 72px) clamp(20px, 4vw, 64px) 0;">
+      <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">Juridic</div>
+      <h1 style="margin: 0; max-width: 26ch; font: 900 clamp(32px, 3.8vw, 48px)/1.02 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase;">Politica de confidențialitate</h1>
+      <p style="margin: 0; max-width: 62ch; font: 400 17px/1.55 Archivo, sans-serif; color: #4a453e;">Cum colectează, folosește și protejează SenecAI datele cu caracter personal.</p>
+    </div>
+  </div>
+
+  <div class="bg-black" data-screen-label="Privacy Policy content" style="padding: clamp(36px, 4.4vw, 64px) clamp(20px, 4vw, 64px);">
+    <div style="max-width: 760px; display: flex; flex-direction: column; gap: 28px;">
+      <div style="font: 600 13px/1.5 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: rgba(250,243,227,.6);">Ultima actualizare: [DATA]</div>
+      <nav aria-label="Cuprins" style="padding: 20px 22px; border: 1px solid rgba(250,243,227,.18);">
+        <div style="margin-bottom: 10px; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #d5aa4b;">Cuprins</div>
+        <ol style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; list-style: none; padding: 0; font: 500 15px/1.5 Archivo, sans-serif;"><li><a href="#s1" style="color: #d5aa4b; font-weight: 700;">1. Operatorul de date</a></li><li><a href="#s2" style="color: #d5aa4b; font-weight: 700;">2. Datele cu caracter personal pe care le colectăm</a></li><li><a href="#s3" style="color: #d5aa4b; font-weight: 700;">3. Scopuri și temeiuri juridice</a></li><li><a href="#s4" style="color: #d5aa4b; font-weight: 700;">4. Destinatari și persoane împuternicite</a></li><li><a href="#s5" style="color: #d5aa4b; font-weight: 700;">5. Transferuri internaționale</a></li><li><a href="#s6" style="color: #d5aa4b; font-weight: 700;">6. Perioade de stocare</a></li><li><a href="#s7" style="color: #d5aa4b; font-weight: 700;">7. Drepturile dvs.</a></li><li><a href="#s8" style="color: #d5aa4b; font-weight: 700;">8. Cookie-uri și analiză</a></li><li><a href="#s9" style="color: #d5aa4b; font-weight: 700;">9. Modificări ale acestei politici</a></li></ol>
+      </nav>
+      <section id="s1" style="display: flex; flex-direction: column; gap: 12px; padding-top: 28px; border-top: 1px solid rgba(250,243,227,.18);">
+        <h2 style="margin: 0; font: 800 clamp(20px, 2vw, 24px)/1.2 Archivo, sans-serif; letter-spacing: -.01em;">1. Operatorul de date</h2>
+        <p style="margin: 0; font: 400 16px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);">Identitatea și datele de contact ale operatorului și, după caz, ale responsabilului cu protecția datelor.</p>
+        <p style="margin: 0; padding: 12px 16px; border-left: 3px solid #c9a227; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.6); font-style: italic;">[Text provizoriu — versiunea finală va fi furnizată.]</p>
+      </section>
+      <section id="s2" style="display: flex; flex-direction: column; gap: 12px; padding-top: 28px; border-top: 1px solid rgba(250,243,227,.18);">
+        <h2 style="margin: 0; font: 800 clamp(20px, 2vw, 24px)/1.2 Archivo, sans-serif; letter-spacing: -.01em;">2. Datele cu caracter personal pe care le colectăm</h2>
+        <p style="margin: 0; font: 400 16px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);">Categoriile de date colectate, de exemplu datele de contact trimise prin e-mail sau la programarea apelurilor introductive.</p>
+        <p style="margin: 0; padding: 12px 16px; border-left: 3px solid #c9a227; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.6); font-style: italic;">[Text provizoriu — versiunea finală va fi furnizată.]</p>
+      </section>
+      <section id="s3" style="display: flex; flex-direction: column; gap: 12px; padding-top: 28px; border-top: 1px solid rgba(250,243,227,.18);">
+        <h2 style="margin: 0; font: 800 clamp(20px, 2vw, 24px)/1.2 Archivo, sans-serif; letter-spacing: -.01em;">3. Scopuri și temeiuri juridice</h2>
+        <p style="margin: 0; font: 400 16px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);">De ce este prelucrată fiecare categorie de date și temeiul juridic GDPR pentru fiecare scop.</p>
+        <p style="margin: 0; padding: 12px 16px; border-left: 3px solid #c9a227; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.6); font-style: italic;">[Text provizoriu — versiunea finală va fi furnizată.]</p>
+      </section>
+      <section id="s4" style="display: flex; flex-direction: column; gap: 12px; padding-top: 28px; border-top: 1px solid rgba(250,243,227,.18);">
+        <h2 style="margin: 0; font: 800 clamp(20px, 2vw, 24px)/1.2 Archivo, sans-serif; letter-spacing: -.01em;">4. Destinatari și persoane împuternicite</h2>
+        <p style="margin: 0; font: 400 16px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);">Categoriile de destinatari, inclusiv furnizori de servicii precum găzduirea și e-mailul.</p>
+        <p style="margin: 0; padding: 12px 16px; border-left: 3px solid #c9a227; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.6); font-style: italic;">[Text provizoriu — versiunea finală va fi furnizată.]</p>
+      </section>
+      <section id="s5" style="display: flex; flex-direction: column; gap: 12px; padding-top: 28px; border-top: 1px solid rgba(250,243,227,.18);">
+        <h2 style="margin: 0; font: 800 clamp(20px, 2vw, 24px)/1.2 Archivo, sans-serif; letter-spacing: -.01em;">5. Transferuri internaționale</h2>
+        <p style="margin: 0; font: 400 16px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);">Eventualele transferuri în afara UE/SEE și garanțiile aplicabile.</p>
+        <p style="margin: 0; padding: 12px 16px; border-left: 3px solid #c9a227; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.6); font-style: italic;">[Text provizoriu — versiunea finală va fi furnizată.]</p>
+      </section>
+      <section id="s6" style="display: flex; flex-direction: column; gap: 12px; padding-top: 28px; border-top: 1px solid rgba(250,243,227,.18);">
+        <h2 style="margin: 0; font: 800 clamp(20px, 2vw, 24px)/1.2 Archivo, sans-serif; letter-spacing: -.01em;">6. Perioade de stocare</h2>
+        <p style="margin: 0; font: 400 16px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);">Cât timp este păstrată fiecare categorie de date.</p>
+        <p style="margin: 0; padding: 12px 16px; border-left: 3px solid #c9a227; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.6); font-style: italic;">[Text provizoriu — versiunea finală va fi furnizată.]</p>
+      </section>
+      <section id="s7" style="display: flex; flex-direction: column; gap: 12px; padding-top: 28px; border-top: 1px solid rgba(250,243,227,.18);">
+        <h2 style="margin: 0; font: 800 clamp(20px, 2vw, 24px)/1.2 Archivo, sans-serif; letter-spacing: -.01em;">7. Drepturile dvs.</h2>
+        <p style="margin: 0; font: 400 16px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);">Dreptul de acces, rectificare, ștergere, restricționare, portabilitate și opoziție, cum le puteți exercita și dreptul de a depune plângere la ANSPDCP.</p>
+        <p style="margin: 0; padding: 12px 16px; border-left: 3px solid #c9a227; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.6); font-style: italic;">[Text provizoriu — versiunea finală va fi furnizată.]</p>
+      </section>
+      <section id="s8" style="display: flex; flex-direction: column; gap: 12px; padding-top: 28px; border-top: 1px solid rgba(250,243,227,.18);">
+        <h2 style="margin: 0; font: 800 clamp(20px, 2vw, 24px)/1.2 Archivo, sans-serif; letter-spacing: -.01em;">8. Cookie-uri și analiză</h2>
+        <p style="margin: 0; font: 400 16px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);">Cookie-urile sau tehnologiile similare folosite pe acest site, dacă există.</p>
+        <p style="margin: 0; padding: 12px 16px; border-left: 3px solid #c9a227; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.6); font-style: italic;">[Text provizoriu — versiunea finală va fi furnizată.]</p>
+      </section>
+      <section id="s9" style="display: flex; flex-direction: column; gap: 12px; padding-top: 28px; border-top: 1px solid rgba(250,243,227,.18);">
+        <h2 style="margin: 0; font: 800 clamp(20px, 2vw, 24px)/1.2 Archivo, sans-serif; letter-spacing: -.01em;">9. Modificări ale acestei politici</h2>
+        <p style="margin: 0; font: 400 16px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74);">Cum sunt comunicate actualizările acestei politici.</p>
+        <p style="margin: 0; padding: 12px 16px; border-left: 3px solid #c9a227; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.6); font-style: italic;">[Text provizoriu — versiunea finală va fi furnizată.]</p>
+      </section>
+    </div>
+  </div>
+
+  <!-- ================= FINAL CTA ================= -->
+  <div id="cta" class="bg-gold" data-screen-label="Final CTA" data-tone-band="cta" style="border-top: 1px solid #ddd7c8; padding: clamp(48px, 6vw, 88px) clamp(20px, 4vw, 64px); display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px;">
+    <h2 style="margin: 0; max-width: 20ch; font: 900 clamp(36px, 5.2vw, 72px)/0.96 Archivo, sans-serif; letter-spacing: -.035em; text-transform: uppercase; color: #201e1d;">Pregătiți pentru conformitate?</h2>
+    <a href="mailto:hello@senecai.eu?subject=Programare%20apel%20introductiv%20gratuit" class="om-cta x26" style="display: flex; align-items: center; gap: 40px; max-width: 46ch; padding: 20px 22px; border: 2px solid #201e1d; background: #f8f1de; color: #201e1d; font: 800 14px/1.35 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;">
+      <span>Spuneți-ne ce construiți și vă spunem cât de expuși sunteți</span>
+      <span style="font-size: 18px;">→</span>
+    </a>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <div data-screen-label="Footer" style="background: #17160f; color: #faf3e3; border-top: 1px solid rgba(250,243,227,.16);">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 28px; padding: 44px clamp(20px, 4vw, 64px);">
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 14px;">
+        <a href="index.html" style="display: flex; align-items: center; gap: 10px;">
+          <img src="../assets/senecai-compliance-logo-light.png" alt="SenecAI Compliance" style="display: block; height: auto; width: clamp(200px, 18vw, 280px);">
+        </a>
+        <div style="font: 400 14px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.6); max-width: 30ch;">Conformitate digitală UE pentru startup-uri și IMM-uri.</div>
+      </div>
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 12px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">Navigare</div>
+        <a class="footer-link" href="index.html#method">Metoda noastră</a>
+        <a class="footer-link" href="index.html#services">Ce facem</a>
+        <a class="footer-link" href="index.html#support">Colaborare</a>
+        <a class="footer-link" href="index.html#team">Echipa</a>
+        <a class="footer-link" href="index.html#faq">Întrebări frecvente</a>
+      </div>
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 12px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">Contact</div>
+        <a class="footer-link" href="mailto:hello@senecai.eu">hello@senecai.eu</a>
+        <a class="footer-link" href="mailto:hello@senecai.eu?subject=Programare%20apel%20introductiv%20gratuit">Programați un apel introductiv gratuit</a>
+      </div>
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 12px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">Urmăriți-ne</div>
+        <a class="footer-link" href="#top">LinkedIn</a>
+        <a class="footer-link" href="https://theaiactguy.substack.com/" target="_blank" rel="noopener">The AI Act Guy — Substack</a>
+      </div>
+      <div style="min-width: 0; display: flex; flex-direction: column; gap: 12px;">
+        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">Juridic</div>
+        <a class="footer-link" href="legal-notice.html">Mențiuni legale</a>
+        <a class="footer-link" href="privacy-policy.html">Politica de confidențialitate</a>
+        <a class="footer-link" href="terms-of-use.html">Termeni de utilizare</a>
+      </div>
+    </div>
+    <div style="padding: 16px clamp(20px, 4vw, 64px); border-top: 1px solid rgba(250,243,227,.12); font: 600 11px/1.5 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: rgba(250,243,227,.5);">SenecAI – marcă înregistrată la OSIM [NUMĂR DE ÎNREGISTRARE]</div>
+  </div>
+</div>
+</body>
+</html>

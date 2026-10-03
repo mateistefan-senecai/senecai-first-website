@@ -1,0 +1,165 @@
+"""Builds the Romanian site under ro/ from the English pages.
+
+Every text node and translatable attribute (alt, aria-label, title, meta content) of each
+English page is looked up in tools/i18n/ro_*.py dictionaries (English text -> Romanian
+text). Anything not found is reported, so a changed English sentence never ships
+silently untranslated. Run from the repo root:
+
+    python3 tools/i18n/build_ro.py          # build ro/*.html and assets/checkers.ro.*.js
+    python3 tools/i18n/build_ro.py --check  # list untranslated strings only
+"""
+import html, json, os, re, sys
+
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from ro_pages import PAGES as T            # noqa: E402
+from ro_checkers import CHECKERS as TJS, RAW, REF_START, ref    # noqa: E402
+
+PAGE_FILES = ["index.html", "regulations-covered.html", "resources.html",
+              "legal-notice.html", "privacy-policy.html", "terms-of-use.html"]
+ENGINE_EN = "assets/checkers.v2.js"
+ENGINE_RO = "assets/checkers.ro.v1.js"
+ATTRS = ("alt", "aria-label", "title", "content")
+# Text that is the same in both languages (brands, names, symbols, codes).
+KEEP_WORDS = {"EN", "RO", "SenecAI", "SenecAI Compliance", "AI Act", "GDPR", "NIS2", "DORA", "CRA",
+              "ISO 27001", "ISO 42001", "AIVERGENT", "hello@senecai.eu", "LinkedIn", "Sapio.ai", "SoCyber",
+              "Tales of Security", "AI Advy", "AI Leaders Romania", "Institute for Applied AI",
+              "Institutul de Cercetare Informatică (ICI)", "WebHunt.io", "Matei Ștefan", "Vlad Tudor",
+              "Marius Petcu", "Dimitris Petikas", "Leo Dumitru", "Cristi Irimiea", "Adrian Șuteu",
+              "Bogdan Iasinovschi & Matei Oprea", "The AI Act Guy", "width=device-width, initial-scale=1",
+              "EU AI Act · GDPR · NIS2 · DORA · CRA · ISO 27001 · ISO 42001", "AI Act · ISO 42001",
+              "NIS2 · ISO 27001", "AI Act · GDPR · NIS2 · DORA · CRA", "ISO/IEC 27001", "ISO/IEC 42001"}
+KEEP = re.compile(r"^[\W\d_]+$")
+
+missing = {}
+
+def tr(text, where):
+    key = " ".join(text.split())
+    if not key:
+        return text
+    if key in T:
+        out = T[key]
+    elif KEEP.match(key) or key in KEEP_WORDS:
+        return text
+    else:
+        missing.setdefault(where, []).append(key)
+        return text
+    lead = text[: len(text) - len(text.lstrip())]
+    if out[:1] in ",.;:)":
+        lead = ""
+    trail = text[len(text.rstrip()):]
+    return lead + out + trail
+
+def translate_page(src, name):
+    # Protect <script>, <style> and <svg> blocks from text replacement.
+    blocks = []
+    def stash(m):
+        blocks.append(m.group(0)); return f"\x00{len(blocks)-1}\x00"
+    s = re.sub(r"<(script|style|svg)\b.*?</\1>", stash, src, flags=re.S)
+    s = re.sub(r">([^<>\x00]+)<", lambda m: ">" + html.escape(tr(html.unescape(m.group(1)), name), quote=False) + "<", s)
+    def attr(m):
+        return f'{m.group(1)}="{html.escape(tr(html.unescape(m.group(2)), name), quote=True)}"'
+    s = re.sub(r'\b(' + "|".join(ATTRS) + r')="([^"]*)"', attr, s)
+    s = re.sub(r"\x00(\d+)\x00", lambda m: blocks[int(m.group(1))], s)
+    return s
+
+def relink(s, name):
+    """Paths for a page living in ro/: shared assets go up a level, page links stay in ro/."""
+    s = s.replace('<html lang="en">', '<html lang="ro">')
+    s = re.sub(r'(src|href)="(assets/|favicon)', r'\1="../\2', s)
+    s = s.replace('src="../assets/checkers.v2.js"', 'src="../assets/checkers.ro.v1.js"')
+    if name == "index.html":
+        s = re.sub(r'(<h1 class="ink-h1"[^>]*>)\s*Conformitate <span style="color: #d5aa4b;">digitală UE</span><br class="hero-break"> pentru startup-uri și IMM-uri',
+                   r'\1\n        <span style="color: #d5aa4b;">Conformitate</span> digitală UE<br class="hero-break"> pentru startup-uri și IMM-uri', s)
+        assert '<span style="color: #d5aa4b;">Conformitate</span>' in s, "hero headline not rewritten"
+        # Romanian headline is ~40% longer: slightly smaller type so it sets in two lines on desktop.
+        s = s.replace('<h1 class="ink-h1" style="margin: 0; font: 900 clamp(40px, min(7vw, 11vh), 108px)/0.92 Archivo',
+                      '<h1 class="ink-h1" style="margin: 0; font: 900 clamp(34px, min(5.6vw, 9vh), 88px)/0.95 Archivo', 1)
+    s = s.replace("mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call",
+                  "mailto:hello@senecai.eu?subject=Programare%20apel%20introductiv%20gratuit")
+    return s
+
+def lang_switch(s, name, lang):
+    """Turns the EN/RO placeholder into links between the two language versions."""
+    page = name.replace(".html", "")
+    en_href = "../" + name if lang == "ro" else name
+    ro_href = ("index.html" if page == "index" else name) if lang == "ro" else "ro/" + ("" if page == "index" else name)
+    if lang == "ro" and page == "index":
+        en_href = "../"
+    if lang == "en" and page == "index":
+        ro_href = "ro/"
+    on = 'style="padding: 7px 12px; background: #faf3e3; color: #17160f;"'
+    off = 'style="padding: 7px 12px; color: #faf3e3;"'
+    en = f'<span {on} aria-current="true">EN</span>' if lang == "en" else f'<a class="ink-focus" href="{en_href}" hreflang="en" lang="en" {off}>EN</a>'
+    ro = f'<span {on} aria-current="true">RO</span>' if lang == "ro" else f'<a class="ink-focus" href="{ro_href}" hreflang="ro" lang="ro" {off}>RO</a>'
+    pat = re.compile(r'<span style="padding: 7px 12px; background: #faf3e3; color: #17160f;">EN</span>\s*'
+                     r'<span class="ink-focus" style="padding: 7px 12px; color: #faf3e3; cursor: pointer;">RO</span>')
+    if pat.search(s):
+        s = pat.sub(en + "\n        " + ro, s, count=1)
+    else:  # already converted on a previous run
+        s = re.sub(r'<(?:span|a)[^>]*>EN</(?:span|a)>\s*<(?:span|a)[^>]*>RO</(?:span|a)>', en + "\n        " + ro, s, count=1)
+    # hreflang alternates
+    base = "https://www.senecai.eu/"
+    alt = (f'<link rel="alternate" hreflang="en" href="{base}{"" if page == "index" else page}">\n'
+           f'<link rel="alternate" hreflang="ro" href="{base}ro/{"" if page == "index" else page}">\n')
+    s = re.sub(r'<link rel="alternate" hreflang="en"[^>]*>\n<link rel="alternate" hreflang="ro"[^>]*>\n', "", s)
+    s = s.replace("</title>\n", "</title>\n" + alt, 1)
+    return s
+
+def _is_prose(t):
+    """English UI text in the engine (as opposed to ids, CSS classes and code fragments)."""
+    if re.fullmatch(r"[a-z0-9_\-]+", t) or not re.search(r"[A-Za-z]{2,}", t):
+        return False
+    if re.search(r"[<>\[\]]|ck-|' \+|\) \+|&quot;|mailto|use strict|^high_|^Arrow|DOMContentLoaded|^ (selected|disabled)$", t):
+        return False
+    # values RAW already turned into Romanian
+    return t not in ("Probabil", "Indirect", "De verificat", "Interzis", "Risc ridicat", "importator / distribuitor")
+
+
+def translate_engine(src):
+    for old, new in RAW:
+        assert old in src, "RAW snippet not found in engine: " + old[:60]
+        src = src.replace(old, new)
+
+    def lit(m):
+        text = json.loads('"' + m.group(1) + '"')
+        if text in TJS:
+            return json.dumps(TJS[text], ensure_ascii=False)
+        if REF_START.match(text):
+            return json.dumps(ref(text), ensure_ascii=False)
+        if _is_prose(text) and text not in KEEP_WORDS and text not in ("AI Act", "GDPR", "NIS2", "DORA", "CRA") \
+                and not re.search(r"[ăâîșțĂÂÎȘȚ]|\b(mare|medie)\b", text):
+            missing.setdefault(ENGINE_EN, []).append(text)
+        return m.group(0)
+    out = re.sub(r'"((?:[^"\\\n]|\\.)*)"', lit, src)
+    out = out.replace("SenecAI compliance checkers: three rules-based decision trees.",
+                      "SenecAI compliance checkers: three rules-based decision trees (Romanian build).\n *\n * GENERATED by tools/i18n/build_ro.py from checkers.v2.js. Do not edit by hand.", 1)
+    return out
+
+
+def main():
+    check = "--check" in sys.argv
+    os.makedirs(os.path.join(ROOT, "ro"), exist_ok=True)
+    for name in PAGE_FILES:
+        p = os.path.join(ROOT, name)
+        en = open(p, encoding="utf-8").read()
+        en2 = lang_switch(en, name, "en")
+        ro = lang_switch(relink(translate_page(en, name), name), name, "ro")
+        if not check:
+            open(p, "w", encoding="utf-8").write(en2)
+            open(os.path.join(ROOT, "ro", name), "w", encoding="utf-8").write(ro)
+    eng = translate_engine(open(os.path.join(ROOT, ENGINE_EN), encoding="utf-8").read())
+    if not check:
+        open(os.path.join(ROOT, ENGINE_RO), "w", encoding="utf-8").write(eng)
+    if missing:
+        for where, items in missing.items():
+            seen = []
+            for i in items:
+                if i not in seen: seen.append(i)
+            print(f"== {where}: {len(seen)} untranslated")
+            for i in seen: print("   " + json.dumps(i, ensure_ascii=False))
+        sys.exit(1)
+    print("ok: all strings translated")
+
+if __name__ == "__main__":
+    main()
