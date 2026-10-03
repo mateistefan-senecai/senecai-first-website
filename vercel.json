@@ -12,5 +12,17 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/research",
+      "destination": "/resources",
+      "permanent": true
+    },
+    {
+      "source": "/research.html",
+      "destination": "/resources",
+      "permanent": true
+    }
   ]
 }
