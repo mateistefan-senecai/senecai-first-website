@@ -74,6 +74,5 @@ dashboard (or run `vercel` from this directory with the Vercel CLI) and it will 
 - **Links**: LinkedIn in the footer still points to `#top`. Swap in the real URL.
 - **Partner logos** — AIVERGENT still shows a text placeholder (`data-partner` tiles in
   `index.html`); swap it for an `<img>` once the logo file is supplied.
-- **Team bios** — all four team members currently say "Full bio coming soon." Team photos live in `assets/team/`.
 - **Research cards** list the 10 latest *The AI Act Guy* editions (#21–#30, as of
   5 October 2026); update them by hand as new editions go out.
