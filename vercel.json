@@ -23,6 +23,86 @@
       "source": "/research.html",
       "destination": "/resources",
       "permanent": true
+    },
+    {
+      "source": "/blog/a-concise-yet-panoramic-introduction",
+      "destination": "https://theaiactguy.substack.com/p/a-concise-yet-panoramic-introduction",
+      "permanent": true
+    },
+    {
+      "source": "/blog/a-new-reality-in-ai-governance",
+      "destination": "https://theaiactguy.substack.com/p/a-new-reality-in-ai-governance-adjusting",
+      "permanent": true
+    },
+    {
+      "source": "/blog/ai-as-a-regulated-product",
+      "destination": "https://theaiactguy.substack.com/p/ai-as-a-regulated-product-how-the",
+      "permanent": true
+    },
+    {
+      "source": "/blog/how-ai-agents-are-regulated-under-eu-law",
+      "destination": "https://theaiactguy.substack.com/p/how-ai-agents-are-regulated-under",
+      "permanent": true
+    },
+    {
+      "source": "/blog/the-ai-omnibus-deal-what-was-agreed",
+      "destination": "https://theaiactguy.substack.com/p/the-ai-omnibus-deal-what-was-agreed",
+      "permanent": true
+    },
+    {
+      "source": "/blog/the-high-risk-ai-systems-under-the-ai-act-part-1",
+      "destination": "https://theaiactguy.substack.com/p/the-high-risk-ai-systems-under-the",
+      "permanent": true
+    },
+    {
+      "source": "/blog/the-high-risk-ai-systems-under-the-ai-act-part-2",
+      "destination": "https://theaiactguy.substack.com/p/the-high-risk-ai-systems-under-the-233",
+      "permanent": true
+    },
+    {
+      "source": "/blog/the-prohibited-practices-under-the-ai-act",
+      "destination": "https://theaiactguy.substack.com/p/the-prohibited-practices-under-the",
+      "permanent": true
+    },
+    {
+      "source": "/blog/the-prohibited-practices-under-the-ai-act-part-2",
+      "destination": "https://theaiactguy.substack.com/p/the-prohibited-practices-under-the-ad4",
+      "permanent": true
+    },
+    {
+      "source": "/blog/the-prohibited-practices-under-the-ai-act-part-3",
+      "destination": "https://theaiactguy.substack.com/p/the-prohibited-practices-under-the-b07",
+      "permanent": true
+    },
+    {
+      "source": "/blog/the-prohibited-practices-under-the-ai-act-part-4",
+      "destination": "https://theaiactguy.substack.com/p/the-prohibited-practices-under-the-cc0",
+      "permanent": true
+    },
+    {
+      "source": "/blog/the-state-of-the-ai-omnibus-negotiations",
+      "destination": "https://theaiactguy.substack.com/p/the-state-of-the-ai-omnibus-negotiations",
+      "permanent": true
+    },
+    {
+      "source": "/blog",
+      "destination": "https://theaiactguy.substack.com/",
+      "permanent": true
+    },
+    {
+      "source": "/compliance",
+      "destination": "/resources#compliance-checkers",
+      "permanent": true
+    },
+    {
+      "source": "/eu-ai-act",
+      "destination": "/regulations-covered#ai-act",
+      "permanent": true
+    },
+    {
+      "source": "/global-ai-policy-study",
+      "destination": "/SenecAI-Global-AI-Policy-Report-2026.pdf",
+      "permanent": true
     }
   ]
 }

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://www.senecai.eu/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/"/>
+  </url>
+  <url>
+    <loc>https://www.senecai.eu/ro/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/"/>
+  </url>
+  <url>
+    <loc>https://www.senecai.eu/regulations-covered</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/regulations-covered"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/regulations-covered"/>
+  </url>
+  <url>
+    <loc>https://www.senecai.eu/ro/regulations-covered</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/regulations-covered"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/regulations-covered"/>
+  </url>
+  <url>
+    <loc>https://www.senecai.eu/resources</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/resources"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/resources"/>
+  </url>
+  <url>
+    <loc>https://www.senecai.eu/ro/resources</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/resources"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/resources"/>
+  </url>
+  <url>
+    <loc>https://www.senecai.eu/legal-notice</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/legal-notice"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/legal-notice"/>
+  </url>
+  <url>
+    <loc>https://www.senecai.eu/ro/legal-notice</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/legal-notice"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/legal-notice"/>
+  </url>
+  <url>
+    <loc>https://www.senecai.eu/privacy-policy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/privacy-policy"/>
+  </url>
+  <url>
+    <loc>https://www.senecai.eu/ro/privacy-policy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/privacy-policy"/>
+  </url>
+  <url>
+    <loc>https://www.senecai.eu/terms-of-use</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/terms-of-use"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/terms-of-use"/>
+  </url>
+  <url>
+    <loc>https://www.senecai.eu/ro/terms-of-use</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/terms-of-use"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/terms-of-use"/>
+  </url>
+  <url>
+    <loc>https://www.senecai.eu/global-ai-policy-map</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/global-ai-policy-map"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/global-ai-policy-map"/>
+  </url>
+  <url>
+    <loc>https://www.senecai.eu/ro/global-ai-policy-map</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/global-ai-policy-map"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/global-ai-policy-map"/>
+  </url>
+</urlset>
