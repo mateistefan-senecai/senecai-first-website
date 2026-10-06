@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found — SenecAI</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/archivo-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  /* Archivo (SIL OFL 1.1), self-hosted so no visitor data goes to Google Fonts. */
+  @font-face { font-family: Archivo; font-style: normal; font-weight: 400 900; font-display: swap; src: url(/assets/fonts/archivo-latin-ext.v1.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+  @font-face { font-family: Archivo; font-style: normal; font-weight: 400 900; font-display: swap; src: url(/assets/fonts/archivo-latin.v1.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  body { margin: 0; font-family: Archivo, system-ui, sans-serif; color: #faf3e3; background: #17160f; }
+  a { color: #8a6a1f; text-decoration: none; }
+  a:hover { color: #6d5417; }
+  html { scroll-behavior: smooth; }
+  [id] { scroll-margin-top: 140px; }
+  /* Keeps the CTA button in the true top-right corner: below this width the nav
+     links drop to their own row instead of pushing the button down. */
+  @media (max-width: 1420px) { [data-nav-links] { order: 3; flex-basis: 100%; } }
+  .om-cta { position: relative; overflow: hidden; }
+  .om-cta > span { position: relative; z-index: 1; }
+  .om-cta::before { content: ""; position: absolute; inset: 0; background: #17160f; transform: translateX(-101%); transition: transform .28s cubic-bezier(.2,.7,.2,1); }
+  .om-cta:hover::before { transform: translateX(0); }
+  .x26:hover { color: #d5aa4b; }
+
+  .ink-nav-link { transition: color .18s ease; }
+  .ink-nav-link:hover { color: #d5aa4b; }
+  .ink-nav-cta { transition: background .18s ease; }
+  .ink-nav-cta:hover { background: #e6c477; }
+  .ink-focus:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
+
+  /* ---- Palette: black (#17160f) and gold (#f8f1de) are the only section backgrounds.
+     Every gold section carries the animated gold dot wave. ---- */
+  .bg-black { background: #17160f; color: #faf3e3; }
+  .bg-gold { position: relative; overflow: hidden; background: #f8f1de; color: #201e1d; }
+  .bg-gold > * { position: relative; z-index: 1; }
+  /* Animated gold dot wave (assets/dot-wave.v1.js injects the canvas into every .bg-gold). */
+  .bg-gold > canvas[data-dot-wave] { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+  /* ---- Horizontal scroll band (partners, testimonials) ---- */
+  .hscroll { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 14px; scrollbar-width: thin; scrollbar-color: #c9a227 transparent; overscroll-behavior-x: contain; }
+  .hscroll > * { flex: 0 0 auto; scroll-snap-align: start; }
+  .hscroll::-webkit-scrollbar { height: 6px; }
+  .hscroll::-webkit-scrollbar-thumb { background: #c9a227; }
+  .hscroll-btn { all: unset; box-sizing: border-box; width: 44px; height: 44px; display: grid; place-items: center; cursor: pointer; font: 800 18px/1 Archivo, sans-serif; border: 1px solid currentColor; transition: background .18s ease, color .18s ease; }
+  .hscroll-btn:hover { background: #d5aa4b; border-color: #d5aa4b; color: #17160f; }
+  .hscroll-btn:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
+  .footer-link { color: rgba(250,243,227,.72); font: 600 14px/1.3 Archivo, sans-serif; transition: color .18s ease; }
+  .footer-link:hover { color: #d5aa4b; }
+
+  .faq-q { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; }
+  .faq-q::-webkit-details-marker { display: none; }
+  .faq-q::after { content: "+"; flex: none; font: 800 20px/1 Archivo, sans-serif; color: #d5aa4b; }
+  .faq-item[open] > .faq-q::after { content: "\2013"; }
+  .faq-q:hover { color: #d5aa4b !important; }
+  .faq-item p { margin: 0 0 10px; } .faq-item p:last-child { margin: 0; }
+  .faq-item ul, .faq-item ol { margin: 0 0 10px; padding-left: 20px; }
+  .faq-item a { color: #d5aa4b; font-weight: 700; }
+</style>
+</head>
+<body>
+<!-- Served by Vercel for any unknown URL, at any depth: every link here is root-absolute. -->
+<div style="min-height: 100vh; display: flex; flex-direction: column; background: #17160f;">
+  <div style="display: flex; align-items: center; gap: 20px; padding: 16px clamp(20px, 4vw, 56px); border-bottom: 1px solid rgba(250,243,227,.16);">
+    <a href="/"><img src="/assets/senecai-compliance-logo-light.png" alt="SenecAI Compliance" style="display: block; height: 50px; width: auto;"></a>
+  </div>
+  <div class="bg-gold" style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 22px; padding: clamp(48px, 7vw, 112px) clamp(20px, 4vw, 64px);">
+    <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a6a1f;">Error 404</div>
+    <h1 style="margin: 0; max-width: 18ch; font: 900 clamp(36px, 5.2vw, 72px)/0.96 Archivo, sans-serif; letter-spacing: -.035em; text-transform: uppercase;">This page doesn&rsquo;t exist</h1>
+    <p style="margin: 0; max-width: 60ch; font: 400 17px/1.55 Archivo, sans-serif; color: #4a453e;">The link may be outdated, or the page may have moved. <span lang="ro">Pagina nu există sau a fost mutată.</span></p>
+    <div style="display: flex; flex-wrap: wrap; gap: 14px;">
+      <a href="/" class="om-cta x26" style="display: flex; align-items: center; gap: 28px; padding: 16px 20px; border: 2px solid #201e1d; color: #201e1d; font: 800 13px/1.35 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;"><span>Go to the homepage</span><span>→</span></a>
+      <a href="/ro/" lang="ro" class="om-cta x26" style="display: flex; align-items: center; gap: 28px; padding: 16px 20px; border: 2px solid #201e1d; color: #201e1d; font: 800 13px/1.35 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;"><span>Pagina principală (RO)</span><span>→</span></a>
+      <a href="/resources" class="om-cta x26" style="display: flex; align-items: center; gap: 28px; padding: 16px 20px; border: 2px solid #201e1d; color: #201e1d; font: 800 13px/1.35 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;"><span>Compliance checkers &amp; research</span><span>→</span></a>
+    </div>
+  </div>
+</div>
+<script src="/assets/dot-wave.v1.js" defer></script>
+</body>
+</html>
