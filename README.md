@@ -71,7 +71,6 @@ dashboard (or run `vercel` from this directory with the Vercel CLI) and it will 
 
 ## Known placeholders to fill in before launch
 
-- **Links**: LinkedIn in the footer still points to `#top`. Swap in the real URL.
 - **Partner logos** — AIVERGENT still shows a text placeholder (`data-partner` tiles in
   `index.html`); swap it for an `<img>` once the logo file is supplied.
 - **Research cards** list the 10 latest *The AI Act Guy* editions (#21–#30, as of

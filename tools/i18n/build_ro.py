@@ -83,8 +83,6 @@ def relink(s, name):
         # Romanian headline is ~40% longer: slightly smaller type so it sets in two lines on desktop.
         s = s.replace('<h1 class="ink-h1" style="margin: 0; font: 900 clamp(40px, min(7vw, 11vh), 108px)/0.92 Archivo',
                       '<h1 class="ink-h1" style="margin: 0; font: 900 clamp(34px, min(5.6vw, 9vh), 88px)/0.95 Archivo', 1)
-    s = s.replace("mailto:hello@senecai.eu?subject=Book%20a%20free%20intro%20call",
-                  "mailto:hello@senecai.eu?subject=Programare%20apel%20introductiv%20gratuit")
     return s
 
 def lang_switch(s, name, lang):
