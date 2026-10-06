@@ -4,7 +4,8 @@ Marketing site for SenecAI — EU digital compliance (AI Act, GDPR, DORA, NIS2) 
 
 ## Stack
 
-Plain static HTML. No build step, no framework, no dependencies.
+Plain static HTML. No build step, no framework; the only dependency is `nodemailer` for the
+contact form function.
 
 - `index.html` — the main scrolling page (Hero, Challenge, Partners, Testimonials, How We
   Work, Engagement, Team, FAQ, final CTA), with styling inline on the elements plus one
@@ -28,6 +29,14 @@ Plain static HTML. No build step, no framework, no dependencies.
   npm run build`; bump the version in the file names when it changes). Its data is
   `data/ai-policy-geo.json`; the report PDF is `SenecAI-Global-AI-Policy-Report-2026.pdf`.
 - `404.html` — served by Vercel for unknown URLs; all its links are root-absolute.
+- Contact form — in the "Ready to get compliant?" band on every page. `assets/contact-form.v1.js`
+  posts it to `api/contact.js`, a Vercel serverless function that emails the enquiry (nothing is
+  stored) through Google Workspace SMTP to `matei.stefan@senecai.eu`, with Reply-To set to the
+  sender. It needs two environment variables in Vercel (Settings → Environment Variables,
+  Production): `SMTP_USER` (the Workspace address that sends, e.g. `matei.stefan@senecai.eu`)
+  and `SMTP_PASS` (a Google app password for that account). Optional: `CONTACT_TO`,
+  `SMTP_HOST`, `SMTP_PORT`. Without them the form shows its error line, which points to the
+  email address. `package.json` exists only for this function's `nodemailer` dependency.
 - SEO: every page's `<head>` carries a generated block (canonical, hreflang incl.
   `x-default`, favicon, Open Graph / Twitter card using `assets/og-image.v1.png`), and
   `sitemap.xml` is generated too — both by `tools/i18n/build_ro.py` (see below).

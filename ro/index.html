@@ -109,6 +109,25 @@
     #method [data-stagger] > div { grid-template-columns: 44px minmax(0, 1fr) !important; }
     #method [data-stagger] > div > div:last-child { grid-column: 2; }
   }
+  /* ---- Contact form in the final CTA band (assets/contact-form.v1.js, api/contact.js) ---- */
+  .cta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); gap: clamp(32px, 5vw, 72px); align-items: start; }
+  .cf { min-width: 0; display: flex; flex-direction: column; gap: 16px; padding: clamp(20px, 2.4vw, 32px); border: 1px solid #ddd7c8; background: rgba(255, 252, 243, .94); color: #201e1d; }
+  .cf-title { font: 800 13px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f; }
+  .cf-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 16px; }
+  .cf-field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+  .cf-field > span { font: 700 11px/1.2 Archivo, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: #4a453e; }
+  .cf-field input, .cf-field textarea { box-sizing: border-box; width: 100%; margin: 0; padding: 12px 14px; border: 1.5px solid #201e1d; border-radius: 0; background: #fffdf7; color: #201e1d; font: 400 16px/1.45 Archivo, sans-serif; }
+  .cf-field textarea { resize: vertical; min-height: 120px; }
+  .cf-field input:focus, .cf-field textarea:focus { outline: 2px solid #d5aa4b; outline-offset: 1px; }
+  .cf-hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .cf-note { margin: 0; font: 400 13px/1.5 Archivo, sans-serif; color: #4a453e; }
+  .cf-note a, .cf-status a { color: #8a6a1f; font-weight: 700; text-decoration: underline; }
+  .cf-submit { all: unset; box-sizing: border-box; align-self: flex-start; display: flex; align-items: center; gap: 28px; padding: 16px 22px; background: #201e1d; color: #faf3e3; cursor: pointer; font: 800 13.5px/1.3 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; transition: background .18s ease, color .18s ease; }
+  .cf-submit:hover { background: #d5aa4b; color: #17160f; }
+  .cf-submit:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
+  .cf-submit:disabled { opacity: .6; cursor: progress; }
+  .cf-status { margin: 0; padding: 12px 14px; border-left: 3px solid #c9a227; background: #f8f1de; font: 600 15px/1.5 Archivo, sans-serif; color: #201e1d; }
+  .cf-error { border-left-color: #b3261e; }
 </style>
 <script>
   document.addEventListener("click", function (e) {
@@ -239,6 +258,7 @@
   .faq-count { margin-left: auto; font: 600 12px/1 Archivo, sans-serif; letter-spacing: .12em; color: rgba(250,243,227,.55); }
 </style>
 <script src="../assets/dot-wave.v1.js" defer></script>
+<script src="../assets/contact-form.v1.js" defer></script>
 </head>
 <body>
 <div style="background: #17160f;">
@@ -660,7 +680,7 @@
         <div style="display: flex; flex-direction: column; gap: 8px; min-width: 0;">
           <div style="font: 800 24px/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Marius Petcu</div>
           <div style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #8a6a1f;">Consultant securitate cibernetică</div>
-          <div style="margin-top: 6px; font: 400 16px/1.55 Archivo, sans-serif; color: #4a453e;">Marius îi consiliază pe clienții SenecAI Compliance în materie de securitate cibernetică. Conectează proiectele noastre cu serviciile SoCyber de testare a securității și management al vulnerabilităților și ghidează echipele prin cerințele NIS2, DORA, ISO 27001 și PCI DSS. Este Country Manager pentru România la SoCyber.</div>
+          <div style="margin-top: 6px; font: 400 16px/1.55 Archivo, sans-serif; color: #4a453e;">Marius îi consiliază pe clienții SenecAI Compliance în materie de securitate cibernetică. Conectează proiectele noastre cu serviciile SoCyber de testare a securității și management al vulnerabilităților și ghidează echipele prin cerințele NIS2, DORA, ISO 27001 și PCI DSS.</div>
         </div>
       </div>
       <div role="listitem" style="box-sizing: border-box; width: min(460px, 84vw); display: flex; align-items: flex-start; gap: 22px; padding: 24px; border: 1px solid #ddd7c8; background: #f8f1de;">
@@ -668,7 +688,7 @@
         <div style="display: flex; flex-direction: column; gap: 8px; min-width: 0;">
           <div style="font: 800 24px/1.1 Archivo, sans-serif; letter-spacing: -.02em;">Dimitris Petikas</div>
           <div style="font: 600 12px/1.4 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #8a6a1f;">Dezvoltare afaceri</div>
-          <div style="margin-top: 6px; font: 400 16px/1.55 Archivo, sans-serif; color: #4a453e;">Dimitris conduce dezvoltarea de business a SenecAI Compliance, deschizând drumul către companii din România, Grecia și Emiratele Arabe Unite care trebuie să își pună în ordine conformitatea privind AI, datele și securitatea cibernetică. Aduce peste 30 de ani de leadership în telecomunicații și transformare digitală, cu funcții de conducere la Telekom Romania (Grupul Deutsche Telekom), du, OTE/COSMOTE și Vodafone, și a construit Next2U Digital, subsidiara de transformare digitală a Piraeus Bank România.</div>
+          <div style="margin-top: 6px; font: 400 16px/1.55 Archivo, sans-serif; color: #4a453e;">Dimitris conduce dezvoltarea de business a SenecAI Compliance, deschizând drumul către companii din România, Grecia și restul Uniunii Europene care trebuie să își pună în ordine conformitatea privind AI, datele și securitatea cibernetică. Aduce peste 30 de ani de leadership în telecomunicații și transformare digitală, cu funcții de conducere la Telekom Romania (Grupul Deutsche Telekom), du, OTE/COSMOTE și Vodafone, și a construit Next2U Digital, subsidiara de transformare digitală a Piraeus Bank România.</div>
         </div>
       </div>
     </div>
@@ -779,12 +799,33 @@
   </div>
 
   <!-- ================= FINAL CTA ================= -->
-  <div id="cta" class="bg-gold" data-screen-label="Final CTA" data-tone-band="cta" style="border-top: 1px solid #ddd7c8; padding: clamp(48px, 6vw, 88px) clamp(20px, 4vw, 64px); display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px;">
-    <h2 style="margin: 0; max-width: 20ch; font: 900 clamp(36px, 5.2vw, 72px)/0.96 Archivo, sans-serif; letter-spacing: -.035em; text-transform: uppercase; color: #201e1d;">Pregătiți pentru conformitate?</h2>
-    <a href="https://calendly.com/senecai-consulting/30min" target="_blank" rel="noopener" class="om-cta x26" style="display: flex; align-items: center; gap: 40px; max-width: 46ch; padding: 20px 22px; border: 2px solid #201e1d; background: #f8f1de; color: #201e1d; font: 800 14px/1.35 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;">
-      <span>Spuneți-ne ce construiți și vă spunem cât de expuși sunteți</span>
-      <span style="font-size: 18px;">→</span>
-    </a>
+  <div id="cta" class="bg-gold" data-screen-label="Final CTA" data-tone-band="cta" style="border-top: 1px solid #ddd7c8; padding: clamp(48px, 6vw, 88px) clamp(20px, 4vw, 64px);">
+    <div class="cta-grid">
+      <div style="min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 22px;">
+        <h2 style="margin: 0; max-width: 20ch; font: 900 clamp(36px, 5.2vw, 72px)/0.96 Archivo, sans-serif; letter-spacing: -.035em; text-transform: uppercase; color: #201e1d;">Pregătiți pentru conformitate?</h2>
+        <p style="margin: 0; max-width: 40ch; font: 400 18px/1.55 Archivo, sans-serif; color: #4a453e;">Spuneți-ne ce construiți și vă spunem cât de expuși sunteți</p>
+        <a href="https://calendly.com/senecai-consulting/30min" target="_blank" rel="noopener" class="om-cta x26" style="display: flex; align-items: center; gap: 40px; padding: 18px 22px; border: 2px solid #201e1d; background: #f8f1de; color: #201e1d; font: 800 14px/1.35 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;">
+          <span>Programați un apel introductiv gratuit</span>
+          <span style="font-size: 18px;">→</span>
+        </a>
+      </div>
+      <form class="cf" action="/api/contact" method="post" data-contact-form>
+        <div class="cf-title">Sau trimiteți-ne un mesaj</div>
+        <div class="cf-row">
+          <label class="cf-field"><span>Nume</span><input name="name" type="text" required maxlength="200" autocomplete="name"></label>
+          <label class="cf-field"><span>E-mail de serviciu</span><input name="email" type="email" required maxlength="254" autocomplete="email"></label>
+        </div>
+        <label class="cf-field"><span>Companie (opțional)</span><input name="company" type="text" maxlength="200" autocomplete="organization"></label>
+        <label class="cf-field"><span>Ce construiți și unde aveți nevoie de ajutor?</span><textarea name="message" rows="5" required minlength="10" maxlength="5000"></textarea></label>
+        <div class="cf-hp" aria-hidden="true"><label>Lăsați acest câmp gol<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+        <input type="hidden" name="t" value="">
+        <p class="cf-note">Folosim datele dumneavoastră doar pentru a răspunde solicitării. Consultați <a href="privacy-policy.html">Politica de confidențialitate</a>.</p>
+        <button type="submit" class="cf-submit"><span>Trimiteți mesajul</span><span aria-hidden="true">→</span></button>
+        <p class="cf-status" data-cf-status="sending" role="status" hidden>Se trimite…</p>
+        <p class="cf-status" data-cf-status="ok" role="status" hidden>Vă mulțumim. Mesajul a fost trimis și vă vom răspunde în curând.</p>
+        <p class="cf-status cf-error" data-cf-status="error" role="alert" hidden>Mesajul nu a putut fi trimis. Vă rugăm să ne scrieți la <a href="mailto:matei.stefan@senecai.eu">matei.stefan@senecai.eu</a>.</p>
+      </form>
+    </div>
   </div>
 
   <!-- ================= FOOTER ================= -->
