@@ -74,6 +74,25 @@
   .faq-item p { margin: 0 0 10px; } .faq-item p:last-child { margin: 0; }
   .faq-item ul, .faq-item ol { margin: 0 0 10px; padding-left: 20px; }
   .faq-item a { color: #d5aa4b; font-weight: 700; }
+  /* ---- Contact form in the final CTA band (assets/contact-form.v1.js, api/contact.js) ---- */
+  .cta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); gap: clamp(32px, 5vw, 72px); align-items: start; }
+  .cf { min-width: 0; display: flex; flex-direction: column; gap: 16px; padding: clamp(20px, 2.4vw, 32px); border: 1px solid #ddd7c8; background: rgba(255, 252, 243, .94); color: #201e1d; }
+  .cf-title { font: 800 13px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f; }
+  .cf-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 16px; }
+  .cf-field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+  .cf-field > span { font: 700 11px/1.2 Archivo, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: #4a453e; }
+  .cf-field input, .cf-field textarea { box-sizing: border-box; width: 100%; margin: 0; padding: 12px 14px; border: 1.5px solid #201e1d; border-radius: 0; background: #fffdf7; color: #201e1d; font: 400 16px/1.45 Archivo, sans-serif; }
+  .cf-field textarea { resize: vertical; min-height: 120px; }
+  .cf-field input:focus, .cf-field textarea:focus { outline: 2px solid #d5aa4b; outline-offset: 1px; }
+  .cf-hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .cf-note { margin: 0; font: 400 13px/1.5 Archivo, sans-serif; color: #4a453e; }
+  .cf-note a, .cf-status a { color: #8a6a1f; font-weight: 700; text-decoration: underline; }
+  .cf-submit { all: unset; box-sizing: border-box; align-self: flex-start; display: flex; align-items: center; gap: 28px; padding: 16px 22px; background: #201e1d; color: #faf3e3; cursor: pointer; font: 800 13.5px/1.3 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; transition: background .18s ease, color .18s ease; }
+  .cf-submit:hover { background: #d5aa4b; color: #17160f; }
+  .cf-submit:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
+  .cf-submit:disabled { opacity: .6; cursor: progress; }
+  .cf-status { margin: 0; padding: 12px 14px; border-left: 3px solid #c9a227; background: #f8f1de; font: 600 15px/1.5 Archivo, sans-serif; color: #201e1d; }
+  .cf-error { border-left-color: #b3261e; }
 </style>
 <script>
   /* Additive reveals only — content is never hidden in the styles. */
@@ -102,6 +121,7 @@
   })();
 </script>
 <script src="assets/dot-wave.v1.js" defer></script>
+<script src="assets/contact-form.v1.js" defer></script>
 </head>
 <body>
 <div style="background: #17160f;">
@@ -188,12 +208,33 @@
   </div>
 
   <!-- ================= FINAL CTA ================= -->
-  <div id="cta" class="bg-gold" data-screen-label="Final CTA" data-tone-band="cta" style="border-top: 1px solid #ddd7c8; padding: clamp(48px, 6vw, 88px) clamp(20px, 4vw, 64px); display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px;">
-    <h2 style="margin: 0; max-width: 20ch; font: 900 clamp(36px, 5.2vw, 72px)/0.96 Archivo, sans-serif; letter-spacing: -.035em; text-transform: uppercase; color: #201e1d;">Ready to get compliant?</h2>
-    <a href="https://calendly.com/senecai-consulting/30min" target="_blank" rel="noopener" class="om-cta x26" style="display: flex; align-items: center; gap: 40px; max-width: 46ch; padding: 20px 22px; border: 2px solid #201e1d; background: #f8f1de; color: #201e1d; font: 800 14px/1.35 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;">
-      <span>Tell us what you build, and we'll tell you how exposed you are</span>
-      <span style="font-size: 18px;">→</span>
-    </a>
+  <div id="cta" class="bg-gold" data-screen-label="Final CTA" data-tone-band="cta" style="border-top: 1px solid #ddd7c8; padding: clamp(48px, 6vw, 88px) clamp(20px, 4vw, 64px);">
+    <div class="cta-grid">
+      <div style="min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 22px;">
+        <h2 style="margin: 0; max-width: 20ch; font: 900 clamp(36px, 5.2vw, 72px)/0.96 Archivo, sans-serif; letter-spacing: -.035em; text-transform: uppercase; color: #201e1d;">Ready to get compliant?</h2>
+        <p style="margin: 0; max-width: 40ch; font: 400 18px/1.55 Archivo, sans-serif; color: #4a453e;">Tell us what you build, and we'll tell you how exposed you are</p>
+        <a href="https://calendly.com/senecai-consulting/30min" target="_blank" rel="noopener" class="om-cta x26" style="display: flex; align-items: center; gap: 40px; padding: 18px 22px; border: 2px solid #201e1d; background: #f8f1de; color: #201e1d; font: 800 14px/1.35 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;">
+          <span>Book a free intro call</span>
+          <span style="font-size: 18px;">→</span>
+        </a>
+      </div>
+      <form class="cf" action="/api/contact" method="post" data-contact-form>
+        <div class="cf-title">Or send us a message</div>
+        <div class="cf-row">
+          <label class="cf-field"><span>Name</span><input name="name" type="text" required maxlength="200" autocomplete="name"></label>
+          <label class="cf-field"><span>Work email</span><input name="email" type="email" required maxlength="254" autocomplete="email"></label>
+        </div>
+        <label class="cf-field"><span>Company (optional)</span><input name="company" type="text" maxlength="200" autocomplete="organization"></label>
+        <label class="cf-field"><span>What do you build, and where do you need help?</span><textarea name="message" rows="5" required minlength="10" maxlength="5000"></textarea></label>
+        <div class="cf-hp" aria-hidden="true"><label>Leave this field empty<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+        <input type="hidden" name="t" value="">
+        <p class="cf-note">We use your details only to reply to your enquiry. See our <a href="privacy-policy.html">Privacy Policy</a>.</p>
+        <button type="submit" class="cf-submit"><span>Send message</span><span aria-hidden="true">→</span></button>
+        <p class="cf-status" data-cf-status="sending" role="status" hidden>Sending…</p>
+        <p class="cf-status" data-cf-status="ok" role="status" hidden>Thank you. Your message has been sent and we will get back to you shortly.</p>
+        <p class="cf-status cf-error" data-cf-status="error" role="alert" hidden>Your message could not be sent. Please email us at <a href="mailto:matei.stefan@senecai.eu">matei.stefan@senecai.eu</a>.</p>
+      </form>
+    </div>
   </div>
 
   <!-- ================= FOOTER ================= -->
