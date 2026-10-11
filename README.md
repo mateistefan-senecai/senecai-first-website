@@ -66,7 +66,8 @@ contact form function.
 The Romanian site lives in `ro/` (served at `/ro/…`) and is **generated** from the English
 pages: `python3 tools/i18n/build_ro.py` translates every text node and attribute using the
 dictionaries in `tools/i18n/ro_pages.py` (pages) and `tools/i18n/ro_checkers.py` (compliance
-checkers → `assets/checkers.ro.v1.js`), rewrites asset paths and wires the EN/RO switch.
+checkers → `assets/checkers.ro.v1.js`) and `tools/i18n/ro_quote.py` (quote questionnaires →
+`assets/quote.ro.v1.js`), rewrites asset paths and wires the EN/RO switch.
 The same script writes the SEO head block of every page (both languages) and `sitemap.xml`;
 to add a page, append it to `PAGE_FILES`.
 After editing any English page or `assets/checkers.v2.js`, re-run the script: it fails and
