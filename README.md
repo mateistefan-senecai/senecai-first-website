@@ -21,6 +21,17 @@ contact form function.
   `assets/checkers.v2.js` (versioned like the dot wave — rename on change). Deep links:
   `resources.html#general-checker`, `#aiact-checker`, `#nis2-checker`; the hero's
   "Try the compliance checker" link opens the general one. Legal position: October 2026.
+- Quote questionnaires — two forms rendered by `assets/quote.v1.js` (data + engine, versioned
+  like the checkers) and emailed through `api/quote.js` (same SMTP variables as the contact form;
+  nothing is stored, progress is kept in the visitor's browser until they submit):
+  - `get-a-quote.html` — Tier 1, "Get a quote in 24 hours", the lead magnet linked from the hero
+    and the Resources page (`/quote` redirects here). Scope checks for NIS2, DORA and CRA come
+    first; their targeted questions appear only when the company is likely in scope. AI Act roles
+    are inferred from plain-language questions, never asked by name.
+  - `discovery.html` — Tier 2, the detailed discovery brief for interested clients. Unlisted
+    (`noindex`, not in the sitemap or nav). The Tier 1 email contains a link that opens it
+    pre-filled (`/discovery?p=…`); its sections follow the same scope logic, and the Cyber section
+    is the security partners' wording, unchanged.
 - `legal-notice.html` / `privacy-policy.html` / `terms-of-use.html` — legal pages linked from
   the footer (operator: SenecAI Compliance S.R.L.; text ported from the old senecai.eu site).
 - `global-ai-policy-map.html` — the interactive Jurisdiction Map from the Global AI Policy
@@ -60,7 +71,7 @@ The same script writes the SEO head block of every page (both languages) and `si
 to add a page, append it to `PAGE_FILES`.
 After editing any English page or `assets/checkers.v2.js`, re-run the script: it fails and
 lists every string that has no Romanian translation yet, so add those to the dictionaries.
-Never edit `ro/*.html` or `assets/checkers.ro.*.js` by hand.
+Never edit `ro/*.html`, `assets/checkers.ro.*.js` or `assets/quote.ro.*.js` by hand.
 
 ## Local preview
 

@@ -554,4 +554,19 @@ PAGES = {
     "Sending…": "Se trimite…",
     "Thank you. Your message has been sent and we will get back to you shortly.": "Vă mulțumim. Mesajul a fost trimis și vă vom răspunde în curând.",
     "Your message could not be sent. Please email us at": "Mesajul nu a putut fi trimis. Vă rugăm să ne scrieți la",
+
+    # ---- quote questionnaires: hero buttons, Resources card, get-a-quote.html, discovery.html ----
+    "Get a quote in 24 hours": "Primiți o ofertă în 24 de ore",
+    "Prefer to talk? Book your intro call →": "Preferați să discutăm? Programați apelul introductiv →",
+    "Get a quote": "Cereți o ofertă",
+    "Your compliance quote in 24 hours": "Oferta de conformitate în 24 de ore",
+    "Answer about 20 quick questions on your company, your product and where you stand. We check which of the AI Act, GDPR, NIS2, DORA and the CRA apply, and send you a quote within 24 hours.": "Răspundeți la aproximativ 20 de întrebări rapide despre companie, produs și stadiul în care vă aflați. Verificăm care dintre AI Act, GDPR, NIS2, DORA și CRA vi se aplică și vă trimitem o ofertă în 24 de ore.",
+    "Get a quote in 24 hours — SenecAI": "Ofertă în 24 de ore — SenecAI",
+    "Tell us about your company and what you need. It takes about 5 minutes, and only the questions that apply to you are shown. Your answers stay confidential and are used only to prepare your quote.": "Spuneți-ne despre compania dvs. și de ce aveți nevoie. Durează aproximativ 5 minute și vedeți doar întrebările care vi se aplică. Răspunsurile rămân confidențiale și sunt folosite doar pentru pregătirea ofertei.",
+    "This questionnaire needs JavaScript enabled. You can also email us at hello@senecai.eu.": "Acest chestionar necesită JavaScript activat. Ne puteți scrie și la hello@senecai.eu.",
+    "Tell us about your company and what you need, and get a compliance quote for the EU AI Act, GDPR, NIS2, DORA, the CRA or ISO certification within 24 hours.": "Spuneți-ne despre compania dvs. și de ce aveți nevoie și primiți în 24 de ore o ofertă de conformitate pentru EU AI Act, GDPR, NIS2, DORA, CRA sau certificare ISO.",
+    "Discovery brief — SenecAI": "Chestionar detaliat — SenecAI",
+    "Discovery brief": "Chestionar detaliat",
+    "The detailed questions we use to scope your project and prepare your proposal. Only the sections that apply to you are shown. You can stop and come back later: your answers are kept in this browser until you send them.": "Întrebările detaliate pe care le folosim pentru a stabili amploarea proiectului și a pregăti propunerea. Vedeți doar secțiunile care vi se aplică. Puteți face o pauză și reveni mai târziu: răspunsurile sunt păstrate în acest browser până le trimiteți.",
+    "The SenecAI discovery brief: the detailed questions we use to scope your compliance project.": "Chestionarul detaliat SenecAI: întrebările pe care le folosim pentru a stabili amploarea proiectului dvs. de conformitate.",
 }

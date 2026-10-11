@@ -90,6 +90,11 @@
       "permanent": true
     },
     {
+      "source": "/quote",
+      "destination": "/get-a-quote",
+      "permanent": true
+    },
+    {
       "source": "/compliance",
       "destination": "/resources#compliance-checkers",
       "permanent": true
