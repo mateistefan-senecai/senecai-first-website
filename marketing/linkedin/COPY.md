@@ -17,7 +17,7 @@ cybersecurity team.
       `linkedin.com/company/senecai-compliance/` (Page admin → Edit page → Page info). Then
       update the link in the site footer (`index.html` and the other pages, then re-run
       `tools/i18n/build_ro.py`).
-- [ ] Upload the new logo (`exports/logo-400.png`) and cover (`exports/company-cover-1128x191.png`).
+- [ ] Upload the new logo (`exports/logo-400.png`) and cover (`exports/company-cover-4200x700.jpg`).
 - [ ] Paste the tagline, About and specialties from section 1.
 - [ ] Set the custom button to **Book an appointment** → `https://calendly.com/senecai-consulting/30min`.
       (If you rename the Calendly account later, update the button and the site together.)

@@ -54,16 +54,18 @@ png("logo-400", 400, 400, `
   <img src="${mark}" style="width:230px">
 </div>`);
 
-// ---------- Company cover 1128x191 ----------
-png("company-cover-1128x191", 1128, 191, `
-<div class="frame dark" style="width:1128px;height:191px">
+// ---------- Company cover: laid out at 2100x350, saved at 2x = 4200x700 (LinkedIn's 6:1 upload size) ----------
+// LinkedIn crops the edges on some screens and puts the logo over the bottom-left, so the text
+// keeps clear of the edges.
+png("company-cover-4200x700", 2100, 350, `
+<div class="frame dark" style="width:2100px;height:350px">
   ${darkWave()}
-  <div style="position:absolute;right:56px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;text-align:right">
-    <div class="display" style="font-size:38px">EU digital compliance</div>
-    <div class="display gold" style="font-size:38px;margin-top:4px">for startups & SMEs</div>
-    <div class="eyebrow" style="font-size:12px;color:${C.line};margin-top:14px">${REGS} &nbsp;·&nbsp; <span class="gold">senecai.eu</span></div>
+  <div style="position:absolute;right:190px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;text-align:right">
+    <div class="display" style="font-size:64px">EU digital compliance</div>
+    <div class="display gold" style="font-size:64px;margin-top:6px">for startups & SMEs</div>
+    <div class="eyebrow" style="font-size:20px;color:${C.line};margin-top:24px">${REGS} &nbsp;·&nbsp; <span class="gold">senecai.eu</span></div>
   </div>
-  <div class="bar" style="height:5px"></div>
+  <div class="bar" style="height:9px"></div>
 </div>`);
 
 // ---------- Personal cover 1584x396 (profile photo covers the bottom-left) ----------
