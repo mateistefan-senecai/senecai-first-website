@@ -40,7 +40,7 @@ cybersecurity team.
 **Company size:** 2–10
 **Headquarters:** Bucharest, Romania
 
-**About** (about 1,450 / 2,000 characters)
+**About** (about 1,350 / 2,000 characters)
 
 > SenecAI Compliance helps startups and SMEs navigate EU digital regulation, from "which law
 > applies to us?" to "we're fully compliant."
@@ -50,7 +50,7 @@ cybersecurity team.
 > it, with one team of legal experts, AI engineers and cybersecurity specialists.
 >
 > Most firms give you either a legal opinion or a technical implementation, and leave you to
-> connect the two. We make the legal analysis directly into documentation, architecture and
+> connect the two. We turn the legal analysis directly into documentation, architecture and
 > controls you can actually run. We write for founders, not for other lawyers.
 >
 > How we work: Discover → Assess → Implement → Monitor.
