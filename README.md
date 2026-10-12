@@ -50,6 +50,13 @@ contact form function.
   old site's URLs (`/blog/*` → the matching Substack posts, `/compliance`, `/eu-ai-act`,
   `/global-ai-policy-study`).
 
+## Marketing assets
+
+`marketing/linkedin/` holds the SenecAI Compliance LinkedIn rebrand kit: `COPY.md` (page copy,
+launch posts, profile headlines, posting plan) and the graphics in `exports/`, rendered from
+`src/render.mjs` (`NODE_PATH=$(npm root -g) node marketing/linkedin/src/render.mjs`, needs
+Playwright). The folder is listed in `.vercelignore`, so it is never deployed.
+
 ## Romanian version
 
 The Romanian site lives in `ro/` (served at `/ro/…`) and is **generated** from the English
