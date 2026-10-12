@@ -31,7 +31,7 @@ cybersecurity team.
 
 **Name:** SenecAI Compliance
 
-**Tagline** (114 / 120 characters)
+**Tagline** (119 / 120 characters)
 
 > EU digital compliance for startups and SMEs. AI Act, GDPR, NIS2, DORA and CRA, covered by one legal–tech–security team.
 
