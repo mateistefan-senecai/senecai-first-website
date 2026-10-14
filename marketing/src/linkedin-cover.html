@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SenecAI LinkedIn cover</title>
+<!-- LinkedIn personal cover, 1584x396. render-linkedin-cover.mjs prints it at 2x.
+     The profile photo covers roughly the left quarter, so all content sits to the right of x = 460. -->
+<style>
+  @font-face { font-family: Archivo; font-weight: 400 900; src: url(/assets/fonts/archivo-latin.v1.woff2) format("woff2"); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  #cover { position: relative; width: 1584px; height: 396px; overflow: hidden; background: #ffffff; font-family: Archivo, sans-serif; color: #17160f; }
+  #wave { position: absolute; inset: 0; }
+  .content { position: absolute; right: 72px; top: 0; bottom: 0; display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 18px; text-align: right; }
+  .logo { height: 64px; width: auto; display: block; margin-bottom: 6px; }
+  h1 { margin: 0; font-weight: 900; font-size: 62px; line-height: .98; letter-spacing: -.035em; text-transform: uppercase; }
+  h1 .gold { color: #b8902f; }
+  .regs { font-weight: 700; font-size: 17px; letter-spacing: .2em; text-transform: uppercase; color: #4a453e; }
+  .regs b { color: #b8902f; font-weight: 800; }
+  .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 8px; background: linear-gradient(90deg, #e6c477, #d5aa4b 45%, #b8902f); }
+</style>
+</head>
+<body>
+<div id="cover">
+  <svg id="wave" viewBox="0 0 1584 396" aria-hidden="true"></svg>
+  <div class="content">
+    <img class="logo" src="/assets/senecai-logo-v2.png" alt="SenecAI Compliance">
+    <h1>EU digital <span class="gold">compliance</span><br>for startups &amp; SMEs</h1>
+    <div class="regs">AI Act · GDPR · NIS2 · DORA · CRA · ISO 27001 · ISO 42001 · <b>senecai.eu</b></div>
+  </div>
+  <div class="bar"></div>
+</div>
+<script>
+  // Gold dot wave, as on the site's gold sections: rows of dots riding a soft crest, fading out
+  // towards the text so the headline stays clean.
+  const svg = document.getElementById('wave');
+  let dots = '';
+  for (let row = 0; row < 26; row++) {
+    for (let x = 300; x <= 1584; x += 9) {
+      const t = x / 1584;
+      const crest = 150 * Math.exp(-Math.pow((x - 760) / 240, 2));
+      const y = 300 - crest + row * 7 + 18 * Math.sin(t * 6 + row * 0.25);
+      const fade = Math.max(0, 1 - Math.abs(x - 760) / 620) * (1 - row / 30);
+      if (fade < 0.04 || y > 392) continue;
+      dots += `<circle cx="${x}" cy="${y.toFixed(1)}" r="${(1.1 + fade * 0.6).toFixed(2)}" fill="#d5aa4b" opacity="${(fade * 0.55).toFixed(2)}"/>`;
+    }
+  }
+  svg.innerHTML = dots;
+</script>
+</body>
+</html>
