@@ -1,6 +1,7 @@
-// Renders video.html frame by frame into an H.264 MP4.
+// Renders a video composition frame by frame into an H.264 MP4.
 //   python3 -m http.server 8000   (from the repo root)
-//   node marketing/src/render-video.mjs [--preview 0,4,8,12,17]
+//   node marketing/src/render-video.mjs [--preview 0,4,8,12,17]          16:9 cut (video.html)
+//   node marketing/src/render-video.mjs --vertical [--preview 0,4,8]     9:16 Reels cut (video-vertical.html)
 // Needs Playwright (Chromium) and ffmpeg on PATH.
 import { spawn } from 'node:child_process';
 import { mkdirSync } from 'node:fs';
@@ -16,10 +17,12 @@ catch { ({ chromium } = await import('/opt/node22/lib/node_modules/playwright/in
 const here = dirname(fileURLToPath(import.meta.url));
 const outDir = join(here, '..');
 const FPS = 30;
-const URL = process.env.VIDEO_URL || 'http://localhost:8000/marketing/src/video.html';
+const vertical = process.argv.includes('--vertical');
+const URL = process.env.VIDEO_URL || `http://localhost:8000/marketing/src/${vertical ? 'video-vertical' : 'video'}.html`;
+const OUT = vertical ? 'senecai-promo-reels-1080x1920.mp4' : 'senecai-promo-1080p.mp4';
 
 const browser = await chromium.launch();
-const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
+const page = await browser.newPage({ viewport: vertical ? { width: 1080, height: 1920 } : { width: 1920, height: 1080 } });
 await page.goto(URL, { waitUntil: 'networkidle' });
 await page.evaluate(() => document.fonts.ready);
 await page.waitForTimeout(500);
@@ -28,7 +31,7 @@ const duration = await page.evaluate(() => window.DURATION);
 
 const previewArg = process.argv.indexOf('--preview');
 if (previewArg > -1) {
-  const dir = join(here, 'preview');
+  const dir = join(here, vertical ? 'preview-vertical' : 'preview');
   mkdirSync(dir, { recursive: true });
   for (const t of process.argv[previewArg + 1].split(',').map(Number)) {
     await page.evaluate((t) => window.render(t), t);
@@ -38,7 +41,7 @@ if (previewArg > -1) {
   process.exit(0);
 }
 
-const out = join(outDir, 'senecai-promo-1080p.mp4');
+const out = join(outDir, OUT);
 const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-i', '-',
   '-c:v', 'libx264', '-preset', 'slow', '-crf', '18', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', out],
   { stdio: ['pipe', 'inherit', 'inherit'] });
