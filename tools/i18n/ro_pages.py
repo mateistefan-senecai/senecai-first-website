@@ -600,5 +600,7 @@ PAGES = {
     "The SenecAI discovery brief: the detailed questions we use to scope your compliance project.": "Chestionarul detaliat SenecAI: întrebările pe care le folosim pentru a stabili amploarea proiectului dvs. de conformitate.",
     # ---- index: hero buttons (short labels)
     "Get a quote in 24h": "Ofertă în 24 de ore",
-    "Free compliance check": "Verificare gratuită",
+    "Check what applies to you": "Verificați ce vi se aplică",
+    # ---- footer: legal entity
+    "SenecAI Compliance S.R.L. · CUI 55377157": "SenecAI Compliance S.R.L. · CUI 55377157",
 }
