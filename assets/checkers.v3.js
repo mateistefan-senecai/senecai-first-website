@@ -6,10 +6,12 @@
  *
  * Each tool is plain data: a start node, nodes with options and a next(answers) function,
  * and an evaluate(answers) function that turns the answers into results with a rule
- * trace (every result line cites the article it rests on). No answer leaves the browser.
+ * trace (every result line cites the article it rests on). Answers leave the browser only
+ * when the visitor asks for the PDF report by email: api/checker-report.js loads this same
+ * file (or its Romanian build) and rebuilds the result from the answers on the server.
  *
- * The file name is versioned because /assets/* is cached as immutable: rename it (v3, …)
- * whenever it changes, and update the <script> tag in research.html.
+ * The file name is versioned because /assets/* is cached as immutable: rename it (v4, …)
+ * whenever it changes, and update the <script> tag in resources.html and the three checker pages.
  *
  * Legal position as of October 2026: AI Act as amended by Regulation (EU) 2026/1744
  * (Digital Omnibus on AI, in force 27 July 2026); NIS2 as adopted (the January 2026
@@ -1146,13 +1148,82 @@
 
   var TOOLS = { general: general, aiact: aiact, nis2: nis2 };
 
+  /* Each checker also has a page of its own, to share directly; resources.html shows all
+     three as tabs. */
+  var PAGES = { general: "eu-compliance-checker.html", aiact: "ai-act-checker.html", nis2: "nis2-checker.html" };
+
+  var STATUS_LABEL = { applies: "Applies", likely: "Likely", indirect: "Indirect", review: "Review", no: "Does not apply", prohibited: "Prohibited", high: "High-risk", essential: "Essential", important: "Important" };
+
+  /* Interface text. api/checker-report.js uses it too, for the PDF report and its email. */
+  var UI = {
+    result: "Your result",
+    means: "What this means for you",
+    good: "Good to know",
+    dates: "Key dates",
+    answers: "Your answers",
+    disclaimer: "This checker applies a fixed set of rules to your answers. It gives general information, not legal advice, and is no substitute for an assessment of your specific situation. Legal position as of October 2026, including the AI Act as amended by Regulation (EU) 2026/1744.",
+    gateEyebrow: "Your result is ready",
+    gateTitle: "Where should we send your PDF report?",
+    gateText: "We’ll email you the full result as a PDF: every finding with the article it rests on, what it means for you, the key dates and your answers.",
+    againTitle: "Get this result as a PDF by email",
+    email: "Work email",
+    name: "Name (optional)",
+    company: "Company (optional)",
+    consent: "SenecAI may contact me to follow up on my result",
+    privacy: "We use your email address to send you the report and, only if you tick the box, to follow up on it. See our",
+    privacyLink: "Privacy Policy",
+    send: "Email me the report",
+    sending: "Sending…",
+    skip: "Skip and show my result",
+    sent: "Done. Your PDF report is on its way to",
+    sendError: "The report could not be sent. Check your email address and try again, or write to us at",
+    copied: "Link copied",
+    pdfKicker: "Compliance checker report",
+    pdfDate: "Date",
+    pdfFor: "Prepared for",
+    pdfCta: "Want to go through your result with an expert? Book a free 30-minute intro call:",
+    mailSubject: "Your SenecAI compliance report",
+    mailHello: "Hello",
+    mailIntro: "Thank you for using the SenecAI compliance checker. Your report is attached as a PDF.",
+    mailCta: "Questions about your result? Reply to this email or book a free intro call:",
+    mailSign: "The SenecAI team"
+  };
+
+  function validAnswer(n, v) {
+    var vals = n.options.map(function (o) { return o.v; });
+    if (n.multi) {
+      return Array.isArray(v) && v.length > 0 && v.every(function (x, i) { return typeof x === "string" && vals.indexOf(x) !== -1 && v.indexOf(x) === i; });
+    }
+    return typeof v === "string" && vals.indexOf(v) !== -1;
+  }
+
+  /* Re-walks a tree from its start with the given answers. Returns the path (node ids) and
+     the answers on it, or null if an answer on the path is missing or not one of its node's
+     options. The server uses it so an emailed report always follows the rules. */
+  function walk(tool, answers) {
+    var path = [], clean = {}, id = tool.start;
+    while (id) {
+      var n = tool.nodes[id], v = Object.prototype.hasOwnProperty.call(answers, id) ? answers[id] : undefined;
+      if (!n || path.indexOf(id) !== -1 || !validAnswer(n, v)) return null;
+      path.push(id); clean[id] = v;
+      id = n.next(clean);
+    }
+    return { path: path, answers: clean };
+  }
+
+  /* The option labels for one answer (recap on the page and in the PDF). */
+  function answerLabels(n, v) {
+    return (Array.isArray(v) ? v : [v]).map(function (x) {
+      for (var i = 0; i < n.options.length; i++) if (n.options[i].v === x) return n.options[i].l;
+      return x;
+    });
+  }
+
   /* ========================================================================
    * UI engine (browser only)
    * ====================================================================== */
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function paras(s) { return String(s).split("\n\n").map(function (p) { return "<p>" + esc(p) + "</p>"; }).join(""); }
-
-  var STATUS_LABEL = { applies: "Applies", likely: "Likely", indirect: "Indirect", review: "Review", no: "Does not apply", prohibited: "Prohibited", high: "High-risk", essential: "Essential", important: "Important" };
 
   function Checker(el, tool) {
     this.el = el; this.tool = tool;
@@ -1160,6 +1231,8 @@
   }
   Checker.prototype.reset = function () {
     this.answers = {}; this.history = []; this.current = this.tool.start; this.done = false; this.draft = null;
+    /* Email step: shown once after the last question ("gate"), then as a form under the result. */
+    this.mail = { stage: "gate", email: this.mail ? this.mail.email : "", sentFor: null, t: 0 };
   };
   /* Answers that are on the current path only (back-navigation drops stale branches). */
   Checker.prototype.pathAnswers = function () {
@@ -1195,7 +1268,8 @@
     });
     html += "</div>";
     html += '<div class="ck-bar"><span style="width:' + Math.round(100 * Math.min(secIdx, t.sections.length) / t.sections.length) + '%"></span></div>';
-    html += this.done ? this.renderResult() : this.renderNode();
+    if (this.done) this.mail.t = Date.now();
+    html += !this.done ? this.renderNode() : this.mail.stage === "gate" ? this.renderMailForm(true) : this.renderResult();
     this.el.innerHTML = html;
     this.bind();
     if (focus) {
@@ -1254,7 +1328,8 @@
     var res = this.tool.evaluate(this.pathAnswers()), html = "", self = this;
     var h = res.headline;
     html += '<div class="ck-result">';
-    html += '<div class="ck-head ck-s-' + h.status + '"><div class="ck-eyebrow">Your result</div><h3 class="ck-title" tabindex="-1" data-ck-focus>' + esc(h.title) + '</h3><p>' + esc(h.text) + "</p></div>";
+    if (this.mail.sentFor === this.resultKey()) html += '<p class="ck-sent" role="status">' + esc(UI.sent) + " <strong>" + esc(this.mail.email) + "</strong>.</p>";
+    html += '<div class="ck-head ck-s-' + h.status + '"><div class="ck-eyebrow">' + esc(UI.result) + '</div><h3 class="ck-title" tabindex="-1" data-ck-focus>' + esc(h.title) + '</h3><p>' + esc(h.text) + "</p></div>";
     html += '<div class="ck-cards">';
     res.cards.forEach(function (c) {
       html += '<div class="ck-card">';
@@ -1267,34 +1342,34 @@
         html += "</ul>";
       }
       if (c.actions && c.actions.length) {
-        html += '<div class="ck-sub">What this means for you</div><ul class="ck-acts">';
+        html += '<div class="ck-sub">' + esc(UI.means) + '</div><ul class="ck-acts">';
         c.actions.forEach(function (x) { html += "<li>" + esc(x) + "</li>"; });
         html += "</ul>";
       }
       if (c.notes && c.notes.length) {
-        html += '<div class="ck-sub">Good to know</div><ul class="ck-acts">';
+        html += '<div class="ck-sub">' + esc(UI.good) + '</div><ul class="ck-acts">';
         c.notes.forEach(function (x) { html += "<li>" + esc(x) + "</li>"; });
         html += "</ul>";
       }
       if (c.dates && c.dates.length) {
-        html += '<div class="ck-sub">Key dates</div><ul class="ck-acts ck-dates">';
+        html += '<div class="ck-sub">' + esc(UI.dates) + '</div><ul class="ck-acts ck-dates">';
         c.dates.forEach(function (x) { html += "<li>" + esc(x) + "</li>"; });
         html += "</ul>";
       }
-      if (c.link && c.status !== "no") html += '<a class="ck-link" href="#' + c.link.tool + '-checker" data-ck-goto="' + c.link.tool + '">' + esc(c.link.label) + "</a>";
+      if (c.link && c.status !== "no") html += '<a class="ck-link" href="' + PAGES[c.link.tool] + '" data-ck-goto="' + c.link.tool + '">' + esc(c.link.label) + "</a>";
       html += "</div>";
     });
     html += "</div>";
 
     /* answer recap */
     var a = this.pathAnswers(), t = this.tool;
-    html += '<details class="ck-recap"><summary>Your answers</summary><ol>';
+    html += '<details class="ck-recap"><summary>' + esc(UI.answers) + "</summary><ol>";
     this.history.forEach(function (id) {
-      var n = t.nodes[id], v = a[id], vals = Array.isArray(v) ? v : [v];
-      var labels = vals.map(function (x) { for (var i = 0; i < n.options.length; i++) if (n.options[i].v === x) return n.options[i].l; return x; });
-      html += "<li><strong>" + esc(n.q) + "</strong><br>" + esc(labels.join("; ")) + "</li>";
+      var n = t.nodes[id];
+      html += "<li><strong>" + esc(n.q) + "</strong><br>" + esc(answerLabels(n, a[id]).join("; ")) + "</li>";
     });
     html += "</ol></details>";
+    if (this.mail.sentFor !== this.resultKey()) html += this.renderMailForm(false);
 
     html += '<div class="ck-nav ck-end">';
     html += '<a class="ck-btn ck-primary" href="mailto:hello@senecai.eu?subject=' + encodeURIComponent("Compliance checker result: " + h.title) + '">Discuss your result with us →</a>';
@@ -1302,9 +1377,67 @@
     html += '<button type="button" class="ck-btn ck-ghost" data-ck-restart>Start over</button>';
     html += '<button type="button" class="ck-btn ck-ghost" data-ck-print>Print / save as PDF</button>';
     html += "</div>";
-    html += '<p class="ck-disclaimer">This checker applies a fixed set of rules to your answers. It gives general information, not legal advice, and is no substitute for an assessment of your specific situation. Legal position as of October 2026, including the AI Act as amended by Regulation (EU) 2026/1744.</p>';
+    html += '<p class="ck-disclaimer">' + esc(UI.disclaimer) + "</p>";
     html += "</div>";
     return html;
+  };
+
+  Checker.prototype.resultKey = function () { return JSON.stringify(this.pathAnswers()); };
+
+  /* The email form: a step of its own after the last question (gate), or a box under the result. */
+  Checker.prototype.renderMailForm = function (gate) {
+    var html = '<form class="ck-mail' + (gate ? " ck-gate" : "") + '" data-ck-mail>';
+    if (gate) {
+      html += '<div class="ck-eyebrow">' + esc(UI.gateEyebrow) + '</div><h3 class="ck-title" tabindex="-1" data-ck-focus>' + esc(UI.gateTitle) + "</h3>";
+      html += '<p class="ck-mail-text">' + esc(UI.gateText) + "</p>";
+    } else {
+      html += '<div class="ck-sub">' + esc(UI.againTitle) + "</div>";
+    }
+    html += '<div class="ck-mail-row">';
+    html += '<label class="ck-field"><span>' + esc(UI.email) + '</span><input type="email" name="email" required maxlength="254" autocomplete="email" value="' + esc(this.mail.email) + '"></label>';
+    html += '<label class="ck-field"><span>' + esc(UI.name) + '</span><input type="text" name="name" maxlength="200" autocomplete="name"></label>';
+    html += '<label class="ck-field"><span>' + esc(UI.company) + '</span><input type="text" name="company" maxlength="200" autocomplete="organization"></label>';
+    html += "</div>";
+    html += '<label class="ck-consent"><input type="checkbox" name="consent" value="yes"><span>' + esc(UI.consent) + "</span></label>";
+    html += '<div class="ck-hp" aria-hidden="true"><input name="website" type="text" tabindex="-1" autocomplete="off"></div>';
+    html += '<p class="ck-mail-note">' + esc(UI.privacy) + ' <a href="privacy-policy.html">' + esc(UI.privacyLink) + "</a>.</p>";
+    html += '<div class="ck-nav"><button type="submit" class="ck-btn ck-primary" data-ck-send>' + esc(UI.send) + " →</button>";
+    if (gate) {
+      html += '<button type="button" class="ck-btn ck-ghost" data-ck-skip>' + esc(UI.skip) + "</button>";
+      html += '<button type="button" class="ck-btn ck-ghost" data-ck-back>← Change last answer</button>';
+    }
+    html += "</div>";
+    html += '<p class="ck-mail-status" data-ck-status role="status" hidden></p>';
+    html += "</form>";
+    return html;
+  };
+
+  Checker.prototype.send = function (form) {
+    if (!form.reportValidity()) return;
+    var self = this, f = form.elements, key = this.resultKey();
+    var btn = form.querySelector("[data-ck-send]"), status = form.querySelector("[data-ck-status]");
+    var body = {
+      tool: this.tool.id, lang: document.documentElement.lang === "ro" ? "ro" : "en", answers: this.pathAnswers(),
+      email: f.email.value.trim(), name: f.name.value.trim(), company: f.company.value.trim(),
+      consent: f.consent.checked, website: f.website.value, t: this.mail.t
+    };
+    btn.disabled = true;
+    status.hidden = false; status.className = "ck-mail-status"; status.textContent = UI.sending;
+    fetch("/api/checker-report", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(body)
+    }).then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
+      .then(function (res) {
+        if (!res || !res.ok) throw new Error("send");
+        self.mail.email = body.email; self.mail.sentFor = key; self.mail.stage = "done";
+        self.render(true);
+      })
+      .catch(function () {
+        btn.disabled = false;
+        status.className = "ck-mail-status ck-error";
+        status.innerHTML = esc(UI.sendError) + ' <a href="mailto:hello@senecai.eu">hello@senecai.eu</a>.';
+      });
   };
 
   Checker.prototype.bind = function () {
@@ -1346,8 +1479,11 @@
     el.querySelectorAll("[data-ck-back]").forEach(function (b) { b.addEventListener("click", function () { self.back(); }); });
     var rs = el.querySelector("[data-ck-restart]"); if (rs) rs.addEventListener("click", function () { self.restart(); });
     var pr = el.querySelector("[data-ck-print]"); if (pr) pr.addEventListener("click", function () { window.print(); });
+    var mf = el.querySelector("[data-ck-mail]"); if (mf) mf.addEventListener("submit", function (ev) { ev.preventDefault(); self.send(mf); });
+    var sk = el.querySelector("[data-ck-skip]"); if (sk) sk.addEventListener("click", function () { self.mail.stage = "skipped"; self.render(true); });
+    /* Another checker: switch tabs on resources.html, otherwise follow the link to its page. */
     el.querySelectorAll("[data-ck-goto]").forEach(function (l) {
-      l.addEventListener("click", function (ev) { ev.preventDefault(); if (root.SenecaiCheckers.activate) root.SenecaiCheckers.activate(l.getAttribute("data-ck-goto"), true); });
+      l.addEventListener("click", function (ev) { var go = root.SenecaiCheckers.activate; if (go && go(l.getAttribute("data-ck-goto"), true)) ev.preventDefault(); });
     });
   };
 
@@ -1364,7 +1500,7 @@
     });
     var tabs = wrap.querySelectorAll("[data-ck-tab]");
     function activate(id, scroll) {
-      if (!instances[id]) return;
+      if (!instances[id] || !tabs.length) return false;
       tabs.forEach(function (tb) {
         var on = tb.getAttribute("data-ck-tab") === id;
         tb.setAttribute("aria-selected", on); tb.classList.toggle("is-active", on); tb.tabIndex = on ? 0 : -1;
@@ -1372,6 +1508,7 @@
       wrap.querySelectorAll("[data-checker]").forEach(function (p) { p.hidden = p.getAttribute("data-checker") !== id; });
       if (history.replaceState) history.replaceState(null, "", "#" + id + "-checker");
       if (scroll) { var nav = document.getElementById("top"); var top = wrap.getBoundingClientRect().top + window.pageYOffset - (nav ? nav.offsetHeight : 0) - 16; window.scrollTo({ top: top, behavior: "smooth" }); }
+      return true;
     }
     root.SenecaiCheckers.activate = activate;
     tabs.forEach(function (tb, i) {
@@ -1391,9 +1528,19 @@
     document.querySelectorAll("[data-ck-open]").forEach(function (l) {
       l.addEventListener("click", function (ev) { ev.preventDefault(); activate(l.getAttribute("data-ck-open"), true); });
     });
+    /* Copy-link buttons: the clean URL of a checker's own page, in the page's language. */
+    document.querySelectorAll("[data-ck-copy]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var url = new URL(PAGES[b.getAttribute("data-ck-copy")].replace(/\.html$/, ""), location.href).href;
+        var label = b.textContent;
+        var done = function () { b.textContent = UI.copied; setTimeout(function () { b.textContent = label; }, 2000); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, function () { window.prompt("", url); });
+        else window.prompt("", url);
+      });
+    });
   }
 
-  root.SenecaiCheckers = { tools: TOOLS, Checker: Checker };
+  root.SenecaiCheckers = { tools: TOOLS, pages: PAGES, ui: UI, statusLabel: STATUS_LABEL, walk: walk, answerLabels: answerLabels, Checker: Checker };
   if (typeof module !== "undefined" && module.exports) module.exports = root.SenecaiCheckers;
   if (typeof document !== "undefined") {
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount);

@@ -1,19 +1,9 @@
 // Contact form endpoint (Vercel serverless function): validates the enquiry from the
 // "Ready to get compliant?" band and emails it through Google Workspace SMTP.
 // Nothing is stored. Needs SMTP_USER and SMTP_PASS (a Google app password) in Vercel.
-const nodemailer = require("nodemailer");
+const { TO, EMAIL_RE, clean, oneLine, configured, transport } = require("./_lib/mail");
 
-const TO = process.env.CONTACT_TO || "matei.stefan@senecai.eu";
-const EMAIL_RE = /^[^\s@<>()",;:]+@[^\s@<>()",;:]+\.[^\s@<>()",;:]{2,}$/;
 const LIMITS = { name: 200, email: 254, company: 200, message: 5000 };
-
-function clean(value, max) {
-  return String(value == null ? "" : value).replace(/\r\n?/g, "\n").trim().slice(0, max);
-}
-
-function oneLine(value) {
-  return value.replace(/[\r\n]+/g, " ");
-}
 
 function reply(req, res, status, body) {
   const wantsJson = (req.headers.accept || "").includes("application/json");
@@ -56,22 +46,15 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+  if (!configured()) {
     console.error("contact: SMTP_USER / SMTP_PASS are not set");
     reply(req, res, 500, { ok: false, error: "config" });
     return;
   }
 
-  const transport = nodemailer.createTransport({
-    host: process.env.SMTP_HOST || "smtp.gmail.com",
-    port: Number(process.env.SMTP_PORT || 465),
-    secure: true,
-    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-  });
-
   const page = oneLine(clean(req.headers.referer, 300));
   try {
-    await transport.sendMail({
+    await transport().sendMail({
       from: { name: "senecai.eu contact form", address: process.env.SMTP_USER },
       to: TO,
       replyTo: { name, address: email },

@@ -1,6 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
+  "functions": {
+    "api/checker-report.js": {
+      "includeFiles": "{api/_lib/fonts/**,assets/senecai-compliance-logo-light.png,assets/checkers.v3.js,assets/checkers.ro.v2.js}"
+    }
+  },
   "trailingSlash": false,
   "headers": [
     {

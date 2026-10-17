@@ -1,5 +1,5 @@
-# English -> Romanian strings for the compliance checkers (assets/checkers.v2.js ->
-# assets/checkers.ro.v1.js). Terminology follows the official Romanian texts: furnizor /
+# English -> Romanian strings for the compliance checkers (assets/checkers.v3.js ->
+# assets/checkers.ro.v2.js). Terminology follows the official Romanian texts: furnizor /
 # implementator (AI Act), operator / persoană împuternicită (GDPR), entitate esențială /
 # importantă (NIS2), entitate financiară, TIC (DORA), produse cu elemente digitale (CRA).
 import re
@@ -11,11 +11,6 @@ RAW = [
     ('roles.push("deployer")', 'roles.push("implementator")'),
     ('roles.push("importer / distributor")', 'roles.push("importator / distribuitor")'),
     ('"Annex II entity of " + size + " size."', '"Entitate din Anexa II de mărime " + (size === "large" ? "mare" : "medie") + "."'),
-    ('<div class="ck-eyebrow">Your result</div>', '<div class="ck-eyebrow">Rezultatul dvs.</div>'),
-    ('<div class="ck-sub">What this means for you</div>', '<div class="ck-sub">Ce înseamnă pentru dvs.</div>'),
-    ('<div class="ck-sub">Good to know</div>', '<div class="ck-sub">Bine de știut</div>'),
-    ('<div class="ck-sub">Key dates</div>', '<div class="ck-sub">Date-cheie</div>'),
-    ('<summary>Your answers</summary>', '<summary>Răspunsurile dvs.</summary>'),
     ('encodeURIComponent("Compliance checker result: " + h.title)', 'encodeURIComponent("Rezultat verificator de conformitate: " + h.title)'),
     ('>Discuss your result with us →<', '>Discutați rezultatul cu noi →<'),
     ('data-ck-back>← Change last answer</button>', 'data-ck-back>← Modificați ultimul răspuns</button>'),
@@ -657,4 +652,34 @@ CHECKERS = {
     "17 Apr 2025: Member States’ deadline to establish their lists of essential and important entities.": "17 apr. 2025: termenul până la care statele membre trebuiau să își stabilească listele de entități esențiale și importante.",
     "Romania: NIS2 was transposed by Government Emergency Ordinance (OUG) no. 155/2024; the competent authority is the National Cyber Security Directorate (DNSC).": "România: NIS2 a fost transpusă prin Ordonanța de urgență a Guvernului (OUG) nr. 155/2024; autoritatea competentă este Directoratul Național de Securitate Cibernetică (DNSC).",
     "Pending: the targeted NIS2 amendment COM(2026) 13 (January 2026) is in negotiation between Parliament and Council.": "În curs: modificarea punctuală a NIS2, COM(2026) 13 (ianuarie 2026), este în negociere între Parlament și Consiliu.",
+    # ---------------------------------------------------------------- UI text (also PDF report and its email)
+    "Your result": "Rezultatul dvs.",
+    "What this means for you": "Ce înseamnă pentru dvs.",
+    "Good to know": "Bine de știut",
+    "Your answers": "Răspunsurile dvs.",
+    "Your result is ready": "Rezultatul dvs. este gata",
+    "Where should we send your PDF report?": "Unde vă trimitem raportul PDF?",
+    "We’ll email you the full result as a PDF: every finding with the article it rests on, what it means for you, the key dates and your answers.": "Vă trimitem pe e-mail rezultatul complet, în format PDF: fiecare concluzie cu articolul pe care se sprijină, ce înseamnă pentru dvs., datele-cheie și răspunsurile dvs.",
+    "Get this result as a PDF by email": "Primiți acest rezultat ca PDF pe e-mail",
+    "Work email": "E-mail de serviciu",
+    "Name (optional)": "Nume (opțional)",
+    "Company (optional)": "Companie (opțional)",
+    "SenecAI may contact me to follow up on my result": "SenecAI mă poate contacta în legătură cu rezultatul meu",
+    "We use your email address to send you the report and, only if you tick the box, to follow up on it. See our": "Folosim adresa dvs. de e-mail pentru a vă trimite raportul și, doar dacă bifați căsuța, pentru a reveni în legătură cu acesta. Consultați",
+    "Privacy Policy": "Politica de confidențialitate",
+    "Email me the report": "Trimiteți-mi raportul",
+    "Sending…": "Se trimite…",
+    "Skip and show my result": "Treci peste și arată-mi rezultatul",
+    "Done. Your PDF report is on its way to": "Gata. Raportul PDF este în drum spre",
+    "The report could not be sent. Check your email address and try again, or write to us at": "Raportul nu a putut fi trimis. Verificați adresa de e-mail și încercați din nou sau scrieți-ne la",
+    "Link copied": "Link copiat",
+    "Compliance checker report": "Raport de verificare a conformității",
+    "Date": "Data",
+    "Prepared for": "Pregătit pentru",
+    "Want to go through your result with an expert? Book a free 30-minute intro call:": "Vreți să discutați rezultatul cu un expert? Programați o discuție introductivă gratuită de 30 de minute:",
+    "Your SenecAI compliance report": "Raportul dvs. de conformitate SenecAI",
+    "Hello": "Bună ziua",
+    "Thank you for using the SenecAI compliance checker. Your report is attached as a PDF.": "Vă mulțumim că ați folosit verificatorul de conformitate SenecAI. Raportul dvs. este atașat în format PDF.",
+    "Questions about your result? Reply to this email or book a free intro call:": "Aveți întrebări despre rezultat? Răspundeți la acest e-mail sau programați o discuție introductivă gratuită:",
+    "The SenecAI team": "Echipa SenecAI",
 }
