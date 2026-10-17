@@ -4,8 +4,8 @@ Marketing site for SenecAI — EU digital compliance (AI Act, GDPR, DORA, NIS2) 
 
 ## Stack
 
-Plain static HTML. No build step, no framework; the only dependency is `nodemailer` for the
-contact form function.
+Plain static HTML. No build step, no framework; the only dependencies are `nodemailer` and
+`pdfkit`, for the two serverless functions in `api/` (contact form, checker report).
 
 - `index.html` — the main scrolling page (Hero, Challenge, Partners, Testimonials, How We
   Work, Engagement, Team, FAQ, final CTA), with styling inline on the elements plus one
@@ -15,12 +15,33 @@ contact form function.
 - `regulations-covered.html` / `resources.html` — standalone pages (same nav/footer shell)
   for the two sections that intentionally sit off the main scroll. Linked from the top nav.
   The Regulations page has its own regulation-specific FAQ at the bottom.
-- Compliance checkers — three rules-based decision trees on `resources.html`
-  (`#compliance-checkers`): general applicability (AI Act, GDPR, NIS2, DORA, CRA), AI Act
-  risk class & role (AI systems only; GPAI models are deliberately out of scope), and NIS2 essential / important. Trees, rules and the UI engine live in
-  `assets/checkers.v2.js` (versioned like the dot wave — rename on change). Deep links:
-  `resources.html#general-checker`, `#aiact-checker`, `#nis2-checker`; the hero's
-  "Try the compliance checker" link opens the general one. Legal position: October 2026.
+- Compliance checkers — three rules-based decision trees: general applicability (AI Act,
+  GDPR, NIS2, DORA, CRA), AI Act risk class & role (AI systems only; GPAI models are
+  deliberately out of scope), and NIS2 essential / important. Trees, rules and the UI engine
+  live in `assets/checkers.v3.js`, their styles in `assets/checkers.v1.css` (both versioned
+  like the dot wave — rename on change). Each checker runs on a page of its own, to share
+  directly: `/eu-compliance-checker`, `/ai-act-checker`, `/nis2-checker` (and `/ro/…`); the
+  engine's `PAGES` map lists them, and each page has a "Copy link" button.
+  `resources.html#compliance-checkers` shows only three title cards linking to those pages
+  (old deep links `#general-checker`, `#aiact-checker`, `#nis2-checker` forward to them), and
+  the hero's "Try the compliance checker" link opens the general one.
+
+  Legal position: October 2026.
+- Checker PDF report by email (lead magnet) — after the last question the visitor must leave
+  their email to see the result (name, company and a follow-up consent box are optional);
+  the result appears on screen once the report has been emailed. Changing an answer and
+  finishing again asks again, with the email pre-filled. If sending fails on our side
+  (5xx or network), the result is shown anyway with a note, and the function logs the
+  visitor's details so the lead is still in the Vercel logs.
+  `api/checker-report.js` receives only the tool id and the answers, re-walks the tree with
+  the same engine file the page runs (`walk()` rejects any answer that is not on the path or
+  not an option), renders the result with `pdfkit` (`api/_lib/report-pdf.js`, Archivo
+  embedded from `api/_lib/fonts/`, logo from `assets/`) and emails it to the visitor, with a
+  copy to `CONTACT_TO` saying who asked and whether they agreed to a follow-up. Nothing is
+  stored. Same SMTP environment variables as the contact form. When `checkers.v3.js` or
+  `checkers.ro.v2.js` is renamed, update `ENGINES` in `api/checker-report.js` and
+  `includeFiles` in `vercel.json`. The PDF and email text lives in the engine's `UI` object,
+  so the Romanian build translates it like everything else.
 - `legal-notice.html` / `privacy-policy.html` / `terms-of-use.html` — legal pages linked from
   the footer (operator: SenecAI Compliance S.R.L.; text ported from the old senecai.eu site).
 - `global-ai-policy-map.html` — the interactive Jurisdiction Map from the Global AI Policy
@@ -31,12 +52,12 @@ contact form function.
 - `404.html` — served by Vercel for unknown URLs; all its links are root-absolute.
 - Contact form — in the "Ready to get compliant?" band on every page. `assets/contact-form.v1.js`
   posts it to `api/contact.js`, a Vercel serverless function that emails the enquiry (nothing is
-  stored) through Google Workspace SMTP to `matei.stefan@senecai.eu`, with Reply-To set to the
+  stored) through Google Workspace SMTP (`api/_lib/mail.js`, shared with the checker report) to `matei.stefan@senecai.eu`, with Reply-To set to the
   sender. It needs two environment variables in Vercel (Settings → Environment Variables,
   Production): `SMTP_USER` (the Workspace address that sends, e.g. `matei.stefan@senecai.eu`)
   and `SMTP_PASS` (a Google app password for that account). Optional: `CONTACT_TO`,
   `SMTP_HOST`, `SMTP_PORT`. Without them the form shows its error line, which points to the
-  email address. `package.json` exists only for this function's `nodemailer` dependency.
+  email address. `package.json` exists only for the functions' dependencies.
 - SEO: every page's `<head>` carries a generated block (canonical, hreflang incl.
   `x-default`, favicon, Open Graph / Twitter card using `assets/og-image.v1.png`), and
   `sitemap.xml` is generated too — both by `tools/i18n/build_ro.py` (see below).
@@ -46,7 +67,8 @@ contact form function.
   (`assets/dot-wave.v1.js`, from the design handoff). The file name is versioned because
   `/assets/*` is cached as immutable: rename it (v2, …) whenever it changes.
 - `assets/` — product screenshots and the logo used on the page.
-- `vercel.json` — long-lived cache headers for `/assets/*`, and permanent redirects from the
+- `vercel.json` — long-lived cache headers for `/assets/*`, the files the checker-report
+  function reads at run time (`includeFiles`), and permanent redirects from the
   old site's URLs (`/blog/*` → the matching Substack posts, `/compliance`, `/eu-ai-act`,
   `/global-ai-policy-study`).
 
@@ -55,10 +77,10 @@ contact form function.
 The Romanian site lives in `ro/` (served at `/ro/…`) and is **generated** from the English
 pages: `python3 tools/i18n/build_ro.py` translates every text node and attribute using the
 dictionaries in `tools/i18n/ro_pages.py` (pages) and `tools/i18n/ro_checkers.py` (compliance
-checkers → `assets/checkers.ro.v1.js`), rewrites asset paths and wires the EN/RO switch.
+checkers → `assets/checkers.ro.v2.js`), rewrites asset paths and wires the EN/RO switch.
 The same script writes the SEO head block of every page (both languages) and `sitemap.xml`;
 to add a page, append it to `PAGE_FILES`.
-After editing any English page or `assets/checkers.v2.js`, re-run the script: it fails and
+After editing any English page or `assets/checkers.v3.js`, re-run the script: it fails and
 lists every string that has no Romanian translation yet, so add those to the dictionaries.
 Never edit `ro/*.html` or `assets/checkers.ro.*.js` by hand.
 

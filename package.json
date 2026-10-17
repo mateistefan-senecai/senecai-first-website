@@ -1,8 +1,9 @@
 {
   "name": "senecai-website",
   "private": true,
-  "description": "Static site; the only dependency is for the contact form function in api/contact.js.",
+  "description": "Static site; the dependencies are for the serverless functions in api/ (contact form, checker PDF report).",
   "dependencies": {
-    "nodemailer": "^10.0.15"
+    "nodemailer": "^10.0.15",
+    "pdfkit": "^0.17.2"
   }
 }

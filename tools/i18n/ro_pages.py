@@ -554,4 +554,33 @@ PAGES = {
     "Sending…": "Se trimite…",
     "Thank you. Your message has been sent and we will get back to you shortly.": "Vă mulțumim. Mesajul a fost trimis și vă vom răspunde în curând.",
     "Your message could not be sent. Please email us at": "Mesajul nu a putut fi trimis. Vă rugăm să ne scrieți la",
+    # ---- index: The Challenge (shortened copy)
+    "Investor due diligence, enterprise deals, regulatory risk: compliance can quickly become a bottleneck.": "Due diligence-ul investitorilor, contractele enterprise, riscul de reglementare: conformitatea poate deveni rapid un blocaj.",
+    "SenecAI handles compliance end to end, from strategy and audits to remediation and ongoing monitoring.": "SenecAI se ocupă de conformitate de la cap la coadă: de la strategie și audituri la remediere și monitorizare continuă.",
+    # ---- resources: checker share bar
+    "Rules-based decision trees built on the text of the regulations. Pick a checker, answer the questions, and see what applies to you, why, and what follows, with every finding traced to its article. We also send you the result as a PDF.": "Arbori de decizie bazați pe reguli, construiți pe textul reglementărilor. Alegeți un verificator, răspundeți la întrebări și vedeți ce vi se aplică, de ce și ce urmează, fiecare concluzie fiind legată de articolul pe care se sprijină. Vă trimitem rezultatul și în format PDF.",
+    "Copy link": "Copiați linkul",
+    "Start the checker →": "Începeți verificarea →",
+    # ---- standalone checker pages
+    "EU Compliance Checker — SenecAI": "Verificator de conformitate UE — SenecAI",
+    "EU AI Act Checker — SenecAI": "Verificator AI Act — SenecAI",
+    "NIS2 Checker — SenecAI": "Verificator NIS2 — SenecAI",
+    "Free checker: find out which of the EU AI Act, GDPR, NIS2, DORA and the Cyber Resilience Act apply to your organisation, and why, with every finding traced to its article.": "Verificator gratuit: aflați care dintre AI Act, GDPR, NIS2, DORA și Cyber Resilience Act se aplică organizației dvs. și de ce, fiecare concluzie fiind legată de articolul pe care se sprijină.",
+    "Free EU AI Act checker: classify your AI system, find out whether you are its provider, deployer, importer or distributor, and see your obligations and deadlines.": "Verificator AI Act gratuit: clasificați sistemul dvs. de IA, aflați dacă sunteți furnizorul, implementatorul, importatorul sau distribuitorul acestuia și vedeți obligațiile și termenele care vi se aplică.",
+    "Free NIS2 checker: find out whether your organisation is covered by the NIS2 Directive and whether it is an essential or an important entity.": "Verificator NIS2 gratuit: aflați dacă organizația dvs. intră sub incidența Directivei NIS2 și dacă este o entitate esențială sau importantă.",
+    "← All compliance checkers": "← Toate verificatoarele de conformitate",
+    "Free compliance checker · All five regulations": "Verificator de conformitate gratuit · Toate cele cinci reglementări",
+    "Free compliance checker · EU AI Act": "Verificator de conformitate gratuit · AI Act",
+    "Free compliance checker · NIS2": "Verificator de conformitate gratuit · NIS2",
+    "Which EU digital rules apply to you?": "Ce reguli digitale UE vi se aplică?",
+    "EU AI Act: risk class & role": "AI Act: clasa de risc și rolul dvs.",
+    "NIS2: in scope? Essential or important?": "NIS2: vă vizează? Entitate esențială sau importantă?",
+    "Rules-based decision trees built on the text of the regulations, with every finding traced to its article. Answer the questions, leave your email, and see your result on screen and as a PDF in your inbox.": "Arbori de decizie bazați pe reguli, construiți pe textul reglementărilor, fiecare concluzie fiind legată de articolul pe care se sprijină. Răspundeți la întrebări, lăsați-ne adresa de e-mail și vedeți rezultatul pe ecran și ca PDF în căsuța de e-mail.",
+    "See all three checkers →": "Vedeți toate cele trei verificatoare →",
+    # ---- privacy policy: compliance checker report
+    "Last updated: 17 October 2026": "Ultima actualizare: 17 octombrie 2026",
+    "Compliance checker data:": "Datele din verificatoarele de conformitate:",
+    "when you use a compliance checker, your email address, the name and company you choose to give, and your answers and result.": "când folosiți un verificator de conformitate: adresa de e-mail, numele și compania pe care alegeți să le indicați, precum și răspunsurile și rezultatul dvs.",
+    "Sending your compliance checker report:": "Trimiterea raportului verificatorului de conformitate:",
+    "To show you your result and email it to you as a PDF, based on Art. 6(1)(b) GDPR. A copy reaches our mailbox; we contact you about your result only if you tick the box asking us to, based on your consent (Art. 6(1)(a) GDPR), which you can withdraw at any time.": "Pentru a vă afișa rezultatul și a vi-l trimite pe e-mail în format PDF, în temeiul art. 6 alin. (1) lit. (b) GDPR. O copie ajunge în căsuța noastră de e-mail; vă contactăm în legătură cu rezultatul doar dacă bifați căsuța prin care ne cereți acest lucru, în temeiul consimțământului dvs. (art. 6 alin. (1) lit. (a) GDPR), pe care îl puteți retrage oricând.",
 }
