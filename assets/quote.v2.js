@@ -10,7 +10,7 @@
  * Progress is kept in the visitor's own browser (localStorage) until they submit.
  *
  * Code strings use single quotes; every double-quoted string is visitor-facing text, which
- * tools/i18n/build_ro.py translates into assets/quote.ro.v1.js. The file name is versioned
+ * tools/i18n/build_ro.py translates into assets/quote.ro.v2.js. The file name is versioned
  * because /assets/* is cached as immutable: rename it (v2, …) whenever it changes.
  */
 (function () {
@@ -199,7 +199,8 @@
       { v: 'finetuned', l: "On a fine-tuned model" },
       { v: 'own', l: "On our own model" },
       { v: 'mix', l: "A mix of these" }] },
-    q17: { id: 'q17', n: 'Q17', t: 'one', inline: true, req: true, q: "How many AI systems or features should the quote cover?",
+    q17: { id: 'q17', n: 'Q17', t: 'one', inline: true, req: true, q: "How many AI systems does your company use?",
+      hint: "Count each one separately, for example: a chatbot for customers, a CV-screening tool, a credit-scoring or fraud-detection model, an AI feature inside your product, or tools like ChatGPT or Copilot used by your team.",
       show: function (a) { return scope(a).ai; }, opts: [
       { v: '1', l: "1" }, { v: '2-3', l: "2–3" }, { v: '4-10', l: "4–10" }, { v: '10+', l: "More than 10" }, { v: 'dk', l: "Not sure" }] },
     q18: { id: 'q18', n: 'Q18', t: 'one', req: true, q: "Where does your product stand today?", opts: [

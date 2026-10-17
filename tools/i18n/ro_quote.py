@@ -1,5 +1,5 @@
-# English -> Romanian strings for the quote questionnaires (assets/quote.v1.js ->
-# assets/quote.ro.v1.js). Same register and terms as ro_checkers.py: formal ("dvs."),
+# English -> Romanian strings for the quote questionnaires (assets/quote.v2.js ->
+# assets/quote.ro.v2.js). Same register and terms as ro_checkers.py: formal ("dvs."),
 # regulation names kept in English as on the rest of the Romanian site.
 QUOTE = {
     # ---- engine UI ----
@@ -125,7 +125,8 @@ QUOTE = {
     "On a fine-tuned model": "Pe un model ajustat (fine-tuned)",
     "On our own model": "Pe un model propriu",
     "A mix of these": "O combinație a acestora",
-    "How many AI systems or features should the quote cover?": "Câte sisteme sau funcționalități AI ar trebui să acopere oferta?",
+    "How many AI systems does your company use?": "Câte sisteme AI folosește compania dvs.?",
+    "Count each one separately, for example: a chatbot for customers, a CV-screening tool, a credit-scoring or fraud-detection model, an AI feature inside your product, or tools like ChatGPT or Copilot used by your team.": "Numărați-le pe fiecare separat, de exemplu: un chatbot pentru clienți, un instrument de selecție a CV-urilor, un model de scoring de credit sau de detectare a fraudei, o funcționalitate AI din produsul dvs. sau instrumente precum ChatGPT ori Copilot folosite de echipă.",
     "More than 10": "Peste 10",
     "Where does your product stand today?": "În ce stadiu este produsul dvs. astăzi?",
     "In development": "În dezvoltare",
