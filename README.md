@@ -27,9 +27,12 @@ Plain static HTML. No build step, no framework; the only dependencies are `nodem
     `/nis2-checker` (and `/ro/…`). The engine's `PAGES` map lists them.
 
   Legal position: October 2026.
-- Checker PDF report by email — after the last question the visitor is asked for their email
-  (name, company and a follow-up consent box are optional; "Skip and show my result" goes
-  straight to the result, which then offers the email form again underneath).
+- Checker PDF report by email (lead magnet) — after the last question the visitor must leave
+  their email to see the result (name, company and a follow-up consent box are optional);
+  the result appears on screen once the report has been emailed. Changing an answer and
+  finishing again asks again, with the email pre-filled. If sending fails on our side
+  (5xx or network), the result is shown anyway with a note, and the function logs the
+  visitor's details so the lead is still in the Vercel logs.
   `api/checker-report.js` receives only the tool id and the answers, re-walks the tree with
   the same engine file the page runs (`walk()` rejects any answer that is not on the path or
   not an option), renders the result with `pdfkit` (`api/_lib/report-pdf.js`, Archivo

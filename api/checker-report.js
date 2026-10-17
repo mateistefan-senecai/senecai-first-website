@@ -1,6 +1,7 @@
-// Compliance checker report endpoint (Vercel serverless function). The visitor finishes a
-// checker, leaves their email, and gets the result as a PDF by email; a copy (with the PDF)
-// goes to CONTACT_TO so we know who asked. Nothing is stored.
+// Compliance checker report endpoint (Vercel serverless function). The checkers are a lead
+// magnet: the visitor sees their result only after leaving their email, gets it as a PDF by
+// email, and a copy (with the PDF) goes to CONTACT_TO so we know who completed it. Nothing
+// is stored.
 //
 // The client sends only the tool id and the answers. The result is rebuilt here with the
 // same engine the page runs (assets/checkers.v3.js, or its Romanian build), after re-walking
@@ -90,7 +91,8 @@ module.exports = async function handler(req, res) {
       attachments: [attachment],
     });
   } catch (err) {
-    console.error("checker-report: sending failed", err && err.message);
+    // Keep the lead visible in the Vercel logs even when the email could not go out.
+    console.error("checker-report: sending failed", err && err.message, JSON.stringify({ email, name, company, consent, tool: tool.id, result: result.headline.title }));
     send(res, 502, { ok: false, error: "send" });
     return;
   }

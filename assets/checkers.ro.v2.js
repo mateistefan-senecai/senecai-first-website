@@ -1166,19 +1166,18 @@
     disclaimer: "Acest verificator aplică un set fix de reguli răspunsurilor dvs. Oferă informații generale, nu consultanță juridică, și nu înlocuiește o evaluare a situației dvs. concrete. Situația juridică la octombrie 2026, inclusiv AI Act astfel cum a fost modificat prin Regulamentul (UE) 2026/1744.",
     gateEyebrow: "Rezultatul dvs. este gata",
     gateTitle: "Unde vă trimitem raportul PDF?",
-    gateText: "Vă trimitem pe e-mail rezultatul complet, în format PDF: fiecare concluzie cu articolul pe care se sprijină, ce înseamnă pentru dvs., datele-cheie și răspunsurile dvs.",
-    againTitle: "Primiți acest rezultat ca PDF pe e-mail",
+    gateText: "Introduceți adresa de e-mail pentru a vedea rezultatul. Vi-l trimitem și în format PDF: fiecare concluzie cu articolul pe care se sprijină, ce înseamnă pentru dvs., datele-cheie și răspunsurile dvs.",
     email: "E-mail de serviciu",
     name: "Nume (opțional)",
     company: "Companie (opțional)",
     consent: "SenecAI mă poate contacta în legătură cu rezultatul meu",
     privacy: "Folosim adresa dvs. de e-mail pentru a vă trimite raportul și, doar dacă bifați căsuța, pentru a reveni în legătură cu acesta. Consultați",
     privacyLink: "Politica de confidențialitate",
-    send: "Trimiteți-mi raportul",
+    send: "Arătați-mi rezultatul și trimiteți-mi PDF-ul",
     sending: "Se trimite…",
-    skip: "Treci peste și arată-mi rezultatul",
     sent: "Gata. Raportul PDF este în drum spre",
-    sendError: "Raportul nu a putut fi trimis. Verificați adresa de e-mail și încercați din nou sau scrieți-ne la",
+    invalidEmail: "Verificați adresa de e-mail și încercați din nou.",
+    sendError: "Nu am putut trimite raportul pe e-mail acum, așa că vă afișăm rezultatul pe ecran. Îl puteți tipări sau salva ca PDF ori ne puteți scrie la",
     copied: "Link copiat",
     pdfKicker: "Raport de verificare a conformității",
     pdfDate: "Data",
@@ -1233,8 +1232,9 @@
   }
   Checker.prototype.reset = function () {
     this.answers = {}; this.history = []; this.current = this.tool.start; this.done = false; this.draft = null;
-    /* Email step: shown once after the last question ("gate"), then as a form under the result. */
-    this.mail = { stage: "gate", email: this.mail ? this.mail.email : "", sentFor: null, t: 0 };
+    /* The result is shown only once it has been emailed (lead capture): sentFor is the set of
+       answers last sent. If our side fails, failedFor shows the result anyway. */
+    this.mail = { email: this.mail ? this.mail.email : "", sentFor: null, failedFor: null, t: 0 };
   };
   /* Answers that are on the current path only (back-navigation drops stale branches). */
   Checker.prototype.pathAnswers = function () {
@@ -1271,7 +1271,8 @@
     html += "</div>";
     html += '<div class="ck-bar"><span style="width:' + Math.round(100 * Math.min(secIdx, t.sections.length) / t.sections.length) + '%"></span></div>';
     if (this.done) this.mail.t = Date.now();
-    html += !this.done ? this.renderNode() : this.mail.stage === "gate" ? this.renderMailForm(true) : this.renderResult();
+    var key = this.done ? this.resultKey() : null;
+    html += !this.done ? this.renderNode() : (this.mail.sentFor === key || this.mail.failedFor === key) ? this.renderResult() : this.renderMailForm();
     this.el.innerHTML = html;
     this.bind();
     if (focus) {
@@ -1331,6 +1332,7 @@
     var h = res.headline;
     html += '<div class="ck-result">';
     if (this.mail.sentFor === this.resultKey()) html += '<p class="ck-sent" role="status">' + esc(UI.sent) + " <strong>" + esc(this.mail.email) + "</strong>.</p>";
+    else html += '<p class="ck-sent ck-error" role="alert">' + esc(UI.sendError) + ' <a href="mailto:hello@senecai.eu">hello@senecai.eu</a>.</p>';
     html += '<div class="ck-head ck-s-' + h.status + '"><div class="ck-eyebrow">' + esc(UI.result) + '</div><h3 class="ck-title" tabindex="-1" data-ck-focus>' + esc(h.title) + '</h3><p>' + esc(h.text) + "</p></div>";
     html += '<div class="ck-cards">';
     res.cards.forEach(function (c) {
@@ -1371,7 +1373,6 @@
       html += "<li><strong>" + esc(n.q) + "</strong><br>" + esc(answerLabels(n, a[id]).join("; ")) + "</li>";
     });
     html += "</ol></details>";
-    if (this.mail.sentFor !== this.resultKey()) html += this.renderMailForm(false);
 
     html += '<div class="ck-nav ck-end">';
     html += '<a class="ck-btn ck-primary" href="mailto:hello@senecai.eu?subject=' + encodeURIComponent("Rezultat verificator de conformitate: " + h.title) + '">Discutați rezultatul cu noi →</a>';
@@ -1386,15 +1387,11 @@
 
   Checker.prototype.resultKey = function () { return JSON.stringify(this.pathAnswers()); };
 
-  /* The email form: a step of its own after the last question (gate), or a box under the result. */
-  Checker.prototype.renderMailForm = function (gate) {
-    var html = '<form class="ck-mail' + (gate ? " ck-gate" : "") + '" data-ck-mail>';
-    if (gate) {
-      html += '<div class="ck-eyebrow">' + esc(UI.gateEyebrow) + '</div><h3 class="ck-title" tabindex="-1" data-ck-focus>' + esc(UI.gateTitle) + "</h3>";
-      html += '<p class="ck-mail-text">' + esc(UI.gateText) + "</p>";
-    } else {
-      html += '<div class="ck-sub">' + esc(UI.againTitle) + "</div>";
-    }
+  /* The email step between the last question and the result. */
+  Checker.prototype.renderMailForm = function () {
+    var html = '<form class="ck-mail" data-ck-mail>';
+    html += '<div class="ck-eyebrow">' + esc(UI.gateEyebrow) + '</div><h3 class="ck-title" tabindex="-1" data-ck-focus>' + esc(UI.gateTitle) + "</h3>";
+    html += '<p class="ck-mail-text">' + esc(UI.gateText) + "</p>";
     html += '<div class="ck-mail-row">';
     html += '<label class="ck-field"><span>' + esc(UI.email) + '</span><input type="email" name="email" required maxlength="254" autocomplete="email" value="' + esc(this.mail.email) + '"></label>';
     html += '<label class="ck-field"><span>' + esc(UI.name) + '</span><input type="text" name="name" maxlength="200" autocomplete="name"></label>';
@@ -1404,10 +1401,7 @@
     html += '<div class="ck-hp" aria-hidden="true"><input name="website" type="text" tabindex="-1" autocomplete="off"></div>';
     html += '<p class="ck-mail-note">' + esc(UI.privacy) + ' <a href="privacy-policy.html">' + esc(UI.privacyLink) + "</a>.</p>";
     html += '<div class="ck-nav"><button type="submit" class="ck-btn ck-primary" data-ck-send>' + esc(UI.send) + " →</button>";
-    if (gate) {
-      html += '<button type="button" class="ck-btn ck-ghost" data-ck-skip>' + esc(UI.skip) + "</button>";
-      html += '<button type="button" class="ck-btn ck-ghost" data-ck-back>← Modificați ultimul răspuns</button>';
-    }
+    html += '<button type="button" class="ck-btn ck-ghost" data-ck-back>← Modificați ultimul răspuns</button>';
     html += "</div>";
     html += '<p class="ck-mail-status" data-ck-status role="status" hidden></p>';
     html += "</form>";
@@ -1429,17 +1423,18 @@
       method: "POST",
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify(body)
-    }).then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
-      .then(function (res) {
-        if (!res || !res.ok) throw new Error("send");
-        self.mail.email = body.email; self.mail.sentFor = key; self.mail.stage = "done";
-        self.render(true);
-      })
-      .catch(function () {
-        btn.disabled = false;
-        status.className = "ck-mail-status ck-error";
-        status.innerHTML = esc(UI.sendError) + ' <a href="mailto:hello@senecai.eu">hello@senecai.eu</a>.';
+    }).then(function (r) {
+      return r.json().catch(function () { return { ok: false }; }).then(function (res) {
+        self.mail.email = body.email;
+        if (res && res.ok) { self.mail.sentFor = key; self.render(true); return; }
+        if (r.status === 400) {
+          btn.disabled = false;
+          status.className = "ck-mail-status ck-error"; status.textContent = UI.invalidEmail;
+          return;
+        }
+        self.mail.failedFor = key; self.render(true);
       });
+    }, function () { self.mail.email = body.email; self.mail.failedFor = key; self.render(true); });
   };
 
   Checker.prototype.bind = function () {
@@ -1482,7 +1477,6 @@
     var rs = el.querySelector("[data-ck-restart]"); if (rs) rs.addEventListener("click", function () { self.restart(); });
     var pr = el.querySelector("[data-ck-print]"); if (pr) pr.addEventListener("click", function () { window.print(); });
     var mf = el.querySelector("[data-ck-mail]"); if (mf) mf.addEventListener("submit", function (ev) { ev.preventDefault(); self.send(mf); });
-    var sk = el.querySelector("[data-ck-skip]"); if (sk) sk.addEventListener("click", function () { self.mail.stage = "skipped"; self.render(true); });
     /* Another checker: switch tabs on resources.html, otherwise follow the link to its page. */
     el.querySelectorAll("[data-ck-goto]").forEach(function (l) {
       l.addEventListener("click", function (ev) { var go = root.SenecaiCheckers.activate; if (go && go(l.getAttribute("data-ck-goto"), true)) ev.preventDefault(); });

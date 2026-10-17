@@ -87,9 +87,8 @@
 /* A checker on its own page has no tabs above its panel. */
 .ck-panel.ck-solo { border-top: 1px solid rgba(250,243,227,.22); }
 
-/* ---- Email the PDF report (step after the last question, and box under the result) ---- */
+/* ---- Email step between the last question and the result ---- */
 .ck-mail { display: flex; flex-direction: column; gap: 14px; max-width: 860px; }
-.ck-mail:not(.ck-gate) { margin-top: 24px; padding: 20px; border: 1px solid rgba(213,170,75,.45); background: rgba(213,170,75,.06); }
 .ck-mail .ck-title { margin-bottom: 0; }
 .ck-mail-text { margin: 0; max-width: 70ch; font: 400 16px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.82); }
 .ck-mail-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 14px; }
@@ -101,11 +100,12 @@
 .ck-consent input { flex: none; width: 18px; height: 18px; margin: 2px 0 0; accent-color: #d5aa4b; }
 .ck-hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 .ck-mail-note { margin: 0; font: 400 13px/1.5 Archivo, sans-serif; color: rgba(250,243,227,.6); }
-.ck-mail-note a, .ck-mail-status a { color: #d5aa4b; font-weight: 700; text-decoration: underline; }
+.ck-mail-note a, .ck-mail-status a, .ck-sent a { color: #d5aa4b; font-weight: 700; text-decoration: underline; }
 .ck-mail .ck-nav { margin-top: 4px; }
 .ck-mail-status { margin: 0; padding: 12px 14px; border-left: 3px solid #d5aa4b; background: rgba(250,243,227,.05); font: 600 15px/1.5 Archivo, sans-serif; color: #faf3e3; }
 .ck-mail-status.ck-error { border-left-color: #e0745f; }
 .ck-sent { margin: 0 0 20px; padding: 14px 16px; border-left: 3px solid #d5aa4b; background: rgba(213,170,75,.1); font: 600 15px/1.5 Archivo, sans-serif; color: #faf3e3; }
+.ck-sent.ck-error { border-left-color: #e0745f; background: rgba(224,116,95,.1); }
 @media print {
   body, .bg-black { background: #fff !important; color: #000 !important; }
   [data-nav-links], #top, .bg-gold, [data-screen-label="Footer"], [data-screen-label="Research articles"], .ck-tabs, .ck-nav, .ck-steps, .ck-bar, .ck-intro, .ck-share, .ck-mail, .ck-sent { display: none !important; }
