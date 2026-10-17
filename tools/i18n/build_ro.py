@@ -85,7 +85,7 @@ def relink(s, name):
     s = s.replace('src="../assets/quote.v2.js"', 'src="../assets/quote.ro.v2.js"')
     if name == "index.html":
         s = re.sub(r'(<h1 class="ink-h1"[^>]*>)\s*Conformitate <span style="color: #d5aa4b;">digitală UE</span><br class="hero-break"> pentru startup-uri și IMM-uri',
-                   r'\1\n        <span style="color: #d5aa4b;">Conformitate</span> digitală UE<br class="hero-break"> pentru startup-uri și IMM-uri', s)
+                   r'\1\n        <span style="color: #d5aa4b;">Conformitate</span> digitală UE<br class="hero-break"> pentru startup-uri și <span style="white-space: nowrap;">IMM-uri</span>', s)
         assert '<span style="color: #d5aa4b;">Conformitate</span>' in s, "hero headline not rewritten"
         # Romanian headline is ~40% longer: slightly smaller type so it sets in two lines on desktop.
         s = s.replace('<h1 class="ink-h1" style="margin: 0; font: 900 clamp(40px, min(7vw, 11vh), 108px)/0.92 Archivo',

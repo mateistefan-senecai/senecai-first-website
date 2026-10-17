@@ -598,4 +598,9 @@ PAGES = {
     "Discovery brief": "Chestionar detaliat",
     "The detailed questions we use to scope your project and prepare your proposal. Only the sections that apply to you are shown. You can stop and come back later: your answers are kept in this browser until you send them.": "Întrebările detaliate pe care le folosim pentru a stabili amploarea proiectului și a pregăti propunerea. Vedeți doar secțiunile care vi se aplică. Puteți face o pauză și reveni mai târziu: răspunsurile sunt păstrate în acest browser până le trimiteți.",
     "The SenecAI discovery brief: the detailed questions we use to scope your compliance project.": "Chestionarul detaliat SenecAI: întrebările pe care le folosim pentru a stabili amploarea proiectului dvs. de conformitate.",
+    # ---- index: hero buttons (short labels)
+    "Get a quote in 24h": "Ofertă în 24 de ore",
+    "Check what applies to you": "Verificați ce vi se aplică",
+    # ---- footer: legal entity
+    "SenecAI Compliance S.R.L. · CUI 55377157": "SenecAI Compliance S.R.L. · CUI 55377157",
 }
