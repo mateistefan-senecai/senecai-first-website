@@ -100,4 +100,14 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/nis2-checker"/>
     <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/nis2-checker"/>
   </url>
+  <url>
+    <loc>https://www.senecai.eu/get-a-quote</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/get-a-quote"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/get-a-quote"/>
+  </url>
+  <url>
+    <loc>https://www.senecai.eu/ro/get-a-quote</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/get-a-quote"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/get-a-quote"/>
+  </url>
 </urlset>
