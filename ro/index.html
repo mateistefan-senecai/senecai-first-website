@@ -59,6 +59,10 @@
   .ink-arrow { display: inline-block; transition: transform .18s ease; }
   .ink-secondary { transition: color .18s ease; }
   .ink-secondary:hover { color: #d5aa4b; }
+  .ink-ghost { transition: color .18s ease, border-color .18s ease; }
+  .ink-ghost:hover { color: #d5aa4b; border-color: #d5aa4b !important; }
+  .ink-ghost:hover .ink-arrow { transform: translateX(4px); }
+  @media (max-width: 560px) { .hero-ctas > a { flex: 1 1 100%; } }
   .ink-focus:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
   .hero-break { display: block; }
   @media (max-width: 900px) { .hero-break { display: none; } .ink-h1 { font-size: clamp(40px, 8.5vw, 64px) !important; } }
@@ -304,19 +308,16 @@
       <p style="margin: 0; max-width: 52ch; font: 500 19px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.8);">
         Combinăm expertiza juridică, tehnică și de securitate cibernetică pentru a vă ghida prin reglementarea digitală a UE.
       </p>
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 4px;">
-        <a href="get-a-quote.html" class="ink-cta ink-focus" style="box-sizing: border-box; display: inline-flex; align-items: center; gap: 52px; padding: 19px 32px; background: #d5aa4b; color: #17160f; font: 800 13.5px/1.3 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase;">
-          <span>Primiți o ofertă în 24 de ore</span>
+      <div class="hero-ctas" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 4px;">
+        <a href="get-a-quote.html" class="ink-cta ink-focus" style="box-sizing: border-box; display: inline-flex; align-items: center; justify-content: space-between; gap: 40px; padding: 19px 28px; border: 2px solid transparent; background: #d5aa4b; color: #17160f; font: 800 13.5px/1.3 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase;">
+          <span>Ofertă în 24 de ore</span>
           <span class="ink-arrow" style="font-size: 17px;">→</span>
         </a>
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 32px;">
-          <a class="ink-secondary ink-focus" href="https://calendly.com/senecai-consulting/30min" target="_blank" rel="noopener" style="font: 800 13px/1.4 Archivo, sans-serif; letter-spacing: .09em; text-transform: uppercase; color: rgba(250,243,227,.88); border-bottom: 1px solid #d5aa4b; padding-bottom: 5px;">
-            Preferați să discutăm? Programați apelul introductiv →
-          </a>
-          <a class="ink-secondary ink-focus" href="eu-compliance-checker.html" style="font: 800 13px/1.4 Archivo, sans-serif; letter-spacing: .09em; text-transform: uppercase; color: rgba(250,243,227,.88); border-bottom: 1px solid #d5aa4b; padding-bottom: 5px;">
-            Nu știți ce vi se aplică? Încercați verificatorul de conformitate →
-          </a>
-        </div>
+        <a href="eu-compliance-checker.html" class="ink-ghost ink-focus" style="box-sizing: border-box; display: inline-flex; align-items: center; justify-content: space-between; gap: 40px; padding: 19px 28px; border: 2px solid rgba(250,243,227,.7); color: #faf3e3; font: 800 13.5px/1.3 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase;">
+          <span>Verificare gratuită</span>
+          <span class="ink-arrow" style="font-size: 17px;">→</span>
+        </a>
+      </div>
       </div>
     </div>
   </div>
