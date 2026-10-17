@@ -1,17 +1,7 @@
 /* SenecAI compliance checkers: styles for assets/checkers.v3.js (rendered into [data-ck-mount])
-   on resources.html and the three checker pages. Versioned because /assets/* is cached as
+   on the three checker pages. Versioned because /assets/* is cached as
    immutable: rename it (v2, …) whenever it changes. */
-.ck-tabs { display: flex; flex-wrap: wrap; gap: 0; border: 1px solid rgba(250,243,227,.22); }
-.ck-tab { all: unset; box-sizing: border-box; flex: 1 1 220px; cursor: pointer; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; color: rgba(250,243,227,.78); border-right: 1px solid rgba(250,243,227,.22); transition: background .18s ease, color .18s ease; }
-.ck-tab:last-child { border-right: 0; }
-.ck-tab:hover { color: #faf3e3; background: rgba(250,243,227,.05); }
-.ck-tab:focus-visible { outline: 2px solid #d5aa4b; outline-offset: -2px; }
-.ck-tab .ck-tab-n { font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #d5aa4b; }
-.ck-tab .ck-tab-t { font: 800 16px/1.25 Archivo, sans-serif; }
-.ck-tab.is-active { background: #d5aa4b; color: #17160f; }
-.ck-tab.is-active .ck-tab-n { color: #17160f; }
-@media (max-width: 720px) { .ck-tab { border-right: 0; border-bottom: 1px solid rgba(250,243,227,.22); } .ck-tab:last-child { border-bottom: 0; } }
-.ck-panel { border: 1px solid rgba(250,243,227,.22); border-top: 0; padding: clamp(20px, 3vw, 40px); }
+.ck-panel { border: 1px solid rgba(250,243,227,.22); padding: clamp(20px, 3vw, 40px); }
 .ck-intro { margin: 0 0 22px; max-width: 70ch; font: 400 16px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.78); }
 .ck-steps { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-bottom: 10px; font: 700 10.5px/1.4 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: rgba(250,243,227,.4); }
 .ck-step.is-done { color: rgba(213,170,75,.75); }
@@ -84,8 +74,6 @@
 .ck-share-btn { all: unset; box-sizing: border-box; cursor: pointer; padding: 8px 12px; border: 1px solid rgba(250,243,227,.3); font: 800 11.5px/1.2 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: rgba(250,243,227,.85); transition: border-color .18s ease, color .18s ease; }
 .ck-share-btn:hover { border-color: #d5aa4b; color: #d5aa4b; }
 .ck-share-btn:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
-/* A checker on its own page has no tabs above its panel. */
-.ck-panel.ck-solo { border-top: 1px solid rgba(250,243,227,.22); }
 
 /* ---- Email step between the last question and the result ---- */
 .ck-mail { display: flex; flex-direction: column; gap: 14px; max-width: 860px; }
@@ -108,7 +96,7 @@
 .ck-sent.ck-error { border-left-color: #e0745f; background: rgba(224,116,95,.1); }
 @media print {
   body, .bg-black { background: #fff !important; color: #000 !important; }
-  [data-nav-links], #top, .bg-gold, [data-screen-label="Footer"], [data-screen-label="Research articles"], .ck-tabs, .ck-nav, .ck-steps, .ck-bar, .ck-intro, .ck-share, .ck-mail, .ck-sent { display: none !important; }
+  [data-nav-links], #top, .bg-gold, [data-screen-label="Footer"], .ck-nav, .ck-steps, .ck-bar, .ck-intro, .ck-share, .ck-mail, .ck-sent { display: none !important; }
   .ck-panel { border: 0; padding: 0; }
   .ck-head, .ck-card { border-color: #999 !important; background: none !important; break-inside: avoid; }
   .ck-title, .ck-card-title, .ck-head p, .ck-why, .ck-acts, .ck-recap, .ck-recap strong, .ck-disclaimer { color: #000 !important; }

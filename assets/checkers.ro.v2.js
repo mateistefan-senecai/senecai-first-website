@@ -13,7 +13,7 @@
  * file (or its Romanian build) and rebuilds the result from the answers on the server.
  *
  * The file name is versioned because /assets/* is cached as immutable: rename it (v4, …)
- * whenever it changes, and update the <script> tag in resources.html and the three checker pages.
+ * whenever it changes, and update the <script> tag in the three checker pages.
  *
  * Legal position as of October 2026: AI Act as amended by Regulation (EU) 2026/1744
  * (Digital Omnibus on AI, in force 27 July 2026); NIS2 as adopted (the January 2026
@@ -1360,7 +1360,7 @@
         c.dates.forEach(function (x) { html += "<li>" + esc(x) + "</li>"; });
         html += "</ul>";
       }
-      if (c.link && c.status !== "no") html += '<a class="ck-link" href="' + PAGES[c.link.tool] + '" data-ck-goto="' + c.link.tool + '">' + esc(c.link.label) + "</a>";
+      if (c.link && c.status !== "no") html += '<a class="ck-link" href="' + PAGES[c.link.tool] + '">' + esc(c.link.label) + "</a>";
       html += "</div>";
     });
     html += "</div>";
@@ -1477,52 +1477,12 @@
     var rs = el.querySelector("[data-ck-restart]"); if (rs) rs.addEventListener("click", function () { self.restart(); });
     var pr = el.querySelector("[data-ck-print]"); if (pr) pr.addEventListener("click", function () { window.print(); });
     var mf = el.querySelector("[data-ck-mail]"); if (mf) mf.addEventListener("submit", function (ev) { ev.preventDefault(); self.send(mf); });
-    /* Another checker: switch tabs on resources.html, otherwise follow the link to its page. */
-    el.querySelectorAll("[data-ck-goto]").forEach(function (l) {
-      l.addEventListener("click", function (ev) { var go = root.SenecaiCheckers.activate; if (go && go(l.getAttribute("data-ck-goto"), true)) ev.preventDefault(); });
-    });
   };
 
-  /* Tabs + hash routing: #general-checker, #aiact-checker, #nis2-checker */
+  /* Each checker page mounts one checker ([data-checker] with a [data-ck-mount] inside). */
   function mount() {
-    var wrap = document.querySelector("[data-checkers]");
-    if (!wrap) return;
-    var instances = {};
-    wrap.querySelectorAll("[data-checker]").forEach(function (panel) {
-      var id = panel.getAttribute("data-checker");
-      var mountEl = panel.querySelector("[data-ck-mount]");
-      instances[id] = new Checker(mountEl, TOOLS[id]);
-      instances[id].render(false);
-    });
-    var tabs = wrap.querySelectorAll("[data-ck-tab]");
-    function activate(id, scroll) {
-      if (!instances[id] || !tabs.length) return false;
-      tabs.forEach(function (tb) {
-        var on = tb.getAttribute("data-ck-tab") === id;
-        tb.setAttribute("aria-selected", on); tb.classList.toggle("is-active", on); tb.tabIndex = on ? 0 : -1;
-      });
-      wrap.querySelectorAll("[data-checker]").forEach(function (p) { p.hidden = p.getAttribute("data-checker") !== id; });
-      if (history.replaceState) history.replaceState(null, "", "#" + id + "-checker");
-      if (scroll) { var nav = document.getElementById("top"); var top = wrap.getBoundingClientRect().top + window.pageYOffset - (nav ? nav.offsetHeight : 0) - 16; window.scrollTo({ top: top, behavior: "smooth" }); }
-      return true;
-    }
-    root.SenecaiCheckers.activate = activate;
-    tabs.forEach(function (tb, i) {
-      tb.addEventListener("click", function () { activate(tb.getAttribute("data-ck-tab"), false); });
-      tb.addEventListener("keydown", function (ev) {
-        if (ev.key !== "ArrowRight" && ev.key !== "ArrowLeft") return;
-        var n = tabs[(i + (ev.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length];
-        n.focus(); activate(n.getAttribute("data-ck-tab"), false);
-      });
-    });
-    function fromHash(scroll) {
-      var m = /^#(general|aiact|nis2)-checker$/.exec(location.hash);
-      if (m) activate(m[1], scroll);
-    }
-    fromHash(true);
-    window.addEventListener("hashchange", function () { fromHash(true); });
-    document.querySelectorAll("[data-ck-open]").forEach(function (l) {
-      l.addEventListener("click", function (ev) { ev.preventDefault(); activate(l.getAttribute("data-ck-open"), true); });
+    document.querySelectorAll("[data-checker]").forEach(function (panel) {
+      new Checker(panel.querySelector("[data-ck-mount]"), TOOLS[panel.getAttribute("data-checker")]).render(false);
     });
     /* Copy-link buttons: the clean URL of a checker's own page, in the page's language. */
     document.querySelectorAll("[data-ck-copy]").forEach(function (b) {

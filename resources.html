@@ -75,6 +75,14 @@
   .faq-item ul, .faq-item ol { margin: 0 0 10px; padding-left: 20px; }
   .faq-item a { color: #d5aa4b; font-weight: 700; }
 
+  /* ---- Compliance checkers: one card per checker, each opening the checker's own page ---- */
+  .ck-cards-nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px; }
+  .ck-pick { display: flex; flex-direction: column; gap: 10px; padding: 28px 24px; border: 1px solid rgba(250,243,227,.22); color: #faf3e3; transition: background .18s ease, border-color .18s ease, color .18s ease; }
+  .ck-pick:hover { background: #d5aa4b; border-color: #d5aa4b; color: #17160f; }
+  .ck-pick-n { font: 700 11px/1.3 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #d5aa4b; }
+  .ck-pick-t { font: 800 20px/1.25 Archivo, sans-serif; }
+  .ck-pick-go { margin-top: auto; padding-top: 14px; font: 800 12px/1.3 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #d5aa4b; }
+  .ck-pick:hover .ck-pick-n, .ck-pick:hover .ck-pick-go { color: #17160f; }
   /* ---- Contact form in the final CTA band (assets/contact-form.v1.js, api/contact.js) ---- */
   .cta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); gap: clamp(32px, 5vw, 72px); align-items: start; }
   .cf { min-width: 0; display: flex; flex-direction: column; gap: 16px; padding: clamp(20px, 2.4vw, 32px); border: 1px solid #ddd7c8; background: rgba(255, 252, 243, .94); color: #201e1d; }
@@ -123,8 +131,13 @@
 </script>
 <script src="assets/dot-wave.v1.js" defer></script>
 <script src="assets/contact-form.v1.js" defer></script>
-<link rel="stylesheet" href="assets/checkers.v1.css">
-<script src="assets/checkers.v3.js" defer></script>
+<script>
+  /* Old deep links (resources#general-checker, #aiact-checker, #nis2-checker) open the checker's own page. */
+  (function () {
+    var to = { "#general-checker": "eu-compliance-checker.html", "#aiact-checker": "ai-act-checker.html", "#nis2-checker": "nis2-checker.html" }[location.hash];
+    if (to) location.replace(to);
+  })();
+</script>
 </head>
 <body>
 <div style="background: #17160f;">
@@ -166,29 +179,12 @@
     <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px;">
       <div style="font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">Free tools</div>
       <h2 style="margin: 0; max-width: 24ch; font: 900 clamp(28px, 3.2vw, 42px)/1.02 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase; color: #faf3e3;">Compliance checkers</h2>
-      <p style="margin: 0; max-width: 64ch; font: 400 17px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.78);">Rules-based decision trees built on the text of the regulations. Answer the questions, leave your email, and see what applies to you, why, and what follows, with every finding traced to its article. We also send you the result as a PDF.</p>
+      <p style="margin: 0; max-width: 64ch; font: 400 17px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.78);">Rules-based decision trees built on the text of the regulations. Pick a checker, answer the questions, and see what applies to you, why, and what follows, with every finding traced to its article. We also send you the result as a PDF.</p>
     </div>
-    <div data-checkers>
-      <div class="ck-tabs" role="tablist" aria-label="Compliance checkers">
-        <button type="button" class="ck-tab is-active" role="tab" id="ck-tab-general" aria-controls="ck-panel-general" aria-selected="true" data-ck-tab="general"><span class="ck-tab-n">01 · All five regulations</span><span class="ck-tab-t">Which regulations apply to you?</span></button>
-        <button type="button" class="ck-tab" role="tab" id="ck-tab-aiact" aria-controls="ck-panel-aiact" aria-selected="false" tabindex="-1" data-ck-tab="aiact"><span class="ck-tab-n">02 · EU AI Act</span><span class="ck-tab-t">Risk class &amp; provider / deployer role</span></button>
-        <button type="button" class="ck-tab" role="tab" id="ck-tab-nis2" aria-controls="ck-panel-nis2" aria-selected="false" tabindex="-1" data-ck-tab="nis2"><span class="ck-tab-n">03 · NIS2</span><span class="ck-tab-t">In scope? Essential or important?</span></button>
-      </div>
-      <div class="ck-panel" id="ck-panel-general" role="tabpanel" aria-labelledby="ck-tab-general" data-checker="general">
-        <p class="ck-intro">Answer a few questions about your organisation and we&rsquo;ll map which of the EU AI Act, GDPR, NIS2, DORA and the Cyber Resilience Act apply to you, and why. Takes about 3 minutes.</p>
-        <div class="ck-share"><a class="ck-share-link" href="eu-compliance-checker.html">Open on its own page →</a><button type="button" class="ck-share-btn" data-ck-copy="general">Copy link</button></div>
-        <div data-ck-mount><noscript>The compliance checkers need JavaScript enabled.</noscript></div>
-      </div>
-      <div class="ck-panel" id="ck-panel-aiact" role="tabpanel" aria-labelledby="ck-tab-aiact" data-checker="aiact" hidden>
-        <p class="ck-intro">Classify one AI system under the EU AI Act (as amended by the 2026 Digital Omnibus), find out whether you are its provider, deployer, importer or distributor, and see your obligations and deadlines. Run it once per system.</p>
-        <div class="ck-share"><a class="ck-share-link" href="ai-act-checker.html">Open on its own page →</a><button type="button" class="ck-share-btn" data-ck-copy="aiact">Copy link</button></div>
-        <div data-ck-mount></div>
-      </div>
-      <div class="ck-panel" id="ck-panel-nis2" role="tabpanel" aria-labelledby="ck-tab-nis2" data-checker="nis2" hidden>
-        <p class="ck-intro">Find out whether your organisation is covered by the NIS2 Directive and whether it is an essential or an important entity. The tier decides how you are supervised and how high fines can go.</p>
-        <div class="ck-share"><a class="ck-share-link" href="nis2-checker.html">Open on its own page →</a><button type="button" class="ck-share-btn" data-ck-copy="nis2">Copy link</button></div>
-        <div data-ck-mount></div>
-      </div>
+    <div class="ck-cards-nav">
+      <a class="ck-pick ink-focus" href="eu-compliance-checker.html"><span class="ck-pick-n">01 · All five regulations</span><span class="ck-pick-t">Which regulations apply to you?</span><span class="ck-pick-go">Start the checker →</span></a>
+      <a class="ck-pick ink-focus" href="ai-act-checker.html"><span class="ck-pick-n">02 · EU AI Act</span><span class="ck-pick-t">Risk class &amp; provider / deployer role</span><span class="ck-pick-go">Start the checker →</span></a>
+      <a class="ck-pick ink-focus" href="nis2-checker.html"><span class="ck-pick-n">03 · NIS2</span><span class="ck-pick-t">In scope? Essential or important?</span><span class="ck-pick-go">Start the checker →</span></a>
     </div>
   </section>
 

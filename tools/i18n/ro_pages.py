@@ -558,9 +558,9 @@ PAGES = {
     "Investor due diligence, enterprise deals, regulatory risk: compliance can quickly become a bottleneck.": "Due diligence-ul investitorilor, contractele enterprise, riscul de reglementare: conformitatea poate deveni rapid un blocaj.",
     "SenecAI handles compliance end to end, from strategy and audits to remediation and ongoing monitoring.": "SenecAI se ocupă de conformitate de la cap la coadă: de la strategie și audituri la remediere și monitorizare continuă.",
     # ---- resources: checker share bar
-    "Rules-based decision trees built on the text of the regulations. Answer the questions, leave your email, and see what applies to you, why, and what follows, with every finding traced to its article. We also send you the result as a PDF.": "Arbori de decizie bazați pe reguli, construiți pe textul reglementărilor. Răspundeți la întrebări, lăsați-ne adresa de e-mail și vedeți ce vi se aplică, de ce și ce urmează, fiecare concluzie fiind legată de articolul pe care se sprijină. Vă trimitem rezultatul și în format PDF.",
-    "Open on its own page →": "Deschideți pe pagina proprie →",
+    "Rules-based decision trees built on the text of the regulations. Pick a checker, answer the questions, and see what applies to you, why, and what follows, with every finding traced to its article. We also send you the result as a PDF.": "Arbori de decizie bazați pe reguli, construiți pe textul reglementărilor. Alegeți un verificator, răspundeți la întrebări și vedeți ce vi se aplică, de ce și ce urmează, fiecare concluzie fiind legată de articolul pe care se sprijină. Vă trimitem rezultatul și în format PDF.",
     "Copy link": "Copiați linkul",
+    "Start the checker →": "Începeți verificarea →",
     # ---- standalone checker pages
     "EU Compliance Checker — SenecAI": "Verificator de conformitate UE — SenecAI",
     "EU AI Act Checker — SenecAI": "Verificator AI Act — SenecAI",

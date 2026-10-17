@@ -19,12 +19,12 @@ Plain static HTML. No build step, no framework; the only dependencies are `nodem
   GDPR, NIS2, DORA, CRA), AI Act risk class & role (AI systems only; GPAI models are
   deliberately out of scope), and NIS2 essential / important. Trees, rules and the UI engine
   live in `assets/checkers.v3.js`, their styles in `assets/checkers.v1.css` (both versioned
-  like the dot wave — rename on change). They appear twice:
-  - as tabs on `resources.html` (`#compliance-checkers`; deep links `#general-checker`,
-    `#aiact-checker`, `#nis2-checker`; the hero's "Try the compliance checker" link opens the
-    general one), each with an "Open on its own page" link and a "Copy link" button;
-  - on a page of their own, for sharing: `/eu-compliance-checker`, `/ai-act-checker`,
-    `/nis2-checker` (and `/ro/…`). The engine's `PAGES` map lists them.
+  like the dot wave — rename on change). Each checker runs on a page of its own, to share
+  directly: `/eu-compliance-checker`, `/ai-act-checker`, `/nis2-checker` (and `/ro/…`); the
+  engine's `PAGES` map lists them, and each page has a "Copy link" button.
+  `resources.html#compliance-checkers` shows only three title cards linking to those pages
+  (old deep links `#general-checker`, `#aiact-checker`, `#nis2-checker` forward to them), and
+  the hero's "Try the compliance checker" link opens the general one.
 
   Legal position: October 2026.
 - Checker PDF report by email (lead magnet) — after the last question the visitor must leave
