@@ -3,6 +3,7 @@
  *   quick     : Tier 1, the public "Get a quote in 24 hours" form (get-a-quote.html)
  *   discovery : Tier 2, the detailed discovery brief sent to interested clients (discovery.html)
  *   aiact     : the AI Act scoping questionnaire sent to prospects (scoping-ai-act.html)
+ *   gdpr      : the GDPR scoping questionnaire sent to prospects (scoping-gdpr.html)
  *
  * Each questionnaire is plain data: steps holding questions, each question with an optional
  * show(answers) condition. Scope checks for NIS2, DORA and CRA run first; their targeted
@@ -11,7 +12,7 @@
  * Progress is kept in the visitor's own browser (localStorage) until they submit.
  *
  * Code strings use single quotes; every double-quoted string is visitor-facing text, which
- * tools/i18n/build_ro.py translates into assets/quote.ro.v5.js. The file name is versioned
+ * tools/i18n/build_ro.py translates into assets/quote.ro.v6.js. The file name is versioned
  * because /assets/* is cached as immutable: rename it (v2, …) whenever it changes.
  */
 (function () {
@@ -541,6 +542,31 @@
   }
   function when(fn) { return function (a) { return fn(aiScope(a), a); }; }
 
+  /* "About you": the same first step in every scoping questionnaire. */
+  var ABOUT = [
+    { id: 'g1', n: '1', t: 'text', req: true, q: "Company name and website" },
+    { id: 'g2', n: '2', q: "Legal entity and country of registration", fields: [
+      { k: 'entity', t: 'text' },
+      { k: 'est', t: 'one', inline: true, label: "Established", opts: [{ v: 'eu', l: "In the EU or EEA" }, { v: 'non', l: "Outside the EU or EEA" }] },
+      { k: 'type', t: 'one', label: "Type of organisation", opts: [{ v: 'private', l: "Private company" }, { v: 'public', l: "Public body" }, { v: 'service', l: "Private company providing a public service" }] }] },
+    { id: 'g3', n: '3', q: "Company size, and who owns infrastructure and data", fields: [
+      { k: 'size', t: 'one', inline: true, label: "People", opts: [{ v: '1-9', l: "1–9" }, { v: '10-49', l: "10–49" }, { v: '50-249', l: "50–249" }, { v: '250+', l: "250+" }] },
+      { k: 'team', t: 'text', label: "Engineering team size, and who owns infrastructure and data" }] },
+    { id: 'g4', n: '4', t: 'area', req: true, q: "In one or two sentences, what does your product or service do?" },
+    { id: 'g5', n: '5', t: 'area', q: "Who are your clients (sectors, size, countries), and who is affected by your AI’s outputs?" },
+    { id: 'g6', n: '6', q: "Where does your product stand today?", fields: [
+      { k: 'status', t: 'one', inline: true, opts: [{ v: 'dev', l: "In development" }, { v: 'pilot', l: "Pilot" }, { v: 'live', l: "Live" }] },
+      { k: 'where', t: 'text', label: "Live deployments, and in which countries (EU / non-EU)" }] },
+    { id: 'g7', n: '7', q: "What is driving this, and is there a hard deadline?", fields: [
+      { k: 'drivers', t: 'many', opts: [{ v: 'client', l: "A client or procurement requirement" }, { v: 'investor', l: "Investor due diligence" },
+        { v: 'regulator', l: "A regulator or audit" }, { v: 'deadline', l: "A legal deadline" }, { v: 'ahead', l: "Getting ahead of it" }] },
+      { k: 'deadline', t: 'text', label: "Hard deadline, if any" }] },
+    { id: 'g8', n: '8', q: "Are you looking for an audit of where you stand, or also the work to close the gaps?", fields: [
+      { k: 'scope', t: 'one', inline: true, opts: [{ v: 'audit', l: "Audit only" }, { v: 'both', l: "Audit and implementation" }, { v: 'unsure', l: "Not sure yet" }] },
+      { k: 'who', t: 'one', inline: true, label: "If implementation is needed, who would carry it out?", opts: [{ v: 'us', l: "Our own team" }, { v: 'senecai', l: "SenecAI" }, { v: 'mixed', l: "Mixed" }, { v: 'tbd', l: "Not decided yet" }] },
+      { k: 'notes', t: 'text', label: "Notes on internal capacity or expectations" }] }
+  ];
+
   var aiact = {
     id: 'aiact',
     submit: "Send my answers →",
@@ -549,29 +575,7 @@
     dataNote: "We use your answers only to scope your project and prepare our proposal. See our",
     steps: [
       { title: "About you", intro: "A few questions about your company. They are the same in all our scoping questionnaires.",
-        items: [
-          { id: 'g1', n: '1', t: 'text', req: true, q: "Company name and website" },
-          { id: 'g2', n: '2', q: "Legal entity and country of registration", fields: [
-            { k: 'entity', t: 'text' },
-            { k: 'est', t: 'one', inline: true, label: "Established", opts: [{ v: 'eu', l: "In the EU or EEA" }, { v: 'non', l: "Outside the EU or EEA" }] },
-            { k: 'type', t: 'one', label: "Type of organisation", opts: [{ v: 'private', l: "Private company" }, { v: 'public', l: "Public body" }, { v: 'service', l: "Private company providing a public service" }] }] },
-          { id: 'g3', n: '3', q: "Company size, and who owns infrastructure and data", fields: [
-            { k: 'size', t: 'one', inline: true, label: "People", opts: [{ v: '1-9', l: "1–9" }, { v: '10-49', l: "10–49" }, { v: '50-249', l: "50–249" }, { v: '250+', l: "250+" }] },
-            { k: 'team', t: 'text', label: "Engineering team size, and who owns infrastructure and data" }] },
-          { id: 'g4', n: '4', t: 'area', req: true, q: "In one or two sentences, what does your product or service do?" },
-          { id: 'g5', n: '5', t: 'area', q: "Who are your clients (sectors, size, countries), and who is affected by your AI’s outputs?" },
-          { id: 'g6', n: '6', q: "Where does your product stand today?", fields: [
-            { k: 'status', t: 'one', inline: true, opts: [{ v: 'dev', l: "In development" }, { v: 'pilot', l: "Pilot" }, { v: 'live', l: "Live" }] },
-            { k: 'where', t: 'text', label: "Live deployments, and in which countries (EU / non-EU)" }] },
-          { id: 'g7', n: '7', q: "What is driving this, and is there a hard deadline?", fields: [
-            { k: 'drivers', t: 'many', opts: [{ v: 'client', l: "A client or procurement requirement" }, { v: 'investor', l: "Investor due diligence" },
-              { v: 'regulator', l: "A regulator or audit" }, { v: 'deadline', l: "A legal deadline" }, { v: 'ahead', l: "Getting ahead of it" }] },
-            { k: 'deadline', t: 'text', label: "Hard deadline, if any" }] },
-          { id: 'g8', n: '8', q: "Are you looking for an audit of where you stand, or also the work to close the gaps?", fields: [
-            { k: 'scope', t: 'one', inline: true, opts: [{ v: 'audit', l: "Audit only" }, { v: 'both', l: "Audit and implementation" }, { v: 'unsure', l: "Not sure yet" }] },
-            { k: 'who', t: 'one', inline: true, label: "If implementation is needed, who would carry it out?", opts: [{ v: 'us', l: "Our own team" }, { v: 'senecai', l: "SenecAI" }, { v: 'mixed', l: "Mixed" }, { v: 'tbd', l: "Not decided yet" }] },
-            { k: 'notes', t: 'text', label: "Notes on internal capacity or expectations" }] }
-        ] },
+        items: ABOUT },
       { title: "Your AI systems", intro: "Add one card per AI system, whether it is part of your product or used internally. Be as concrete as you can: these answers are the basis of the assessment.",
         items: [
           { id: 'k0', t: 'repeat', item: "AI system", add: "+ Add another AI system", remove: "Remove", max: 10, fields: [
@@ -800,13 +804,248 @@
     }
     return { likely: [], unlikely: [], roles: [], facts: facts };
   };
-  function findQ(id) {
-    for (var i = 0; i < aiact.steps.length; i++)
-      for (var j = 0; j < aiact.steps[i].items.length; j++) if (aiact.steps[i].items[j].id === id) return aiact.steps[i].items[j];
+  function findIn(t, id) {
+    for (var i = 0; i < t.steps.length; i++)
+      for (var j = 0; j < t.steps[i].items.length; j++) if (t.steps[i].items[j].id === id) return t.steps[i].items[j];
     return null;
   }
+  function findQ(id) { return findIn(aiact, id); }
 
-  var TOOLS = { quick: quick, discovery: discovery, aiact: aiact };
+  /* ================================================================ GDPR SCOPING */
+  /* Sent to prospects after first contact (scoping-gdpr.html). Section 1 is one card per
+     processing activity, in the spirit of a record of processing; questions marked [RO] in the
+     comments show only to companies established in Romania (Law 190/2018). */
+  function acts(a) {
+    var n = Number(a['p0.n']) || 1, out = [];
+    for (var i = 1; i <= n; i++) {
+      var c = {};
+      ['name', 'role', 'basis', 'eea', 'where'].forEach(function (f) { c[f] = a['p0.' + i + '.' + f]; });
+      ['people', 'special'].forEach(function (f) { c[f] = vals(a, 'p0.' + i + '.' + f); });
+      out.push(c);
+    }
+    return out;
+  }
+  function gScope(a) {
+    var cs = acts(a), s = {};
+    s.processor = a.p9 === 'processor' || a.p9 === 'both' || cs.some(function (c) { return c.role === 'processor'; });
+    s.joint = cs.some(function (c) { return c.role === 'joint'; });
+    s.consent = cs.some(function (c) { return c.basis === 'consent'; });
+    s.li = cs.some(function (c) { return c.basis === 'li'; });
+    s.transfers = cs.some(function (c) { return c.eea === 'yes' || c.eea === 'dk'; });
+    s.children = a.p10 === 'yes' || cs.some(function (c) { return c.people.indexOf('children') !== -1; });
+    s.special = [];
+    cs.forEach(function (c) { c.special.forEach(function (v) { if (s.special.indexOf(v) === -1) s.special.push(v); }); });
+    s.ro = a['p12.est'] === 'ro';
+    s.nonEU = a['p12.est'] === 'non' || a['g2.est'] === 'non';
+    s.dpoLikely = a.p11 === 'yes';
+    s.dpo = a['p13.v'] === 'yes' || s.dpoLikely;
+    s.triggers = vals(a, 'p37');
+    s.monitoring = has(a, 'p37', 'employees');
+    s.automated = a['p26.v'] === 'yes';
+    return s;
+  }
+  function gWhen(fn) { return function (a) { return fn(gScope(a), a); }; }
+
+  var gdpr = {
+    id: 'gdpr',
+    submit: "Send my answers →",
+    thanksTitle: "Thank you. Your answers have been sent.",
+    thanks: "We’ll review them and come back to you with our proposal. You can print or save a copy of your answers below.",
+    dataNote: "We use your answers only to scope your project and prepare our proposal. See our",
+    steps: [
+      { title: "About you", intro: "A few questions about your company. They are the same in all our scoping questionnaires.", items: ABOUT },
+      { title: "Your processing activities", intro: "Add one card per activity in which you use personal data, for example customer accounts, recruitment, payroll, newsletter, product analytics or support. Be as concrete as you can: these answers are the basis of the assessment.",
+        items: [
+          { id: 'p0', t: 'repeat', item: "Activity", add: "+ Add another activity", remove: "Remove", max: 15, fields: [
+            { k: 'name', t: 'text', label: "Name of the activity (e.g. customer accounts, recruitment, newsletter)" },
+            { k: 'purpose', t: 'text', label: "Purpose: what you use the data for" },
+            { k: 'role', t: 'one', label: "Your role", opts: [{ v: 'controller', l: "We decide why and how the data is used (controller)" }, { v: 'processor', l: "We process it on behalf of our clients (processor)" }, { v: 'joint', l: "We decide jointly with another company (joint controller)" }] },
+            { k: 'people', t: 'many', label: "People concerned", opts: [{ v: 'customers', l: "Customers" }, { v: 'users', l: "Users" }, { v: 'employees', l: "Employees" }, { v: 'candidates', l: "Job candidates" },
+              { v: 'children', l: "Children" }, { v: 'patients', l: "Patients" }, { v: 'suppliers', l: "Suppliers and business contacts" }, { v: 'other', l: "Other" }] },
+            { k: 'data', t: 'text', label: "Data categories (e.g. name, email, address, payment data, IP address, location)" },
+            { k: 'special', t: 'many', label: "Sensitive data", opts: [{ v: 'health', l: "Health" }, { v: 'biometric', l: "Biometric" }, { v: 'genetic', l: "Genetic" }, { v: 'ethnic', l: "Racial or ethnic origin" },
+              { v: 'political', l: "Political opinions" }, { v: 'religion', l: "Religious or philosophical beliefs" }, { v: 'union', l: "Trade union membership" }, { v: 'sex', l: "Sex life or sexual orientation" },
+              { v: 'criminal', l: "Criminal records" }, { v: 'none', l: "None", none: true }] },
+            { k: 'scale', t: 'one', inline: true, label: "Approximate number of people", opts: [{ v: '<1k', l: "Under 1,000" }, { v: '1k-10k', l: "1,000–10,000" }, { v: '10k-100k', l: "10,000–100,000" }, { v: '100k+', l: "Over 100,000" }] },
+            { k: 'basis', t: 'one', label: "Lawful basis", opts: [{ v: 'consent', l: "Consent" }, { v: 'contract', l: "Contract" }, { v: 'legal', l: "Legal obligation" }, { v: 'vital', l: "Vital interests" },
+              { v: 'public', l: "Public task" }, { v: 'li', l: "Legitimate interest" }, { v: 'dk', l: "Don’t know" }] },
+            { k: 'source', t: 'one', inline: true, label: "Where the data comes from", opts: [{ v: 'direct', l: "Directly from the people" }, { v: 'third', l: "From third parties" }, { v: 'publicsrc', l: "Public sources" }] },
+            { k: 'recipients', t: 'text', label: "Who receives it (vendors, partners, authorities)" },
+            { k: 'eea', t: 'one', inline: true, label: "Is it transferred outside the EEA?", opts: YND },
+            { k: 'where', t: 'text', label: "If yes, where and to whom" },
+            { k: 'tools', t: 'text', label: "Tools or systems used (e.g. CRM, HR software, cloud storage)" },
+            { k: 'retention', t: 'text', label: "How long it is kept" }] }
+        ] },
+      { title: "Scope and role",
+        items: [
+          { id: 'p9', n: '9', t: 'one', q: "Overall, are you a controller, a processor for your clients, or both?", opts: [
+            { v: 'controller', l: "Controller: we decide how personal data is used" }, { v: 'processor', l: "Processor: we handle personal data for our clients" },
+            { v: 'both', l: "Both" }, { v: 'dk', l: "Don’t know" }] },
+          { id: 'p10', n: '10', t: 'one', inline: true, q: "Do you process children’s data (under 16)?", opts: YND },
+          { id: 'p11', n: '11', t: 'one', inline: true, q: "Is processing personal data at the core of your business, at large scale, either by regularly and systematically monitoring people or by handling sensitive data?",
+            hint: "For example behavioural tracking or profiling of many users, location tracking, or health data at scale. This decides whether a data protection officer is mandatory.", opts: YND },
+          { id: 'p12', n: '12', q: "Where are you established, and whom do you serve?", fields: [
+            { k: 'est', t: 'one', inline: true, opts: [{ v: 'ro', l: "In Romania" }, { v: 'eu', l: "In another EU or EEA country" }, { v: 'non', l: "Outside the EU or EEA" }] },
+            { k: 'multi', t: 'one', inline: true, label: "Do you serve people in several EU countries?", opts: YND }] }
+        ] },
+      { title: "Governance and accountability",
+        items: [
+          { id: 'p13', n: '13', q: "Have you appointed a data protection officer (DPO)?", fields: [
+            { k: 'v', t: 'one', inline: true, opts: [{ v: 'yes', l: "Yes" }, { v: 'notneeded', l: "No, we assessed we don’t need one" }, { v: 'no', l: "No" }, { v: 'dk', l: "Don’t know" }] },
+            { k: 'notified', t: 'one', inline: true, label: "If yes, are the DPO’s contact details published and notified to the authority (ANSPDCP in Romania)?", opts: YPND }] },
+          { id: 'p14', n: '14', t: 'text', q: "Who handles data protection day to day?" },
+          { id: 'p15', n: '15', q: "Do you have a record of processing activities (RoPA)?", fields: [
+            { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "Last updated" }] },
+          { id: 'p16', n: '16', q: "Are there internal data protection policies, and has staff been trained?", fields: [
+            { k: 'policies', t: 'one', inline: true, label: "Policies", opts: YPND }, { k: 'training', t: 'one', inline: true, label: "Staff training", opts: YPND }] },
+          { id: 'p17', n: '17', q: "Are new features, products and vendors checked for privacy before launch (privacy by design)?", fields: [
+            { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "How" }] }
+        ] },
+      { title: "Lawful basis and transparency",
+        items: [
+          { id: 'p18', n: '18', q: "Is the lawful basis documented for each activity? Where you rely on legitimate interest, has a legitimate interest assessment (LIA) been done?", fields: [
+            { k: 'v', t: 'one', inline: true, label: "Lawful basis documented", opts: YPND },
+            { k: 'lia', t: 'one', inline: true, label: "Legitimate interest assessments", opts: YPND.concat([{ v: 'na', l: "We don’t rely on legitimate interest" }]) }] },
+          { id: 'p19', n: '19', t: 'area', q: "How is consent collected, recorded and withdrawn?", show: gWhen(function (s) { return s.consent; }) },
+          { id: 'p20', n: '20', t: 'one', inline: true, q: "Is there a current privacy notice that reflects your actual processing, not a generic template?", opts: YPND },
+          { id: 'p21', n: '21', q: "Are people told, before or during the interaction, how their data is used, kept and shared?", fields: [
+            { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "How" }] },
+          { id: 'p22', n: '22', t: 'one', q: "Does your website use a cookie banner, with non-essential cookies blocked until consent?", opts: [
+            { v: 'yes', l: "Yes" }, { v: 'banner', l: "We have a banner, but cookies load before consent" }, { v: 'no', l: "No" }, { v: 'none', l: "We only use essential cookies" }, { v: 'dk', l: "Don’t know" }] },
+          { id: 'p23', n: '23', t: 'one', inline: true, q: "If you send direct marketing (email, SMS, calls), do you have consent or another basis, and an easy opt-out?",
+            opts: YPND.concat([{ v: 'na', l: "We don’t send direct marketing" }]) }
+        ] },
+      { title: "Data subject rights",
+        items: [
+          { id: 'p24', n: '24', t: 'one', inline: true, q: "Is there a process for access, rectification, erasure, portability and objection requests, with answers within one month?", opts: YPND },
+          { id: 'p25', n: '25', t: 'text', q: "How many such requests did you receive in the last 12 months?" },
+          { id: 'p26', n: '26', q: "Do you make automated decisions with legal or similarly significant effects (e.g. automatic rejections, credit scoring)?", fields: [
+            { k: 'v', t: 'one', inline: true, opts: YND }, { k: 'd', t: 'text', label: "If yes, which, and can a person ask for human review?" }] }
+        ] },
+      { title: "Vendors, sharing and transfers",
+        items: [
+          { id: 'p27', n: '27', q: "Is there a list of vendors and sub-processors that handle personal data, with data processing agreements (DPAs) signed?", fields: [
+            { k: 'list', t: 'one', inline: true, label: "Vendor list", opts: YPND }, { k: 'dpa', t: 'one', inline: true, label: "DPAs signed with all of them", opts: YPND }] },
+          { id: 'p28', n: '28', q: "As a processor: do you have DPAs with your clients, and do you pass the same obligations on to your sub-processors?", show: gWhen(function (s) { return s.processor; }), fields: [
+            { k: 'clients', t: 'one', inline: true, label: "DPAs with clients", opts: YPND }, { k: 'flow', t: 'one', inline: true, label: "Obligations passed on to sub-processors", opts: YPND }] },
+          { id: 'p29', n: '29', q: "Transfers outside the EEA: where, and on what basis?", show: gWhen(function (s) { return s.transfers; }), fields: [
+            { k: 'where', t: 'text', label: "Countries and vendors" },
+            { k: 'mech', t: 'many', label: "Transfer mechanism", opts: [{ v: 'adequacy', l: "Adequacy decision" }, { v: 'dpf', l: "EU-US Data Privacy Framework" }, { v: 'scc', l: "Standard contractual clauses (SCCs)" },
+              { v: 'bcr', l: "Binding corporate rules" }, { v: 'derog', l: "Derogations (e.g. explicit consent)" }, { v: 'dk', l: "Don’t know" }] },
+            { k: 'tia', t: 'one', inline: true, label: "Transfer impact assessment (TIA) done?", opts: YPND }] },
+          { id: 'p30', n: '30', t: 'one', inline: true, q: "Is there a written arrangement with the company you decide jointly with (joint controllers)?", opts: YPND, show: gWhen(function (s) { return s.joint; }) }
+        ] },
+      { title: "Security and breaches",
+        items: [
+          { id: 'p31', n: '31', t: 'many', q: "Which of these security measures are in place?", opts: [
+            { v: 'encryption', l: "Encryption at rest and in transit" }, { v: 'mfa', l: "Multi-factor authentication" }, { v: 'rbac', l: "Role-based access" }, { v: 'backups', l: "Backups, tested" },
+            { v: 'pseudo', l: "Pseudonymisation" }, { v: 'logging', l: "Access logging" }, { v: 'endpoint', l: "Endpoint protection" }, { v: 'offboarding', l: "Offboarding procedure (access removed when people leave)" },
+            { v: 'none', l: "None of these yet", none: true }] },
+          { id: 'p32', n: '32', t: 'one', inline: true, q: "Is there a breach response procedure, covering notification to the authority within 72 hours and a breach register?", opts: YPND },
+          { id: 'p33', n: '33', q: "Any personal data breaches in the last 24 months?", fields: [
+            { k: 'v', t: 'one', inline: true, opts: YND }, { k: 'd', t: 'text', label: "If yes, what happened, and were they notified?" }] },
+          { id: 'p34', n: '34', t: 'text', q: "Where is the data hosted (provider and region)?" }
+        ] },
+      { title: "Retention and minimisation",
+        items: [
+          { id: 'p35', n: '35', q: "Are retention periods defined, and is data actually deleted when they expire?", fields: [
+            { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'how', t: 'one', inline: true, label: "Deletion", opts: [{ v: 'auto', l: "Automatic" }, { v: 'manual', l: "Manual" }, { v: 'none', l: "Not done yet" }] }] },
+          { id: 'p36', n: '36', q: "Do you collect only the data you need, and what data is used in test or development environments?", fields: [
+            { k: 'v', t: 'one', inline: true, label: "Only what we need", opts: YPND },
+            { k: 'test', t: 'one', label: "Test and development environments", opts: [{ v: 'synthetic', l: "Anonymised or synthetic data" }, { v: 'real', l: "Real personal data" }, { v: 'na', l: "No such environments" }, { v: 'dk', l: "Don’t know" }] }] }
+        ] },
+      { title: "Higher-risk processing",
+        items: [
+          { id: 'p37', n: '37', t: 'many', q: "Do you do any of the following?", opts: [
+            { v: 'specialscale', l: "Sensitive data at large scale" }, { v: 'publicmon', l: "Systematic monitoring of public areas (e.g. CCTV)" },
+            { v: 'profiling', l: "Profiling with significant effects on people" }, { v: 'ai', l: "AI or other new technology applied to personal data" },
+            { v: 'employees', l: "Monitoring of employees" }, { v: 'childrenscale', l: "Children’s data at scale" },
+            { v: 'combining', l: "Combining datasets from different sources" }, { v: 'biometrics', l: "Biometrics" }, { v: 'location', l: "Location tracking" },
+            { v: 'none', l: "None of these", none: true }] },
+          { id: 'p38', n: '38', q: "Have you done a data protection impact assessment (DPIA)?", fields: [
+            { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "Prepared by, and when" }] },
+          { id: 'p39', n: '39', q: "How are employees monitored?", show: gWhen(function (s) { return s.ro && s.monitoring; }), fields: [
+            { k: 'how', t: 'many', opts: [{ v: 'email', l: "Email" }, { v: 'video', l: "Video" }, { v: 'gps', l: "GPS or location" }, { v: 'activity', l: "Computer activity tracking" }, { v: 'other', l: "Other" }] },
+            { k: 'informed', t: 'one', inline: true, label: "Were employees informed in advance?", opts: YND },
+            { k: 'consulted', t: 'one', inline: true, label: "Was the union or were employee representatives consulted?", opts: YND },
+            { k: 'retention', t: 'one', inline: true, label: "Are recordings kept no longer than 30 days?", opts: YND }] },
+          { id: 'p40', n: '40', t: 'one', inline: true, q: "Do you process national identification numbers (CNP) on the basis of legitimate interest?", opts: YND, show: gWhen(function (s) { return s.ro; }) },
+          { id: 'p41', n: '41', q: "Do you use personal data to train or run AI, and do you collect demographic data?", fields: [
+            { k: 'ai', t: 'one', inline: true, label: "Personal data used to train or run AI", opts: YND },
+            { k: 'demo', t: 'one', inline: true, label: "Demographic data collected (e.g. gender, age, nationality)", opts: YND }] }
+        ] },
+      { title: "Documents",
+        items: [
+          { id: 'p42', n: '42', t: 'grid', q: "Which of these documents do you have?", opts: DOCS, note: "Link or note (optional)",
+            intro: "Only the documents that fit your answers are listed.", rows: [
+            { h: "Every company" },
+            { id: 'e1', l: "Record of processing activities (RoPA)", ref: art('30') },
+            { id: 'e2', l: "Privacy notice for customers and users", ref: art('13–14') },
+            { id: 'e3', l: "Privacy notice for employees and candidates", ref: art('13') },
+            { id: 'e4', l: "Internal data protection policy", ref: art('24') },
+            { id: 'e5', l: "Retention schedule", ref: art('5(1)(e)') },
+            { id: 'e6', l: "Procedure for data subject requests", ref: art('12–22') },
+            { id: 'e7', l: "Breach response procedure and breach register", ref: art('33(5)') },
+            { id: 'e8', l: "Information security policy or description of security measures", ref: art('32') },
+            { id: 'e9', l: "Vendor list with signed DPAs", ref: art('28') },
+            { id: 'e10', l: "Staff training records", ref: art('39') },
+            { id: 'e11', l: "Cookie policy and consent records", ref: "ePrivacy" },
+            { h: "Depending on your answers" },
+            { id: 'e12', l: "Legitimate interest assessments (LIA)", ref: art('6(1)(f)'), show: gWhen(function (s) { return s.li; }) },
+            { id: 'e13', l: "Consent records", ref: art('7(1)'), show: gWhen(function (s) { return s.consent; }) },
+            { id: 'e14', l: "Data protection impact assessment (DPIA)", ref: art('35'), show: gWhen(function (s) { return s.triggers.length > 0; }) },
+            { id: 'e15', l: "DPO appointment and notification to the authority", ref: art('37(7)'), show: gWhen(function (s) { return s.dpo; }) },
+            { id: 'e16', l: "Transfer mechanism (e.g. standard contractual clauses)", ref: art('46'), show: gWhen(function (s) { return s.transfers; }) },
+            { id: 'e17', l: "Transfer impact assessment (TIA)", ref: art('46'), show: gWhen(function (s) { return s.transfers; }) },
+            { id: 'e18', l: "DPA template for your clients and sub-processor list", ref: art('28'), show: gWhen(function (s) { return s.processor; }) },
+            { id: 'e19', l: "Joint controller arrangement", ref: art('26'), show: gWhen(function (s) { return s.joint; }) },
+            { id: 'e20', l: "Appointment of a representative in the EU", ref: art('27'), show: gWhen(function (s) { return s.nonEU; }) },
+            { id: 'e21', l: "Parental consent mechanism", ref: art('8'), show: gWhen(function (s) { return s.children; }) },
+            { id: 'e22', l: "Safeguards for automated decisions (human review, right to contest)", ref: art('22'), show: gWhen(function (s) { return s.automated; }) },
+            { id: 'e23', l: "Employee monitoring policy and record of consulting employees or their representatives", ref: "Law 190/2018, art. 5", show: gWhen(function (s) { return s.ro && s.monitoring; }) }] },
+          { id: 'p43', n: '43', t: 'area', q: "Which of these documents can you share now? Paste links or list them." }
+        ] },
+      { title: "Send", intro: "Who should we follow up with?", final: true,
+        items: CONTACT.concat([{ id: 'notes', n: '', t: 'area', q: "Anything else we should know?" }]) }
+    ]
+  };
+
+  /* For our email only (never shown to the visitor): role, DPO, DPIA, transfers and document gaps. */
+  gdpr.summary = function (a) {
+    var s = gScope(a), facts = [], cs = acts(a);
+    var lbl = function (id, v) { var q = findIn(gdpr, id); return q ? label(q.opts, v) : v; };
+    var card = findIn(gdpr, 'p0'), fopt = function (k, v) { var f = card.fields.filter(function (x) { return x.k === k; })[0]; return label(f.opts, v); };
+    var roles = [];
+    if (s.processor) roles.push('processor');
+    if (a.p9 !== 'processor' || cs.some(function (c) { return c.role === 'controller'; })) roles.unshift('controller');
+    if (s.joint) roles.push('joint controller');
+    facts.push(['Role', roles.join(', ')]);
+    facts.push(['Processing activities', String(cs.filter(function (c) { return c.name || c.role || c.basis; }).length)]);
+    if (s.special.length) facts.push(['Sensitive data', s.special.map(function (v) { return fopt('special', v); }).join(', ')]);
+    if (s.children) facts.push(['Children', 'Yes']);
+    facts.push(['DPO', a['p13.v'] === 'yes' ? 'Appointed' : s.dpoLikely ? 'Likely mandatory, not appointed' : 'Not appointed (check whether needed)']);
+    if (s.triggers.length || s.special.length) facts.push(['DPIA', 'Likely required (' + (s.triggers.map(function (v) { return lbl('p37', v); }).join(', ') || 'sensitive data') + '); done: ' + (a['p38.v'] ? label(YPND, a['p38.v']) : 'not answered')]);
+    var dest = cs.filter(function (c) { return c.eea === 'yes' || c.eea === 'dk'; }).map(function (c) { return c.where || (c.name || '') + (c.eea === 'dk' ? ' (unsure)' : ''); }).filter(Boolean).join('; ');
+    if (s.transfers) facts.push(['Transfers outside the EEA', (a['p29.where'] || dest || 'yes') + '; TIA: ' + (a['p29.tia'] ? label(YPND, a['p29.tia']) : 'not answered')]);
+    if (a['p33.v'] === 'yes') facts.push(['Breaches in the last 24 months', 'Yes']);
+    if (s.ro && s.monitoring) facts.push(['Romania', 'Employee monitoring: check Law 190/2018, art. 5']);
+    if (a['p41.ai'] === 'yes') facts.push(['AI', 'Personal data used for AI: send the AI Act questionnaire too']);
+    var grid = findIn(gdpr, 'p42'), group = '', counts = {};
+    grid.rows.forEach(function (r) {
+      if (r.h) { group = r.h; return; }
+      if (!visible(r, a)) return;
+      var c = counts[group] || (counts[group] = { yes: 0, partly: 0, gap: 0, total: 0 });
+      c.total++;
+      if (a[r.id] === 'yes') c.yes++; else if (a[r.id] === 'partly') c.partly++; else c.gap++;
+    });
+    for (var g in counts) {
+      var c = counts[g];
+      facts.push(['Documents: ' + g, c.yes + ' in place · ' + c.partly + ' partly · ' + c.gap + ' missing or unknown (' + c.total + ')']);
+    }
+    return { likely: [], unlikely: [], roles: [], facts: facts };
+  };
+
+  var TOOLS = { quick: quick, discovery: discovery, aiact: aiact, gdpr: gdpr };
 
   /* ------------------------------------------------------------------ engine */
   function esc(s) {
