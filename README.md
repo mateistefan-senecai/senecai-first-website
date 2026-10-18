@@ -53,6 +53,10 @@ Plain static HTML. No build step, no framework; the only dependencies are `nodem
     (`noindex`, not in the sitemap or nav). It can be opened pre-filled with a profile
     (`/discovery?p=…`), but the Tier 1 email no longer includes that link; its sections follow the same scope logic, and the Cyber section
     is the security partners' wording, unchanged.
+  - `scoping-ai-act.html` — the AI Act scoping questionnaire sent to prospects after first contact
+    (`/scopoing-ai-act` redirects here). Unlisted (`noindex`). One card per AI system, article tags
+    on each question, and a documents checklist filtered by role and risk; the email adds internal
+    notes (likely role per system, risk level, FRIA, document gaps) that the prospect never sees.
 - `legal-notice.html` / `privacy-policy.html` / `terms-of-use.html` — legal pages linked from
   the footer (operator: SenecAI Compliance S.R.L.; text ported from the old senecai.eu site).
 - `global-ai-policy-map.html` — the interactive Jurisdiction Map from the Global AI Policy
