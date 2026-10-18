@@ -3,7 +3,7 @@
   "cleanUrls": true,
   "functions": {
     "api/checker-report.js": {
-      "includeFiles": "{api/_lib/fonts/**,assets/senecai-compliance-logo-light.png,assets/checkers.v3.js,assets/checkers.ro.v2.js}"
+      "includeFiles": "{api/_lib/fonts/**,assets/senecai-compliance-logo-light.png,assets/checkers.v4.js,assets/checkers.ro.v3.js}"
     }
   },
   "trailingSlash": false,

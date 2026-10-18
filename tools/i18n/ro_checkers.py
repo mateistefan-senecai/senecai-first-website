@@ -1,5 +1,5 @@
-# English -> Romanian strings for the compliance checkers (assets/checkers.v3.js ->
-# assets/checkers.ro.v2.js). Terminology follows the official Romanian texts: furnizor /
+# English -> Romanian strings for the compliance checkers (assets/checkers.v4.js ->
+# assets/checkers.ro.v3.js). Terminology follows the official Romanian texts: furnizor /
 # implementator (AI Act), operator / persoană împuternicită (GDPR), entitate esențială /
 # importantă (NIS2), entitate financiară, TIC (DORA), produse cu elemente digitale (CRA).
 import re
@@ -11,7 +11,6 @@ RAW = [
     ('roles.push("deployer")', 'roles.push("implementator")'),
     ('roles.push("importer / distributor")', 'roles.push("importator / distribuitor")'),
     ('"Annex II entity of " + size + " size."', '"Entitate din Anexa II de mărime " + (size === "large" ? "mare" : "medie") + "."'),
-    ('encodeURIComponent("Compliance checker result: " + h.title)', 'encodeURIComponent("Rezultat verificator de conformitate: " + h.title)'),
     ('>Discuss your result with us →<', '>Discutați rezultatul cu noi →<'),
     ('data-ck-back>← Change last answer</button>', 'data-ck-back>← Modificați ultimul răspuns</button>'),
     ('data-ck-restart>Start over</button>', 'data-ck-restart>Începeți din nou</button>'),
@@ -56,6 +55,7 @@ def ref(text):
 
 
 CHECKERS = {
+    "https://calendly.com/senecai-consulting/30min": "https://calendly.com/senecai-consulting/30min",
     # ---------------------------------------------------------------- shared
     "None of these": "Niciuna dintre acestea",
     "Yes": "Da",

@@ -1,4 +1,4 @@
-/* SenecAI compliance checkers: styles for assets/checkers.v3.js (rendered into [data-ck-mount])
+/* SenecAI compliance checkers: styles for assets/checkers.v4.js (rendered into [data-ck-mount])
    on the three checker pages. Versioned because /assets/* is cached as
    immutable: rename it (v2, …) whenever it changes. */
 .ck-panel { border: 1px solid rgba(250,243,227,.22); padding: clamp(20px, 3vw, 40px); }

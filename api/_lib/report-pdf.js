@@ -1,5 +1,5 @@
 // Renders a compliance checker result as a branded A4 PDF (pdfkit). The text comes from
-// the checker engine itself (assets/checkers.v3.js or its Romanian build), so the PDF
+// the checker engine itself (assets/checkers.v4.js or its Romanian build), so the PDF
 // always says exactly what the page says. Archivo is embedded as static instances of the
 // variable font (SIL OFL 1.1), subset to Latin + Latin Extended for Romanian diacritics.
 const path = require("path");
