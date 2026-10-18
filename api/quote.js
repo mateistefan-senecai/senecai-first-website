@@ -1,6 +1,6 @@
 // Quote questionnaire endpoint (Vercel serverless function): receives the answers from
 // get-a-quote.html (Tier 1) or discovery.html (Tier 2), rendered client-side by
-// assets/quote.v3.js, and emails them as a brief through Google Workspace SMTP.
+// assets/quote.v4.js, and emails them as a brief through Google Workspace SMTP.
 // Nothing is stored. Sent to LEADS_TO (default hello@senecai.eu), with the same SMTP_USER /
 // SMTP_PASS (and optional SMTP_HOST, SMTP_PORT) as api/contact.js.
 const nodemailer = require("nodemailer");
@@ -40,7 +40,8 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const tool = b.tool === "discovery" ? "discovery" : "quick";
+  const TITLES = { quick: "Quote request (24h)", discovery: "Discovery brief", aiact: "AI Act scoping" };
+  const tool = Object.prototype.hasOwnProperty.call(TITLES, b.tool) ? b.tool : "quick";
   const lang = b.lang === "ro" ? "ro" : "en";
   const name = oneLine(clean(b.name, 200));
   const email = oneLine(clean(b.email, 254));
@@ -55,6 +56,11 @@ module.exports = async function handler(req, res) {
   const likely = list(sm.likely, 120);
   const unlikely = list(sm.unlikely, 120);
   const roles = list(sm.roles, 120);
+  // Internal notes from the AI Act scoping form (likely roles, risk level, document gaps).
+  const facts = (Array.isArray(sm.facts) ? sm.facts : []).slice(0, 20)
+    .filter((f) => Array.isArray(f) && f.length === 2)
+    .map(([k, v]) => [oneLine(clean(k, 120)), oneLine(clean(v, 1000))])
+    .filter(([k, v]) => k && v);
 
   if (!name || !EMAIL_RE.test(email) || items.length < 3) {
     res.status(400).json({ ok: false, error: "invalid" });
@@ -67,7 +73,7 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const title = tool === "discovery" ? "Discovery brief" : "Quote request (24h)";
+  const title = TITLES[tool];
   const who = company || name;
   const meta = [
     ["Company", company || "-"],
@@ -77,6 +83,7 @@ module.exports = async function handler(req, res) {
   if (likely.length) meta.push(["Likely applies", likely.join(", ")]);
   if (unlikely.length) meta.push(["Ticked but likely out of scope", unlikely.join(", ")]);
   if (roles.length) meta.push(["Likely AI Act role", roles.join("; ")]);
+  facts.forEach((f) => meta.push(f));
 
   // Plain text, grouped by step.
   const text = [];

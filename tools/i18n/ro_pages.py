@@ -603,4 +603,10 @@ PAGES = {
     "Check what applies to you": "Verificați ce vi se aplică",
     # ---- footer: legal entity
     "SenecAI Compliance S.R.L. · CUI 55377157": "SenecAI Compliance S.R.L. · CUI 55377157",
+    # ---- scoping-ai-act.html
+    "AI Act scoping questionnaire — SenecAI": "Chestionar de evaluare AI Act — SenecAI",
+    "AI Act scoping": "Evaluare AI Act",
+    "AI Act scoping questionnaire": "Chestionar de evaluare AI Act",
+    "The questions we use to scope your AI Act compliance project and prepare our proposal. It takes about 30–40 minutes, and only the questions that apply to you are shown. You can stop and come back later: your answers are kept in this browser until you send them.": "Întrebările pe care le folosim pentru a stabili amploarea proiectului dvs. de conformitate cu AI Act și pentru a pregăti propunerea noastră. Durează aproximativ 30–40 de minute și vedeți doar întrebările care vi se aplică. Puteți face o pauză și reveni mai târziu: răspunsurile sunt păstrate în acest browser până le trimiteți.",
+    "The SenecAI AI Act scoping questionnaire: the questions we use to scope your AI Act compliance project.": "Chestionarul SenecAI de evaluare AI Act: întrebările pe care le folosim pentru a stabili amploarea proiectului dvs. de conformitate cu AI Act.",
 }
