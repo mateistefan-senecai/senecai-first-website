@@ -1,5 +1,5 @@
-# English -> Romanian strings for the quote questionnaires (assets/quote.v4.js ->
-# assets/quote.ro.v4.js). Same register and terms as ro_checkers.py: formal ("dvs."),
+# English -> Romanian strings for the quote questionnaires (assets/quote.v5.js ->
+# assets/quote.ro.v5.js). Same register and terms as ro_checkers.py: formal ("dvs."),
 # regulation names kept in English as on the rest of the Romanian site.
 QUOTE = {
     # ---- engine UI ----
