@@ -11,7 +11,7 @@
  * Progress is kept in the visitor's own browser (localStorage) until they submit.
  *
  * Code strings use single quotes; every double-quoted string is visitor-facing text, which
- * tools/i18n/build_ro.py translates into assets/quote.ro.v4.js. The file name is versioned
+ * tools/i18n/build_ro.py translates into assets/quote.ro.v5.js. The file name is versioned
  * because /assets/* is cached as immutable: rename it (v2, …) whenever it changes.
  */
 (function () {
@@ -592,11 +592,11 @@
         ] },
       { title: "Scope and classification",
         items: [
-          { id: 'k9', n: '9', q: "Have you self-assessed the AI Act risk class of your systems?", ref: art('6'), fields: [
+          { id: 'k9', n: '9', q: "Have you self-assessed the AI Act risk class of your systems?", fields: [
             { k: 'done', t: 'one', inline: true, opts: YND },
             { k: 'result', t: 'one', inline: true, label: "If yes, the result", opts: [{ v: 'prohibited', l: "Prohibited" }, { v: 'high', l: "High-risk" }, { v: 'limited', l: "Limited risk (transparency)" }, { v: 'minimal', l: "Minimal risk" }, { v: 'unsure', l: "Unsure" }] },
             { k: 'where', t: 'text', label: "Where is it documented?" }] },
-          { id: 'k10', n: '10', t: 'many', q: "Does any of your systems do any of the following?", ref: art('5'), opts: [
+          { id: 'k10', n: '10', t: 'many', q: "Does any of your systems do any of the following?", opts: [
             { v: 'manipulation', l: "Manipulates behaviour, or exploits vulnerabilities linked to age, disability or social situation" },
             { v: 'scoring', l: "Social scoring" },
             { v: 'crime', l: "Predicts the risk of someone committing a crime, based on profiling" },
@@ -605,7 +605,7 @@
             { v: 'biocat', l: "Categorises people by sensitive traits (e.g. ethnicity, religion, sexual orientation) from biometric data" },
             { v: 'rbi', l: "Real-time remote biometric identification in public spaces" },
             { v: 'none', l: "None of these", none: true }] },
-          { id: 'k11', n: '11', t: 'many', q: "Does any of your systems make or support decisions in these areas?", ref: annex('III'), opts: [
+          { id: 'k11', n: '11', t: 'many', q: "Does any of your systems make or support decisions in these areas?", opts: [
             { v: 'biometrics', l: "Biometrics: identification, categorisation or emotion recognition" },
             { v: 'infra', l: "Critical infrastructure (energy, water, transport, digital infrastructure)" },
             { v: 'education', l: "Education and vocational training" },
@@ -617,17 +617,17 @@
             { v: 'law', l: "Law enforcement, migration or border control" },
             { v: 'justice', l: "Justice and democratic processes" },
             { v: 'none', l: "None of these", none: true }] },
-          { id: 'k12', n: '12', t: 'one', inline: true, q: "Is any of your systems a safety component of a regulated product?", ref: annex('I'),
+          { id: 'k12', n: '12', t: 'one', inline: true, q: "Is any of your systems a safety component of a regulated product?",
             hint: "For example machinery, medical devices, vehicles, toys, lifts or radio equipment.", opts: YND },
-          { id: 'k13', n: '13', t: 'one', q: "Do you use general-purpose AI models (e.g. GPT, Claude, Gemini, Llama)?", ref: art('25, 53'), opts: [
+          { id: 'k13', n: '13', t: 'one', q: "Do you use general-purpose AI models (e.g. GPT, Claude, Gemini, Llama)?", opts: [
             { v: 'no', l: "No" }, { v: 'api', l: "Yes, through an API or a ready-made product" },
             { v: 'finetune', l: "Yes, and we fine-tune or significantly modify them" }, { v: 'own', l: "Yes, we train our own general-purpose model" }, { v: 'dk', l: "Don’t know" }] }
         ] },
       { title: "How the AI works",
         items: [
           { id: 'k14', n: '14', t: 'area', q: "Where exactly does AI step in? Describe the flow: input → processing → output → decision.", hint: "Be specific for each system; avoid general descriptions." },
-          { id: 'k15', n: '15', t: 'area', q: "Does the AI influence real decisions? What is the impact, and what happens when it gets something wrong?", ref: art('9') },
-          { id: 'k16', n: '16', t: 'area', q: "What can the AI do on its own (e.g. access databases, start processes, send commands), and what are the limits?", ref: art('14') },
+          { id: 'k15', n: '15', t: 'area', q: "Does the AI influence real decisions? What is the impact, and what happens when it gets something wrong?" },
+          { id: 'k16', n: '16', t: 'area', q: "What can the AI do on its own (e.g. access databases, start processes, send commands), and what are the limits?" },
           { id: 'k17', n: '17', t: 'area', q: "Which third-party services or APIs are used (LLM provider, speech, hosting…), and what role does each play?" },
           { id: 'k18', n: '18', q: "If anything was trained or fine-tuned in-house, was it trained on your own historical decisions?", fields: [
             { k: 'v', t: 'one', inline: true, opts: [{ v: 'yes', l: "Yes" }, { v: 'no', l: "No" }, { v: 'na', l: "Nothing is trained in-house" }, { v: 'dk', l: "Don’t know" }] },
@@ -640,23 +640,23 @@
         ] },
       { title: "Data governance and testing",
         items: [
-          { id: 'k21', n: '21', t: 'area', q: "What data were the models trained on: sources, period, and whether it is real, synthetic or third-party?", ref: art('10') },
-          { id: 'k22', n: '22', q: "Is data quality and representativeness checked and documented?", ref: art('10'), fields: [
+          { id: 'k21', n: '21', t: 'area', q: "What data were the models trained on: sources, period, and whether it is real, synthetic or third-party?" },
+          { id: 'k22', n: '22', q: "Is data quality and representativeness checked and documented?", fields: [
             { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "How (e.g. sampling, internal audits)" }] },
-          { id: 'k23', n: '23', q: "Is incoming data validated automatically (missing values, outliers, consistency)?", ref: art('10'), fields: [
+          { id: 'k23', n: '23', q: "Is incoming data validated automatically (missing values, outliers, consistency)?", fields: [
             { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "Examples (rules, filters)" }] },
-          { id: 'k24', n: '24', t: 'area', q: "How are data updates and quality problems (incomplete or wrong data) handled?", ref: art('10') },
-          { id: 'k25', n: '25', q: "Has accuracy been measured, and is it consistent across subgroups (e.g. gender, age, language, accent)? Is it documented?", ref: art('15'), fields: [
+          { id: 'k24', n: '24', t: 'area', q: "How are data updates and quality problems (incomplete or wrong data) handled?" },
+          { id: 'k25', n: '25', q: "Has accuracy been measured, and is it consistent across subgroups (e.g. gender, age, language, accent)? Is it documented?", fields: [
             { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "What was tested" }] },
-          { id: 'k26', n: '26', q: "Has robustness been tested (edge cases, unusual inputs, stress tests)? Is it documented?", ref: art('15'), fields: [
+          { id: 'k26', n: '26', q: "Has robustness been tested (edge cases, unusual inputs, stress tests)? Is it documented?", fields: [
             { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "Methods used" }] },
           { id: 'k27', n: '27', q: "Do you collect demographic data about the people affected (e.g. gender, age, nationality)?", fields: [
             { k: 'v', t: 'one', inline: true, opts: YND }, { k: 'd', t: 'text', label: "If yes, what" }] }
         ] },
       { title: "Logging and traceability",
         items: [
-          { id: 'k28', n: '28', t: 'area', q: "What is logged for each AI output (e.g. input, output, model version, timestamp)?", ref: art('12') },
-          { id: 'k29', n: '29', q: "Can a specific decision be reconstructed from the logs (input → model → output)?", ref: art('12'), fields: [
+          { id: 'k28', n: '28', t: 'area', q: "What is logged for each AI output (e.g. input, output, model version, timestamp)?" },
+          { id: 'k29', n: '29', q: "Can a specific decision be reconstructed from the logs (input → model → output)?", fields: [
             { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "How" }] },
           { id: 'k30', n: '30', q: "What is stored per interaction, for how long, and where?", fields: [
             { k: 'stored', t: 'area', label: "What is stored (audio, transcripts, scores, logs, metadata), and for how long" },
@@ -665,50 +665,50 @@
         ] },
       { title: "Human oversight",
         items: [
-          { id: 'k31', n: '31', q: "Can a human review, override or escalate an AI output?", ref: art('14'), fields: [
+          { id: 'k31', n: '31', q: "Can a human review, override or escalate an AI output?", fields: [
             { k: 'v', t: 'one', inline: true, label: "Possible?", opts: YND },
             { k: 'doc', t: 'one', inline: true, label: "Is it documented?", opts: [{ v: 'documented', l: "Documented" }, { v: 'informal', l: "Informal only" }, { v: 'none', l: "No workflow" }] },
             { k: 'how', t: 'text', label: "How it works in practice (interface, procedure, reaction time)" }] },
-          { id: 'k32', n: '32', t: 'one', q: "Are high-impact outcomes (e.g. a rejection) ever acted on without a human checking that specific case?", ref: art('14'), opts: [
+          { id: 'k32', n: '32', t: 'one', q: "Are high-impact outcomes (e.g. a rejection) ever acted on without a human checking that specific case?", opts: [
             { v: 'always', l: "No, a human always checks the case first" }, { v: 'sometimes', l: "Sometimes they are acted on automatically" },
             { v: 'auto', l: "Yes, always automated" }, { v: 'na', l: "Not applicable: no high-impact outcomes" }] },
           { id: 'k33', n: '33', t: 'text', q: "Who has final responsibility for decisions made or supported by AI?" }
         ] },
       { title: "Transparency",
         items: [
-          { id: 'k34', n: '34', t: 'one', inline: true, q: "Do your clients receive instructions for use (capabilities, limits, how to read outputs)?", ref: art('13'),
+          { id: 'k34', n: '34', t: 'one', inline: true, q: "Do your clients receive instructions for use (capabilities, limits, how to read outputs)?",
             opts: YPN.concat([{ v: 'na', l: "Not applicable: we don’t supply AI to clients" }]) },
-          { id: 'k35', n: '35', t: 'one', inline: true, q: "Are people told they are interacting with AI?", ref: art('50(1)'),
+          { id: 'k35', n: '35', t: 'one', inline: true, q: "Are people told they are interacting with AI?",
             opts: YPN.concat([{ v: 'na', l: "Not applicable: no AI interacts with people directly" }]) },
-          { id: 'k36', n: '36', t: 'one', inline: true, q: "Is AI-generated content you publish (text, images, audio, video) labelled as such?", ref: art('50(2), (4)'),
+          { id: 'k36', n: '36', t: 'one', inline: true, q: "Is AI-generated content you publish (text, images, audio, video) labelled as such?",
             opts: YPN.concat([{ v: 'na', l: "Not applicable: we don’t publish AI-generated content" }]) },
           { id: 'k37', n: '37', t: 'one', inline: true, opt: true, q: "Is a non-AI alternative offered to people who prefer one?", opts: YND }
         ] },
       { title: "Governance and risk management",
         items: [
-          { id: 'k38', n: '38', q: "Is there a documented risk management process (risks, mitigations, residual risk), or is risk only handled informally?", ref: art('9'), fields: [
+          { id: 'k38', n: '38', q: "Is there a documented risk management process (risks, mitigations, residual risk), or is risk only handled informally?", fields: [
             { k: 'v', t: 'one', inline: true, opts: [{ v: 'documented', l: "Documented process" }, { v: 'informal', l: "Informal only" }, { v: 'nothing', l: "Nothing yet" }] },
             { k: 'd', t: 'text', label: NOTES }] },
-          { id: 'k39', n: '39', q: "How are changes to the AI reviewed and approved before deployment?", ref: art('17'), fields: [
+          { id: 'k39', n: '39', q: "How are changes to the AI reviewed and approved before deployment?", fields: [
             { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "How" }] },
-          { id: 'k40', n: '40', t: 'one', inline: true, q: "Is there version control for AI policies and technical documentation?", ref: art('17, 18'), opts: YPND },
-          { id: 'k41', n: '41', q: "Are compliance roles assigned, and is there a named person for the AI Act?", ref: art('17'), fields: [
+          { id: 'k40', n: '40', t: 'one', inline: true, q: "Is there version control for AI policies and technical documentation?", opts: YPND },
+          { id: 'k41', n: '41', q: "Are compliance roles assigned, and is there a named person for the AI Act?", fields: [
             { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'who', t: 'text', label: "Who" }] },
-          { id: 'k42', n: '42', q: "Do you monitor performance in production (accuracy, drift, complaints, alert thresholds)?", ref: art('72'), fields: [
+          { id: 'k42', n: '42', q: "Do you monitor performance in production (accuracy, drift, complaints, alert thresholds)?", fields: [
             { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "How" }] },
-          { id: 'k43', n: '43', t: 'one', inline: true, q: "Is there an incident process that could cover AI incidents?", ref: art('73'), opts: YPND },
+          { id: 'k43', n: '43', t: 'one', inline: true, q: "Is there an incident process that could cover AI incidents?", opts: YPND },
           { id: 'k44', n: '44', q: "Who has access to the AI systems and their data? Is access role-based?", fields: [
             { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "Roles and access levels (e.g. admin, operator)" }] },
           { id: 'k45', n: '45', q: "Are there AI policies or governance processes, formal or informal?", fields: [
             { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "Which, and who owns them" }] },
-          { id: 'k46', n: '46', t: 'one', inline: true, q: "Have the people who use or build AI had AI literacy training?", ref: art('4'), opts: YPND },
-          { id: 'k47', n: '47', q: "Security: which measures protect the AI systems, and which tests have been done?", ref: art('15'),
+          { id: 'k46', n: '46', t: 'one', inline: true, q: "Have the people who use or build AI had AI literacy training?", opts: YPND },
+          { id: 'k47', n: '47', q: "Security: which measures protect the AI systems, and which tests have been done?",
             hint: "A short overview is enough here. The detail goes in our cybersecurity questionnaire.", fields: [
             { k: 'measures', t: 'area', label: "Measures (e.g. access control, protection against data manipulation, attack monitoring)" },
             { k: 'tests', t: 'text', label: "Tests done, and how often (e.g. penetration test, vulnerability assessment)" }] },
           { id: 'k48', n: '48', q: "Does your marketing describe the AI as “unbiased”, “fair” or “AI Act compliant”?", fields: [
             { k: 'v', t: 'one', inline: true, opts: YND }, { k: 'd', t: 'text', label: "If yes, what backs these claims" }] },
-          { id: 'k49', n: '49', t: 'one', inline: true, q: "Have you carried out a fundamental rights impact assessment (FRIA)?", ref: art('27'), opts: YPND,
+          { id: 'k49', n: '49', t: 'one', inline: true, q: "Have you carried out a fundamental rights impact assessment (FRIA)?", opts: YPND,
             hint: "Required before using a high-risk system if you are a public body or provide a public service, or if you use AI for credit scoring or for life or health insurance pricing.",
             show: when(function (s) { return s.fria; }) }
         ] },
