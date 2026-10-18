@@ -615,4 +615,6 @@ PAGES = {
     "GDPR scoping questionnaire": "Chestionar de evaluare GDPR",
     "The questions we use to scope your GDPR compliance project and prepare our proposal. It takes about 25–35 minutes, and only the questions that apply to you are shown. You can stop and come back later: your answers are kept in this browser until you send them.": "Întrebările pe care le folosim pentru a stabili amploarea proiectului dvs. de conformitate cu GDPR și pentru a pregăti propunerea noastră. Durează aproximativ 25–35 de minute și vedeți doar întrebările care vi se aplică. Puteți face o pauză și reveni mai târziu: răspunsurile sunt păstrate în acest browser până le trimiteți.",
     "The SenecAI GDPR scoping questionnaire: the questions we use to scope your GDPR compliance project.": "Chestionarul SenecAI de evaluare GDPR: întrebările pe care le folosim pentru a stabili amploarea proiectului dvs. de conformitate cu GDPR.",
+    # ---- index: team "Bio" button (same word in Romanian)
+    "Bio": "Bio",
 }
