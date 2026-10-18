@@ -42,7 +42,7 @@ Plain static HTML. No build step, no framework; the only dependencies are `nodem
   `checkers.ro.v3.js` is renamed, update `ENGINES` in `api/checker-report.js` and
   `includeFiles` in `vercel.json`. The PDF and email text lives in the engine's `UI` object,
   so the Romanian build translates it like everything else.
-- Quote questionnaires — two forms rendered by `assets/quote.v6.js` (data + engine, versioned
+- Quote questionnaires — two forms rendered by `assets/quote.v7.js` (data + engine, versioned
   like the checkers) and emailed through `api/quote.js` to `LEADS_TO` (default `hello@senecai.eu`; same SMTP variables as the contact form;
   nothing is stored, progress is kept in the visitor's browser until they submit):
   - `get-a-quote.html` — Tier 1, "Get a quote in 24 hours", the lead magnet linked from the hero
@@ -61,6 +61,9 @@ Plain static HTML. No build step, no framework; the only dependencies are `nodem
     one card per processing activity (RoPA-style), Romania-only questions (Law 190/2018) for
     companies established there, and a documents checklist; the email notes role, DPO, DPIA
     triggers, transfers and document gaps. Unlisted (`noindex`).
+  - `scoping-cyber.html` — the cybersecurity scoping questionnaire: our security partners'
+    questions C1–C41 word for word (shared with the discovery brief as `CYBER` in the engine), split
+    into five steps along their own section headings. Unlisted (`noindex`).
 - `legal-notice.html` / `privacy-policy.html` / `terms-of-use.html` — legal pages linked from
   the footer (operator: SenecAI Compliance S.R.L.; text ported from the old senecai.eu site).
 - `global-ai-policy-map.html` — the interactive Jurisdiction Map from the Global AI Policy
@@ -97,7 +100,7 @@ The Romanian site lives in `ro/` (served at `/ro/…`) and is **generated** from
 pages: `python3 tools/i18n/build_ro.py` translates every text node and attribute using the
 dictionaries in `tools/i18n/ro_pages.py` (pages) and `tools/i18n/ro_checkers.py` (compliance
 checkers → `assets/checkers.ro.v3.js`) and `tools/i18n/ro_quote.py` (quote questionnaires →
-`assets/quote.ro.v6.js`), rewrites asset paths and wires the EN/RO switch.
+`assets/quote.ro.v7.js`), rewrites asset paths and wires the EN/RO switch.
 The same script writes the SEO head block of every page (both languages) and `sitemap.xml`;
 to add a page, append it to `PAGE_FILES`.
 After editing any English page or `assets/checkers.v4.js`, re-run the script: it fails and
