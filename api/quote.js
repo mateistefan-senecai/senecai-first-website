@@ -6,7 +6,6 @@
 const nodemailer = require("nodemailer");
 
 const TO = process.env.LEADS_TO || "hello@senecai.eu";
-const SITE = "https://www.senecai.eu";
 const EMAIL_RE = /^[^\s@<>()",;:]+@[^\s@<>()",;:]+\.[^\s@<>()",;:]{2,}$/;
 const MAX_ITEMS = 250;
 
@@ -56,8 +55,6 @@ module.exports = async function handler(req, res) {
   const likely = list(sm.likely, 120);
   const unlikely = list(sm.unlikely, 120);
   const roles = list(sm.roles, 120);
-  // Only a link to our own discovery page is passed on; anything else is dropped.
-  const prefill = /^\/(ro\/)?discovery\?p=[A-Za-z0-9_-]{1,6000}$/.test(String(b.prefill || "")) ? SITE + b.prefill : "";
 
   if (!name || !EMAIL_RE.test(email) || items.length < 3) {
     res.status(400).json({ ok: false, error: "invalid" });
@@ -80,7 +77,6 @@ module.exports = async function handler(req, res) {
   if (likely.length) meta.push(["Likely applies", likely.join(", ")]);
   if (unlikely.length) meta.push(["Ticked but likely out of scope", unlikely.join(", ")]);
   if (roles.length) meta.push(["Likely AI Act role", roles.join("; ")]);
-  if (prefill) meta.push(["Pre-filled Tier 2 link", prefill]);
 
   // Plain text, grouped by step.
   const text = [];
@@ -95,8 +91,7 @@ module.exports = async function handler(req, res) {
   let html = `<div style="font-family:Arial,Helvetica,sans-serif;color:#17160f;max-width:760px">` +
     `<div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#a37c17;font-weight:bold">SenecAI · ${esc(title)}</div>` +
     `<h1 style="font-size:22px;margin:8px 0 14px">${esc(who)}</h1><table style="border-collapse:collapse;font-size:14px;margin-bottom:18px">` +
-    meta.map(([k, v]) => `<tr><td style="padding:4px 14px 4px 0;color:#6b665c;vertical-align:top;white-space:nowrap">${esc(k)}</td><td style="padding:4px 0">${
-      k === "Pre-filled Tier 2 link" ? `<a href="${esc(v)}">Open Tier 2 with these answers</a>` : esc(v)}</td></tr>`).join("") +
+    meta.map(([k, v]) => `<tr><td style="padding:4px 14px 4px 0;color:#6b665c;vertical-align:top;white-space:nowrap">${esc(k)}</td><td style="padding:4px 0">${esc(v)}</td></tr>`).join("") +
     `</table>`;
   last = "";
   items.forEach((it) => {

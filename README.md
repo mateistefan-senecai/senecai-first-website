@@ -50,8 +50,8 @@ Plain static HTML. No build step, no framework; the only dependencies are `nodem
     first; their targeted questions appear only when the company is likely in scope. AI Act roles
     are inferred from plain-language questions, never asked by name.
   - `discovery.html` — Tier 2, the detailed discovery brief for interested clients. Unlisted
-    (`noindex`, not in the sitemap or nav). The Tier 1 email contains a link that opens it
-    pre-filled (`/discovery?p=…`); its sections follow the same scope logic, and the Cyber section
+    (`noindex`, not in the sitemap or nav). It can be opened pre-filled with a profile
+    (`/discovery?p=…`), but the Tier 1 email no longer includes that link; its sections follow the same scope logic, and the Cyber section
     is the security partners' wording, unchanged.
 - `legal-notice.html` / `privacy-policy.html` / `terms-of-use.html` — legal pages linked from
   the footer (operator: SenecAI Compliance S.R.L.; text ported from the old senecai.eu site).
