@@ -10,7 +10,7 @@
  * Progress is kept in the visitor's own browser (localStorage) until they submit.
  *
  * Code strings use single quotes; every double-quoted string is visitor-facing text, which
- * tools/i18n/build_ro.py translates into assets/quote.ro.v2.js. The file name is versioned
+ * tools/i18n/build_ro.py translates into assets/quote.ro.v3.js. The file name is versioned
  * because /assets/* is cached as immutable: rename it (v2, …) whenever it changes.
  */
 (function () {
@@ -28,7 +28,7 @@
     submitQuick: "Get my quote in 24 hours →",
     submitDiscovery: "Send my discovery brief →",
     sending: "Sending…",
-    sendError: "Your answers could not be sent. Please try again, or email them to matei.stefan@senecai.eu.",
+    sendError: "Your answers could not be sent. Please try again, or email them to hello@senecai.eu.",
     print: "Print / save as PDF",
     restart: "Start a new questionnaire",
     yourAnswers: "Your answers",

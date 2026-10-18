@@ -1,13 +1,13 @@
 // Compliance checker report endpoint (Vercel serverless function). The checkers are a lead
 // magnet: the visitor sees their result only after leaving their email, gets it as a PDF by
-// email, and a copy (with the PDF) goes to CONTACT_TO so we know who completed it. Nothing
+// email, and a copy (with the PDF) goes to LEADS_TO (hello@senecai.eu) so we know who completed it. Nothing
 // is stored.
 //
 // The client sends only the tool id and the answers. The result is rebuilt here with the
 // same engine the page runs (assets/checkers.v3.js, or its Romanian build), after re-walking
 // the decision tree, so the emailed report can only ever contain the checker's own text.
 // When the engine file is renamed (v4, …), update ENGINES below and includeFiles in vercel.json.
-const { TO, EMAIL_RE, clean, oneLine, configured, transport } = require("./_lib/mail");
+const { LEADS_TO: TO, EMAIL_RE, clean, oneLine, configured, transport } = require("./_lib/mail");
 const { renderReport } = require("./_lib/report-pdf");
 
 const ENGINES = {
@@ -121,7 +121,7 @@ module.exports = async function handler(req, res) {
       attachments: [attachment],
     });
   } catch (err) {
-    console.error("checker-report: copy to CONTACT_TO failed", err && err.message);
+    console.error("checker-report: copy to LEADS_TO failed", err && err.message);
   }
 
   send(res, 200, { ok: true });

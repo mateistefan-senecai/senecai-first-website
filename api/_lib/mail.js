@@ -1,9 +1,11 @@
-// Shared by the serverless functions that send email (api/contact.js, api/checker-report.js):
+// Shared by the serverless functions that send email (api/contact.js, api/checker-report.js, api/quote.js):
 // input cleaning and the Google Workspace SMTP transport. Files under api/_lib are not
 // deployed as functions.
 const nodemailer = require("nodemailer");
 
 const TO = process.env.CONTACT_TO || "matei.stefan@senecai.eu";
+// Leads from the quote questionnaires and the checker reports go to the shared inbox.
+const LEADS_TO = process.env.LEADS_TO || "hello@senecai.eu";
 const EMAIL_RE = /^[^\s@<>()",;:]+@[^\s@<>()",;:]+\.[^\s@<>()",;:]{2,}$/;
 
 function clean(value, max) {
@@ -27,4 +29,4 @@ function transport() {
   });
 }
 
-module.exports = { TO, EMAIL_RE, clean, oneLine, configured, transport };
+module.exports = { TO, LEADS_TO, EMAIL_RE, clean, oneLine, configured, transport };
