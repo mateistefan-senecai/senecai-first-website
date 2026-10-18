@@ -4,15 +4,15 @@
 // is stored.
 //
 // The client sends only the tool id and the answers. The result is rebuilt here with the
-// same engine the page runs (assets/checkers.v3.js, or its Romanian build), after re-walking
+// same engine the page runs (assets/checkers.v4.js, or its Romanian build), after re-walking
 // the decision tree, so the emailed report can only ever contain the checker's own text.
 // When the engine file is renamed (v4, …), update ENGINES below and includeFiles in vercel.json.
 const { LEADS_TO: TO, EMAIL_RE, clean, oneLine, configured, transport } = require("./_lib/mail");
 const { renderReport } = require("./_lib/report-pdf");
 
 const ENGINES = {
-  en: () => require("../assets/checkers.v3.js"),
-  ro: () => require("../assets/checkers.ro.v2.js"),
+  en: () => require("../assets/checkers.v4.js"),
+  ro: () => require("../assets/checkers.ro.v3.js"),
 };
 const FILES = { general: "SenecAI-EU-compliance-report.pdf", aiact: "SenecAI-AI-Act-report.pdf", nis2: "SenecAI-NIS2-report.pdf" };
 const CALENDLY = "https://calendly.com/senecai-consulting/30min";

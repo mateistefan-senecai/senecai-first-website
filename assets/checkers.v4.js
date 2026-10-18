@@ -1373,7 +1373,7 @@
     html += "</ol></details>";
 
     html += '<div class="ck-nav ck-end">';
-    html += '<a class="ck-btn ck-primary" href="mailto:hello@senecai.eu?subject=' + encodeURIComponent("Compliance checker result: " + h.title) + '">Discuss your result with us →</a>';
+    html += '<a class="ck-btn ck-primary" href="https://calendly.com/senecai-consulting/30min" target="_blank" rel="noopener">Discuss your result with us →</a>';
     html += '<button type="button" class="ck-btn ck-ghost" data-ck-back>← Change last answer</button>';
     html += '<button type="button" class="ck-btn ck-ghost" data-ck-restart>Start over</button>';
     html += '<button type="button" class="ck-btn ck-ghost" data-ck-print>Print / save as PDF</button>';

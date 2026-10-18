@@ -18,7 +18,7 @@ Plain static HTML. No build step, no framework; the only dependencies are `nodem
 - Compliance checkers — three rules-based decision trees: general applicability (AI Act,
   GDPR, NIS2, DORA, CRA), AI Act risk class & role (AI systems only; GPAI models are
   deliberately out of scope), and NIS2 essential / important. Trees, rules and the UI engine
-  live in `assets/checkers.v3.js`, their styles in `assets/checkers.v1.css` (both versioned
+  live in `assets/checkers.v4.js`, their styles in `assets/checkers.v1.css` (both versioned
   like the dot wave — rename on change). Each checker runs on a page of its own, to share
   directly: `/eu-compliance-checker`, `/ai-act-checker`, `/nis2-checker` (and `/ro/…`); the
   engine's `PAGES` map lists them, and each page has a "Copy link" button.
@@ -38,8 +38,8 @@ Plain static HTML. No build step, no framework; the only dependencies are `nodem
   not an option), renders the result with `pdfkit` (`api/_lib/report-pdf.js`, Archivo
   embedded from `api/_lib/fonts/`, logo from `assets/`) and emails it to the visitor, with a
   copy to `LEADS_TO` (default `hello@senecai.eu`) saying who asked and whether they agreed to a follow-up. Nothing is
-  stored. Same SMTP environment variables as the contact form. When `checkers.v3.js` or
-  `checkers.ro.v2.js` is renamed, update `ENGINES` in `api/checker-report.js` and
+  stored. Same SMTP environment variables as the contact form. When `checkers.v4.js` or
+  `checkers.ro.v3.js` is renamed, update `ENGINES` in `api/checker-report.js` and
   `includeFiles` in `vercel.json`. The PDF and email text lives in the engine's `UI` object,
   so the Romanian build translates it like everything else.
 - Quote questionnaires — two forms rendered by `assets/quote.v3.js` (data + engine, versioned
@@ -88,11 +88,11 @@ Plain static HTML. No build step, no framework; the only dependencies are `nodem
 The Romanian site lives in `ro/` (served at `/ro/…`) and is **generated** from the English
 pages: `python3 tools/i18n/build_ro.py` translates every text node and attribute using the
 dictionaries in `tools/i18n/ro_pages.py` (pages) and `tools/i18n/ro_checkers.py` (compliance
-checkers → `assets/checkers.ro.v2.js`) and `tools/i18n/ro_quote.py` (quote questionnaires →
+checkers → `assets/checkers.ro.v3.js`) and `tools/i18n/ro_quote.py` (quote questionnaires →
 `assets/quote.ro.v3.js`), rewrites asset paths and wires the EN/RO switch.
 The same script writes the SEO head block of every page (both languages) and `sitemap.xml`;
 to add a page, append it to `PAGE_FILES`.
-After editing any English page or `assets/checkers.v3.js`, re-run the script: it fails and
+After editing any English page or `assets/checkers.v4.js`, re-run the script: it fails and
 lists every string that has no Romanian translation yet, so add those to the dictionaries.
 Never edit `ro/*.html`, `assets/checkers.ro.*.js` or `assets/quote.ro.*.js` by hand.
 
