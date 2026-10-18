@@ -37,13 +37,13 @@ Plain static HTML. No build step, no framework; the only dependencies are `nodem
   the same engine file the page runs (`walk()` rejects any answer that is not on the path or
   not an option), renders the result with `pdfkit` (`api/_lib/report-pdf.js`, Archivo
   embedded from `api/_lib/fonts/`, logo from `assets/`) and emails it to the visitor, with a
-  copy to `CONTACT_TO` saying who asked and whether they agreed to a follow-up. Nothing is
+  copy to `LEADS_TO` (default `hello@senecai.eu`) saying who asked and whether they agreed to a follow-up. Nothing is
   stored. Same SMTP environment variables as the contact form. When `checkers.v3.js` or
   `checkers.ro.v2.js` is renamed, update `ENGINES` in `api/checker-report.js` and
   `includeFiles` in `vercel.json`. The PDF and email text lives in the engine's `UI` object,
   so the Romanian build translates it like everything else.
-- Quote questionnaires — two forms rendered by `assets/quote.v2.js` (data + engine, versioned
-  like the checkers) and emailed through `api/quote.js` (same SMTP variables as the contact form;
+- Quote questionnaires — two forms rendered by `assets/quote.v3.js` (data + engine, versioned
+  like the checkers) and emailed through `api/quote.js` to `LEADS_TO` (default `hello@senecai.eu`; same SMTP variables as the contact form;
   nothing is stored, progress is kept in the visitor's browser until they submit):
   - `get-a-quote.html` — Tier 1, "Get a quote in 24 hours", the lead magnet linked from the hero
     and the Resources page (`/quote` redirects here). Scope checks for NIS2, DORA and CRA come
@@ -66,7 +66,7 @@ Plain static HTML. No build step, no framework; the only dependencies are `nodem
   stored) through Google Workspace SMTP (`api/_lib/mail.js`, shared with the checker report) to `matei.stefan@senecai.eu`, with Reply-To set to the
   sender. It needs two environment variables in Vercel (Settings → Environment Variables,
   Production): `SMTP_USER` (the Workspace address that sends, e.g. `matei.stefan@senecai.eu`)
-  and `SMTP_PASS` (a Google app password for that account). Optional: `CONTACT_TO`,
+  and `SMTP_PASS` (a Google app password for that account). Optional: `CONTACT_TO` (contact form recipient), `LEADS_TO` (quote and checker-report recipient),
   `SMTP_HOST`, `SMTP_PORT`. Without them the form shows its error line, which points to the
   email address. `package.json` exists only for the functions' dependencies.
 - SEO: every page's `<head>` carries a generated block (canonical, hreflang incl.
@@ -89,7 +89,7 @@ The Romanian site lives in `ro/` (served at `/ro/…`) and is **generated** from
 pages: `python3 tools/i18n/build_ro.py` translates every text node and attribute using the
 dictionaries in `tools/i18n/ro_pages.py` (pages) and `tools/i18n/ro_checkers.py` (compliance
 checkers → `assets/checkers.ro.v2.js`) and `tools/i18n/ro_quote.py` (quote questionnaires →
-`assets/quote.ro.v2.js`), rewrites asset paths and wires the EN/RO switch.
+`assets/quote.ro.v3.js`), rewrites asset paths and wires the EN/RO switch.
 The same script writes the SEO head block of every page (both languages) and `sitemap.xml`;
 to add a page, append it to `PAGE_FILES`.
 After editing any English page or `assets/checkers.v3.js`, re-run the script: it fails and

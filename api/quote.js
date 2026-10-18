@@ -1,11 +1,11 @@
 // Quote questionnaire endpoint (Vercel serverless function): receives the answers from
 // get-a-quote.html (Tier 1) or discovery.html (Tier 2), rendered client-side by
-// assets/quote.v2.js, and emails them as a brief through Google Workspace SMTP.
-// Nothing is stored. Uses the same SMTP_USER / SMTP_PASS (and optional CONTACT_TO,
-// SMTP_HOST, SMTP_PORT) as api/contact.js.
+// assets/quote.v3.js, and emails them as a brief through Google Workspace SMTP.
+// Nothing is stored. Sent to LEADS_TO (default hello@senecai.eu), with the same SMTP_USER /
+// SMTP_PASS (and optional SMTP_HOST, SMTP_PORT) as api/contact.js.
 const nodemailer = require("nodemailer");
 
-const TO = process.env.CONTACT_TO || "matei.stefan@senecai.eu";
+const TO = process.env.LEADS_TO || "hello@senecai.eu";
 const SITE = "https://www.senecai.eu";
 const EMAIL_RE = /^[^\s@<>()",;:]+@[^\s@<>()",;:]+\.[^\s@<>()",;:]{2,}$/;
 const MAX_ITEMS = 250;

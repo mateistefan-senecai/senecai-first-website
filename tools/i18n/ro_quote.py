@@ -1,5 +1,5 @@
-# English -> Romanian strings for the quote questionnaires (assets/quote.v2.js ->
-# assets/quote.ro.v2.js). Same register and terms as ro_checkers.py: formal ("dvs."),
+# English -> Romanian strings for the quote questionnaires (assets/quote.v3.js ->
+# assets/quote.ro.v3.js). Same register and terms as ro_checkers.py: formal ("dvs."),
 # regulation names kept in English as on the rest of the Romanian site.
 QUOTE = {
     # ---- engine UI ----
@@ -13,7 +13,7 @@ QUOTE = {
     "Get my quote in 24 hours →": "Vreau oferta în 24 de ore →",
     "Send my discovery brief →": "Trimiteți chestionarul detaliat →",
     "Sending…": "Se trimite…",
-    "Your answers could not be sent. Please try again, or email them to matei.stefan@senecai.eu.": "Răspunsurile nu au putut fi trimise. Vă rugăm să încercați din nou sau să ni le trimiteți pe e-mail la matei.stefan@senecai.eu.",
+    "Your answers could not be sent. Please try again, or email them to hello@senecai.eu.": "Răspunsurile nu au putut fi trimise. Vă rugăm să încercați din nou sau să ni le trimiteți pe e-mail la hello@senecai.eu.",
     "Print / save as PDF": "Tipăriți / salvați ca PDF",
     "Start a new questionnaire": "Începeți un chestionar nou",
     "Your answers": "Răspunsurile dvs.",
