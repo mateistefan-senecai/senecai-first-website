@@ -617,4 +617,10 @@ PAGES = {
     "The SenecAI GDPR scoping questionnaire: the questions we use to scope your GDPR compliance project.": "Chestionarul SenecAI de evaluare GDPR: întrebările pe care le folosim pentru a stabili amploarea proiectului dvs. de conformitate cu GDPR.",
     # ---- index: team "Bio" button (same word in Romanian)
     "Bio": "Bio",
+    # ---- scoping-cyber.html
+    "Cybersecurity scoping questionnaire — SenecAI": "Chestionar de evaluare pentru securitate cibernetică — SenecAI",
+    "Cybersecurity scoping": "Evaluare securitate cibernetică",
+    "Cybersecurity scoping questionnaire": "Chestionar de evaluare pentru securitate cibernetică",
+    "The questions we use to scope a penetration test or AI red-teaming engagement and prepare our proposal. It takes about 20–30 minutes, and only the questions that apply to you are shown. You can stop and come back later: your answers are kept in this browser until you send them.": "Întrebările pe care le folosim pentru a stabili perimetrul unui test de penetrare sau al unui exercițiu de AI red teaming și pentru a pregăti propunerea noastră. Durează aproximativ 20–30 de minute și vedeți doar întrebările care vi se aplică. Puteți face o pauză și reveni mai târziu: răspunsurile sunt păstrate în acest browser până le trimiteți.",
+    "The SenecAI cybersecurity scoping questionnaire: the questions we use to scope a penetration test or AI red-teaming engagement.": "Chestionarul SenecAI de evaluare pentru securitate cibernetică: întrebările pe care le folosim pentru a stabili perimetrul unui test de penetrare sau al unui exercițiu de AI red teaming.",
 }

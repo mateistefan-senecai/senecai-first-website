@@ -1,5 +1,5 @@
-# English -> Romanian strings for the quote questionnaires (assets/quote.v6.js ->
-# assets/quote.ro.v6.js). Same register and terms as ro_checkers.py: formal ("dvs."),
+# English -> Romanian strings for the quote questionnaires (assets/quote.v7.js ->
+# assets/quote.ro.v7.js). Same register and terms as ro_checkers.py: formal ("dvs."),
 # regulation names kept in English as on the rest of the Romanian site.
 QUOTE = {
     # ---- engine UI ----
@@ -851,4 +851,12 @@ QUOTE = {
     "Safeguards for automated decisions (human review, right to contest)": "Garanții pentru deciziile automate (reanalizare de către un om, dreptul de a contesta)",
     "Employee monitoring policy and record of consulting employees or their representatives": "Politica de monitorizare a angajaților și dovada consultării angajaților sau a reprezentanților lor",
     "Law 190/2018, art. 5": "Legea 190/2018, art. 5",
+
+    # ---- Cyber scoping questionnaire (scoping-cyber.html) ----
+    "System overview": "Prezentarea sistemului",
+    "Models and prompts": "Modele și prompturi",
+    "Tools and memory": "Instrumente și memorie",
+    "Access and guardrails": "Acces și măsuri de protecție",
+    "Testing scope": "Perimetrul testării",
+    "To be answered by your engineering or security team. These are the questions we use to scope a penetration test or an AI red-teaming engagement.": "De completat de echipa dvs. tehnică sau de securitate. Sunt întrebările pe care le folosim pentru a stabili perimetrul unui test de penetrare sau al unui exercițiu de AI red teaming.",
 }

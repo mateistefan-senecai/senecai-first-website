@@ -4,6 +4,7 @@
  *   discovery : Tier 2, the detailed discovery brief sent to interested clients (discovery.html)
  *   aiact     : the AI Act scoping questionnaire sent to prospects (scoping-ai-act.html)
  *   gdpr      : the GDPR scoping questionnaire sent to prospects (scoping-gdpr.html)
+ *   cyber     : the cybersecurity scoping questionnaire, our security partners' questions (scoping-cyber.html)
  *
  * Each questionnaire is plain data: steps holding questions, each question with an optional
  * show(answers) condition. Scope checks for NIS2, DORA and CRA run first; their targeted
@@ -12,7 +13,7 @@
  * Progress is kept in the visitor's own browser (localStorage) until they submit.
  *
  * Code strings use single quotes; every double-quoted string is visitor-facing text, which
- * tools/i18n/build_ro.py translates into assets/quote.ro.v6.js. The file name is versioned
+ * tools/i18n/build_ro.py translates into assets/quote.ro.v7.js. The file name is versioned
  * because /assets/* is cached as immutable: rename it (v2, …) whenever it changes.
  */
 (function () {
@@ -330,6 +331,64 @@
   function cyberOn(a) { return scope(a).sec; }
   function on(fn, items) { items.forEach(function (it) { if (!it.show) it.show = fn; }); return items; }
 
+  /* The security partners' questions (C1–C41), word for word. Used by the discovery brief and by
+     the cyber scoping questionnaire. */
+  var CYBER = [
+    { h: "Engagement overview" },
+    { id: 'C1', n: 'C1', t: 'text', q: "What is the name/description of the GenAI application/system?" },
+    { id: 'C2', n: 'C2', t: 'area', q: "What business purpose does it serve?" },
+    { id: 'C3', n: 'C3', t: 'one', q: "Is the target internal facing, external facing, or embedded in another product?", opts: [{ v: 'internal', l: "Internal facing" }, { v: 'external', l: "External facing" }, { v: 'embedded', l: "Embedded in another product" }] },
+    { h: "Architecture & deployment" },
+    { id: 'C4', n: 'C4', t: 'area', q: "Please provide a high-level architecture diagram.", label: "Link or note on how it will be shared" },
+    { id: 'C5', n: 'C5', t: 'area', q: "Describe the GenAI system architecture." },
+    { id: 'C6', n: 'C6', t: 'one', q: "Is the system a single LLM app, an agent/multi-agent framework, a tool-using assistant, an autonomous workflow/orchestration, or a hybrid AI pipeline?", opts: [{ v: 'single', l: "Single LLM app" }, { v: 'agent', l: "Agent/multi-agent framework" }, { v: 'tool', l: "Tool-using assistant" }, { v: 'auto', l: "Autonomous workflow/orchestration" }, { v: 'hybrid', l: "Hybrid AI pipeline" }] },
+    { id: 'C7', n: 'C7', t: 'many', q: "Is the application a web application, API only, mobile application, desktop application, Slack/Teams/Discord bot, embedded widget, voice interface, or other?", opts: [{ v: 'web', l: "Web application" }, { v: 'api', l: "API only" }, { v: 'mobile', l: "Mobile application" }, { v: 'desktop', l: "Desktop application" }, { v: 'bot', l: "Slack/Teams/Discord bot" }, { v: 'widget', l: "Embedded widget" }, { v: 'voice', l: "Voice interface" }, { v: 'other', l: "Other" }] },
+    { h: "Model information" },
+    { id: 'C8', n: 'C8', t: 'area', q: "Which models are used (e.g. OpenAI GPT-4.1/GPT-4o/o-series, Anthropic Claude, Google Gemini, Meta Llama, a self-hosted OSS model, or a proprietary fine-tuned model)?" },
+    { id: 'C9', n: 'C9', t: 'many', q: "Are models hosted by a vendor API, self-hosted, hosted in a cloud VPC/private endpoint, or on-premise?", opts: [{ v: 'vendor', l: "Vendor API" }, { v: 'self', l: "Self-hosted" }, { v: 'vpc', l: "Cloud VPC/private endpoint" }, { v: 'onprem', l: "On-premise" }] },
+    yn('C10', 'C10', "Are any models fine-tuned/custom-trained? If yes, please describe the training/fine-tuning process.", { area: true, label: "If yes — describe" }, YNU),
+    yn('C11', 'C11', "Are multiple models used in routing/chains? If yes, please explain the orchestration logic.", { area: true, label: "If yes — explain" }, YNU),
+    { h: "Prompting / system design" },
+    yn('C12', 'C12', "Can you provide system prompts, developer prompts, hidden instructions, and prompt templates?", null, YNU),
+    yn('C13', 'C13', "Is a prompt templating framework used (e.g. LangChain, LlamaIndex, Semantic Kernel, or a custom framework)?", { label: "Which one" }, YNU),
+    { h: "RAG / information retrieval" },
+    yn('C14', 'C14', "Does the application use RAG (Retrieval-Augmented Generation)?", false, YNU),
+    { id: 'C15', n: 'C15', t: 'area', show: function (a) { return a['C14.v'] === 'yes'; }, q: "What data sources feed the RAG pipeline (internal documents, customer documents, database records, web search, third-party APIs, uploaded files, other)?" },
+    { id: 'C16', n: 'C16', t: 'text', show: function (a) { return a['C14.v'] === 'yes'; }, q: "What vector DB / retrieval system is used (e.g. Pinecone, Weaviate, Chroma, Elasticsearch, PGVector, other)?" },
+    { id: 'C17', n: 'C17', t: 'many', q: "How is ingestion performed (manual upload, automated sync, API ingestion, user uploads)?", opts: [{ v: 'manual', l: "Manual upload" }, { v: 'sync', l: "Automated sync" }, { v: 'api', l: "API ingestion" }, { v: 'user', l: "User uploads" }] },
+    { h: "Agent / tool / plugin capabilities" },
+    yn('C18', 'C18', "Does the model invoke tools/functions?", false, YNU),
+    { id: 'C19', n: 'C19', t: 'area', show: function (a) { return a['C18.v'] === 'yes'; }, q: "List all available tools/functions/plugins. For each: name, purpose, required permissions, and side effects (read/write/delete/send)." },
+    { id: 'C20', n: 'C20', t: 'many', q: "Can the AI send emails, create tickets, modify data, execute code, query databases, access internal APIs, trigger workflows, or access cloud resources?", opts: [{ v: 'email', l: "Send emails" }, { v: 'tickets', l: "Create tickets" }, { v: 'modify', l: "Modify data" }, { v: 'exec', l: "Execute code" }, { v: 'db', l: "Query databases" }, { v: 'apis', l: "Access internal APIs" }, { v: 'workflows', l: "Trigger workflows" }, { v: 'cloud', l: "Access cloud resources" }, { v: 'none', l: "None of these", none: true }] },
+    yn('C21', 'C21', "Are tool calls user-confirmed before execution?", false, YNU),
+    yn('C22', 'C22', "Are there role/permission boundaries for tool access?", null, YNU),
+    { h: "Memory / context handling" },
+    { id: 'C23', n: 'C23', t: 'one', q: "Does the system store conversation memory (session only, persistent per user, or shared/global memory)?", opts: [{ v: 'session', l: "Session only" }, { v: 'user', l: "Persistent per user" }, { v: 'shared', l: "Shared/global memory" }, { v: 'none', l: "No memory" }] },
+    { id: 'C24', n: 'C24', t: 'text', q: "How long is memory retained?" },
+    yn('C25', 'C25', "Is memory isolated between users/tenants?", false, YNU),
+    yn('C26', 'C26', "Can users edit/delete stored memory?", false, YNU),
+    { h: "Authentication / authorization" },
+    { id: 'C27', n: 'C27', t: 'many', q: "What authentication mechanisms protect the application (SSO, OAuth, JWT, API keys, none/public)?", opts: [{ v: 'sso', l: "SSO" }, { v: 'oauth', l: "OAuth" }, { v: 'jwt', l: "JWT" }, { v: 'keys', l: "API keys" }, { v: 'none', l: "None / public" }] },
+    yn('C28', 'C28', "Are there multiple user roles/tiers?", { label: "Which roles" }, YNU),
+    yn('C29', 'C29', "Is RBAC/ABAC enforced on prompts, retrieved data, tool access, and generated outputs?", null, YNU),
+    { h: "Security controls / guardrails" },
+    { id: 'C30', n: 'C30', t: 'many', q: "What protections are implemented (prompt filtering, moderation API, input sanitization, output filtering, jailbreak detection, prompt injection detection, policy engine, human approval workflows)?", opts: [{ v: 'prompt', l: "Prompt filtering" }, { v: 'moderation', l: "Moderation API" }, { v: 'input', l: "Input sanitization" }, { v: 'output', l: "Output filtering" }, { v: 'jailbreak', l: "Jailbreak detection" }, { v: 'injection', l: "Prompt injection detection" }, { v: 'policy', l: "Policy engine" }, { v: 'human', l: "Human approval workflows" }, { v: 'none', l: "None", none: true }] },
+    { id: 'C31', n: 'C31', t: 'many', q: "Are guardrails applied pre-prompt, pre-tool, post-output, or via continuous/agent loop controls?", opts: [{ v: 'pre', l: "Pre-prompt" }, { v: 'tool', l: "Pre-tool" }, { v: 'post', l: "Post-output" }, { v: 'loop', l: "Continuous/agent loop controls" }] },
+    yn('C32', 'C32', "Are there rate limits / abuse protections?", null, YNU),
+    { h: "Environment / access for testing" },
+    { id: 'C33', n: 'C33', t: 'one', q: "Which environment will be tested (production, staging, QA, dedicated test)?", opts: [{ v: 'prod', l: "Production" }, { v: 'staging', l: "Staging" }, { v: 'qa', l: "QA" }, { v: 'test', l: "Dedicated test" }] },
+    { id: 'C34', n: 'C34', t: 'many', q: "Will testers receive user accounts, admin accounts, API keys, documentation, and/or source code / white-box access?", opts: [{ v: 'user', l: "User accounts" }, { v: 'admin', l: "Admin accounts" }, { v: 'keys', l: "API keys" }, { v: 'docs', l: "Documentation" }, { v: 'source', l: "Source code / white-box access" }] },
+    yn('C35', 'C35', "Are there IP allowlisting requirements?", { label: "Details" }, YNU),
+    yn('C36', 'C36', "Are there test window restrictions?", { label: "Details" }, YNU),
+    { h: "Rules of engagement" },
+    yn('C37', 'C37', "Are destructive tests permitted?", false, YNU),
+    yn('C38', 'C38', "Is data exfiltration proof-of-concept allowed?", false, YNU),
+    yn('C39', 'C39', "Are automated fuzzing / high-volume attacks allowed?", false, YNU),
+    yn('C40', 'C40', "Are model-cost-generating tests restricted?", { label: "Details" }, YNU),
+    yn('C41', 'C41', "Are there any prohibited actions or sensitive systems?", { area: true, label: "If yes — list them" }, YNU)
+  ];
+  function copy(it) { var c = {}; for (var k in it) c[k] = it[k]; return c; }
+
   var discovery = {
     id: 'discovery',
     steps: [
@@ -448,60 +507,7 @@
           open('i3', 'I3', "Target certification date, and have you chosen a certification body?", false)
         ] },
       { title: "Cyber", cyber: true, intro: "For security testing (pen test, AI red teaming). Answered by engineering or security.", show: cyberOn,
-        items: on(cyberOn, [
-          { h: "Engagement overview" },
-          { id: 'C1', n: 'C1', t: 'text', q: "What is the name/description of the GenAI application/system?" },
-          { id: 'C2', n: 'C2', t: 'area', q: "What business purpose does it serve?" },
-          { id: 'C3', n: 'C3', t: 'one', q: "Is the target internal facing, external facing, or embedded in another product?", opts: [{ v: 'internal', l: "Internal facing" }, { v: 'external', l: "External facing" }, { v: 'embedded', l: "Embedded in another product" }] },
-          { h: "Architecture & deployment" },
-          { id: 'C4', n: 'C4', t: 'area', q: "Please provide a high-level architecture diagram.", label: "Link or note on how it will be shared" },
-          { id: 'C5', n: 'C5', t: 'area', q: "Describe the GenAI system architecture." },
-          { id: 'C6', n: 'C6', t: 'one', q: "Is the system a single LLM app, an agent/multi-agent framework, a tool-using assistant, an autonomous workflow/orchestration, or a hybrid AI pipeline?", opts: [{ v: 'single', l: "Single LLM app" }, { v: 'agent', l: "Agent/multi-agent framework" }, { v: 'tool', l: "Tool-using assistant" }, { v: 'auto', l: "Autonomous workflow/orchestration" }, { v: 'hybrid', l: "Hybrid AI pipeline" }] },
-          { id: 'C7', n: 'C7', t: 'many', q: "Is the application a web application, API only, mobile application, desktop application, Slack/Teams/Discord bot, embedded widget, voice interface, or other?", opts: [{ v: 'web', l: "Web application" }, { v: 'api', l: "API only" }, { v: 'mobile', l: "Mobile application" }, { v: 'desktop', l: "Desktop application" }, { v: 'bot', l: "Slack/Teams/Discord bot" }, { v: 'widget', l: "Embedded widget" }, { v: 'voice', l: "Voice interface" }, { v: 'other', l: "Other" }] },
-          { h: "Model information" },
-          { id: 'C8', n: 'C8', t: 'area', q: "Which models are used (e.g. OpenAI GPT-4.1/GPT-4o/o-series, Anthropic Claude, Google Gemini, Meta Llama, a self-hosted OSS model, or a proprietary fine-tuned model)?" },
-          { id: 'C9', n: 'C9', t: 'many', q: "Are models hosted by a vendor API, self-hosted, hosted in a cloud VPC/private endpoint, or on-premise?", opts: [{ v: 'vendor', l: "Vendor API" }, { v: 'self', l: "Self-hosted" }, { v: 'vpc', l: "Cloud VPC/private endpoint" }, { v: 'onprem', l: "On-premise" }] },
-          yn('C10', 'C10', "Are any models fine-tuned/custom-trained? If yes, please describe the training/fine-tuning process.", { area: true, label: "If yes — describe" }, YNU),
-          yn('C11', 'C11', "Are multiple models used in routing/chains? If yes, please explain the orchestration logic.", { area: true, label: "If yes — explain" }, YNU),
-          { h: "Prompting / system design" },
-          yn('C12', 'C12', "Can you provide system prompts, developer prompts, hidden instructions, and prompt templates?", null, YNU),
-          yn('C13', 'C13', "Is a prompt templating framework used (e.g. LangChain, LlamaIndex, Semantic Kernel, or a custom framework)?", { label: "Which one" }, YNU),
-          { h: "RAG / information retrieval" },
-          yn('C14', 'C14', "Does the application use RAG (Retrieval-Augmented Generation)?", false, YNU),
-          { id: 'C15', n: 'C15', t: 'area', q: "What data sources feed the RAG pipeline (internal documents, customer documents, database records, web search, third-party APIs, uploaded files, other)?" },
-          { id: 'C16', n: 'C16', t: 'text', q: "What vector DB / retrieval system is used (e.g. Pinecone, Weaviate, Chroma, Elasticsearch, PGVector, other)?" },
-          { id: 'C17', n: 'C17', t: 'many', q: "How is ingestion performed (manual upload, automated sync, API ingestion, user uploads)?", opts: [{ v: 'manual', l: "Manual upload" }, { v: 'sync', l: "Automated sync" }, { v: 'api', l: "API ingestion" }, { v: 'user', l: "User uploads" }] },
-          { h: "Agent / tool / plugin capabilities" },
-          yn('C18', 'C18', "Does the model invoke tools/functions?", false, YNU),
-          { id: 'C19', n: 'C19', t: 'area', q: "List all available tools/functions/plugins. For each: name, purpose, required permissions, and side effects (read/write/delete/send)." },
-          { id: 'C20', n: 'C20', t: 'many', q: "Can the AI send emails, create tickets, modify data, execute code, query databases, access internal APIs, trigger workflows, or access cloud resources?", opts: [{ v: 'email', l: "Send emails" }, { v: 'tickets', l: "Create tickets" }, { v: 'modify', l: "Modify data" }, { v: 'exec', l: "Execute code" }, { v: 'db', l: "Query databases" }, { v: 'apis', l: "Access internal APIs" }, { v: 'workflows', l: "Trigger workflows" }, { v: 'cloud', l: "Access cloud resources" }, { v: 'none', l: "None of these", none: true }] },
-          yn('C21', 'C21', "Are tool calls user-confirmed before execution?", false, YNU),
-          yn('C22', 'C22', "Are there role/permission boundaries for tool access?", null, YNU),
-          { h: "Memory / context handling" },
-          { id: 'C23', n: 'C23', t: 'one', q: "Does the system store conversation memory (session only, persistent per user, or shared/global memory)?", opts: [{ v: 'session', l: "Session only" }, { v: 'user', l: "Persistent per user" }, { v: 'shared', l: "Shared/global memory" }, { v: 'none', l: "No memory" }] },
-          { id: 'C24', n: 'C24', t: 'text', q: "How long is memory retained?" },
-          yn('C25', 'C25', "Is memory isolated between users/tenants?", false, YNU),
-          yn('C26', 'C26', "Can users edit/delete stored memory?", false, YNU),
-          { h: "Authentication / authorization" },
-          { id: 'C27', n: 'C27', t: 'many', q: "What authentication mechanisms protect the application (SSO, OAuth, JWT, API keys, none/public)?", opts: [{ v: 'sso', l: "SSO" }, { v: 'oauth', l: "OAuth" }, { v: 'jwt', l: "JWT" }, { v: 'keys', l: "API keys" }, { v: 'none', l: "None / public" }] },
-          yn('C28', 'C28', "Are there multiple user roles/tiers?", { label: "Which roles" }, YNU),
-          yn('C29', 'C29', "Is RBAC/ABAC enforced on prompts, retrieved data, tool access, and generated outputs?", null, YNU),
-          { h: "Security controls / guardrails" },
-          { id: 'C30', n: 'C30', t: 'many', q: "What protections are implemented (prompt filtering, moderation API, input sanitization, output filtering, jailbreak detection, prompt injection detection, policy engine, human approval workflows)?", opts: [{ v: 'prompt', l: "Prompt filtering" }, { v: 'moderation', l: "Moderation API" }, { v: 'input', l: "Input sanitization" }, { v: 'output', l: "Output filtering" }, { v: 'jailbreak', l: "Jailbreak detection" }, { v: 'injection', l: "Prompt injection detection" }, { v: 'policy', l: "Policy engine" }, { v: 'human', l: "Human approval workflows" }, { v: 'none', l: "None", none: true }] },
-          { id: 'C31', n: 'C31', t: 'many', q: "Are guardrails applied pre-prompt, pre-tool, post-output, or via continuous/agent loop controls?", opts: [{ v: 'pre', l: "Pre-prompt" }, { v: 'tool', l: "Pre-tool" }, { v: 'post', l: "Post-output" }, { v: 'loop', l: "Continuous/agent loop controls" }] },
-          yn('C32', 'C32', "Are there rate limits / abuse protections?", null, YNU),
-          { h: "Environment / access for testing" },
-          { id: 'C33', n: 'C33', t: 'one', q: "Which environment will be tested (production, staging, QA, dedicated test)?", opts: [{ v: 'prod', l: "Production" }, { v: 'staging', l: "Staging" }, { v: 'qa', l: "QA" }, { v: 'test', l: "Dedicated test" }] },
-          { id: 'C34', n: 'C34', t: 'many', q: "Will testers receive user accounts, admin accounts, API keys, documentation, and/or source code / white-box access?", opts: [{ v: 'user', l: "User accounts" }, { v: 'admin', l: "Admin accounts" }, { v: 'keys', l: "API keys" }, { v: 'docs', l: "Documentation" }, { v: 'source', l: "Source code / white-box access" }] },
-          yn('C35', 'C35', "Are there IP allowlisting requirements?", { label: "Details" }, YNU),
-          yn('C36', 'C36', "Are there test window restrictions?", { label: "Details" }, YNU),
-          { h: "Rules of engagement" },
-          yn('C37', 'C37', "Are destructive tests permitted?", false, YNU),
-          yn('C38', 'C38', "Is data exfiltration proof-of-concept allowed?", false, YNU),
-          yn('C39', 'C39', "Are automated fuzzing / high-volume attacks allowed?", false, YNU),
-          yn('C40', 'C40', "Are model-cost-generating tests restricted?", { label: "Details" }, YNU),
-          yn('C41', 'C41', "Are there any prohibited actions or sensitive systems?", { area: true, label: "If yes — list them" }, YNU)
-        ]) },
+        items: on(cyberOn, CYBER.map(copy)) },
       { title: "Send", intro: "Who should we follow up with?", final: true,
         items: CONTACT.concat([{ id: 'notes', n: '', t: 'area', q: "Anything else we should know?" }]) }
     ]
@@ -1045,7 +1051,37 @@
     return { likely: [], unlikely: [], roles: [], facts: facts };
   };
 
-  var TOOLS = { quick: quick, discovery: discovery, aiact: aiact, gdpr: gdpr };
+  /* ================================================================ CYBER SCOPING */
+  /* Sent to prospects for security testing (scoping-cyber.html): the partners' C1–C41, split
+     into steps along their own section headings. */
+  function cyberSteps() {
+    var plan = [["System overview", 2], ["Models and prompts", 3], ["Tools and memory", 2], ["Access and guardrails", 2], ["Testing scope", 2]];
+    var out = [], i = 0;
+    plan.forEach(function (p, ix) {
+      var items = [], heads = 0;
+      while (i < CYBER.length && !(CYBER[i].h && heads === p[1])) {
+        if (CYBER[i].h) heads++;
+        items.push(CYBER[i]); i++;
+      }
+      out.push({ title: p[0], intro: ix === 0 ? "To be answered by your engineering or security team. These are the questions we use to scope a penetration test or an AI red-teaming engagement." : '', items: items });
+    });
+    return out;
+  }
+
+  var cyber = {
+    id: 'cyber',
+    submit: "Send my answers →",
+    thanksTitle: "Thank you. Your answers have been sent.",
+    thanks: "We’ll review them and come back to you with our proposal. You can print or save a copy of your answers below.",
+    dataNote: "We use your answers only to scope your project and prepare our proposal. See our",
+    summary: function () { return { likely: [], unlikely: [], roles: [], facts: [] }; },
+    steps: [{ title: "About you", intro: "A few questions about your company. They are the same in all our scoping questionnaires.", items: ABOUT }]
+      .concat(cyberSteps())
+      .concat([{ title: "Send", intro: "Who should we follow up with?", final: true,
+        items: CONTACT.concat([{ id: 'notes', n: '', t: 'area', q: "Anything else we should know?" }]) }])
+  };
+
+  var TOOLS = { quick: quick, discovery: discovery, aiact: aiact, gdpr: gdpr, cyber: cyber };
 
   /* ------------------------------------------------------------------ engine */
   function esc(s) {

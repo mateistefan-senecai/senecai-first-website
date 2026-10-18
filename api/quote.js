@@ -1,6 +1,6 @@
 // Quote questionnaire endpoint (Vercel serverless function): receives the answers from
 // get-a-quote.html (Tier 1) or discovery.html (Tier 2), rendered client-side by
-// assets/quote.v6.js, and emails them as a brief through Google Workspace SMTP.
+// assets/quote.v7.js, and emails them as a brief through Google Workspace SMTP.
 // Nothing is stored. Sent to LEADS_TO (default hello@senecai.eu), with the same SMTP_USER /
 // SMTP_PASS (and optional SMTP_HOST, SMTP_PORT) as api/contact.js.
 const nodemailer = require("nodemailer");
@@ -40,7 +40,7 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const TITLES = { quick: "Quote request (24h)", discovery: "Discovery brief", aiact: "AI Act scoping", gdpr: "GDPR scoping" };
+  const TITLES = { quick: "Quote request (24h)", discovery: "Discovery brief", aiact: "AI Act scoping", gdpr: "GDPR scoping", cyber: "Cyber scoping" };
   const tool = Object.prototype.hasOwnProperty.call(TITLES, b.tool) ? b.tool : "quick";
   const lang = b.lang === "ro" ? "ro" : "en";
   const name = oneLine(clean(b.name, 200));
