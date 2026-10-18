@@ -2,6 +2,7 @@
  *
  *   quick     : Tier 1, the public "Get a quote in 24 hours" form (get-a-quote.html)
  *   discovery : Tier 2, the detailed discovery brief sent to interested clients (discovery.html)
+ *   aiact     : the AI Act scoping questionnaire sent to prospects (scoping-ai-act.html)
  *
  * Each questionnaire is plain data: steps holding questions, each question with an optional
  * show(answers) condition. Scope checks for NIS2, DORA and CRA run first; their targeted
@@ -10,7 +11,7 @@
  * Progress is kept in the visitor's own browser (localStorage) until they submit.
  *
  * Code strings use single quotes; every double-quoted string is visitor-facing text, which
- * tools/i18n/build_ro.py translates into assets/quote.ro.v3.js. The file name is versioned
+ * tools/i18n/build_ro.py translates into assets/quote.ro.v4.js. The file name is versioned
  * because /assets/* is cached as immutable: rename it (v2, …) whenever it changes.
  */
 (function () {
@@ -44,7 +45,9 @@
     none: "None",
     dataNote: "We use your answers only to prepare your quote. See our",
     privacy: "Privacy Policy",
-    viaClients: "through your financial clients’ contracts"
+    viaClients: "through your financial clients’ contracts",
+    art: "Art.",
+    annex: "Annex"
   };
 
   var REG = {
@@ -503,7 +506,307 @@
     ]
   };
 
-  var TOOLS = { quick: quick, discovery: discovery };
+  /* ================================================================ AI ACT SCOPING */
+  /* Sent to prospects after first contact (scoping-ai-act.html). Section 1 is one card per AI
+     system; the documents checklist (section 9) shows only the groups that fit the answers. */
+  var YPN = [{ v: 'yes', l: "Yes" }, { v: 'partly', l: "Partly" }, { v: 'no', l: "No" }];
+  var DOCS = [{ v: 'yes', l: "Yes" }, { v: 'partly', l: "Partly" }, { v: 'no', l: "No" }, { v: 'dk', l: "We don’t know" }];
+  function art(s) { return UI.art + ' ' + s; }
+  function annex(s) { return UI.annex + ' ' + s; }
+  function vals(a, id) { var x = a[id]; return Array.isArray(x) ? x.filter(function (v) { return v !== 'none'; }) : []; }
+  function cards(a) {
+    var n = Number(a['k0.n']) || 1, out = [];
+    for (var i = 1; i <= n; i++) {
+      var c = {};
+      ['name', 'use', 'built', 'brand'].forEach(function (f) { c[f] = a['k0.' + i + '.' + f]; });
+      out.push(c);
+    }
+    return out;
+  }
+  function aiScope(a) {
+    var cs = cards(a), known = cs.some(function (c) { return c.built || c.use; });
+    var s = {};
+    s.provider = !known || cs.some(function (c) { return c.built === 'self' || c.built === 'commissioned' || c.brand === 'yes'; });
+    s.deployer = !known || cs.some(function (c) { return c.built === 'ready' || c.use === 'internal' || c.use === 'both'; });
+    s.annex3 = vals(a, 'k11');
+    var annex3Unknown = !filled(a.k11);
+    s.annex1 = a.k12 === 'yes' || a.k12 === 'dk';
+    s.high = s.annex3.length > 0 || annex3Unknown || s.annex1 || a['k9.result'] === 'high';
+    s.publicBody = a['g2.type'] === 'public';
+    s.fria = s.deployer && s.high && (s.publicBody || a['g2.type'] === 'service' || has(a, 'k11', 'credit') || has(a, 'k11', 'insurance'));
+    s.gpaiProvider = a.k13 === 'finetune' || a.k13 === 'own';
+    s.nonEU = a['g2.est'] === 'non';
+    s.prohibited = vals(a, 'k10');
+    return s;
+  }
+  function when(fn) { return function (a) { return fn(aiScope(a), a); }; }
+
+  var aiact = {
+    id: 'aiact',
+    submit: "Send my answers →",
+    thanksTitle: "Thank you. Your answers have been sent.",
+    thanks: "We’ll review them and come back to you with our proposal. You can print or save a copy of your answers below.",
+    dataNote: "We use your answers only to scope your project and prepare our proposal. See our",
+    steps: [
+      { title: "About you", intro: "A few questions about your company. They are the same in all our scoping questionnaires.",
+        items: [
+          { id: 'g1', n: '1', t: 'text', req: true, q: "Company name and website" },
+          { id: 'g2', n: '2', q: "Legal entity and country of registration", fields: [
+            { k: 'entity', t: 'text' },
+            { k: 'est', t: 'one', inline: true, label: "Established", opts: [{ v: 'eu', l: "In the EU or EEA" }, { v: 'non', l: "Outside the EU or EEA" }] },
+            { k: 'type', t: 'one', label: "Type of organisation", opts: [{ v: 'private', l: "Private company" }, { v: 'public', l: "Public body" }, { v: 'service', l: "Private company providing a public service" }] }] },
+          { id: 'g3', n: '3', q: "Company size, and who owns infrastructure and data", fields: [
+            { k: 'size', t: 'one', inline: true, label: "People", opts: [{ v: '1-9', l: "1–9" }, { v: '10-49', l: "10–49" }, { v: '50-249', l: "50–249" }, { v: '250+', l: "250+" }] },
+            { k: 'team', t: 'text', label: "Engineering team size, and who owns infrastructure and data" }] },
+          { id: 'g4', n: '4', t: 'area', req: true, q: "In one or two sentences, what does your product or service do?" },
+          { id: 'g5', n: '5', t: 'area', q: "Who are your clients (sectors, size, countries), and who is affected by your AI’s outputs?" },
+          { id: 'g6', n: '6', q: "Where does your product stand today?", fields: [
+            { k: 'status', t: 'one', inline: true, opts: [{ v: 'dev', l: "In development" }, { v: 'pilot', l: "Pilot" }, { v: 'live', l: "Live" }] },
+            { k: 'where', t: 'text', label: "Live deployments, and in which countries (EU / non-EU)" }] },
+          { id: 'g7', n: '7', q: "What is driving this, and is there a hard deadline?", fields: [
+            { k: 'drivers', t: 'many', opts: [{ v: 'client', l: "A client or procurement requirement" }, { v: 'investor', l: "Investor due diligence" },
+              { v: 'regulator', l: "A regulator or audit" }, { v: 'deadline', l: "A legal deadline" }, { v: 'ahead', l: "Getting ahead of it" }] },
+            { k: 'deadline', t: 'text', label: "Hard deadline, if any" }] },
+          { id: 'g8', n: '8', q: "Are you looking for an audit of where you stand, or also the work to close the gaps?", fields: [
+            { k: 'scope', t: 'one', inline: true, opts: [{ v: 'audit', l: "Audit only" }, { v: 'both', l: "Audit and implementation" }, { v: 'unsure', l: "Not sure yet" }] },
+            { k: 'who', t: 'one', inline: true, label: "If implementation is needed, who would carry it out?", opts: [{ v: 'us', l: "Our own team" }, { v: 'senecai', l: "SenecAI" }, { v: 'mixed', l: "Mixed" }, { v: 'tbd', l: "Not decided yet" }] },
+            { k: 'notes', t: 'text', label: "Notes on internal capacity or expectations" }] }
+        ] },
+      { title: "Your AI systems", intro: "Add one card per AI system, whether it is part of your product or used internally. Be as concrete as you can: these answers are the basis of the assessment.",
+        items: [
+          { id: 'k0', t: 'repeat', item: "AI system", add: "+ Add another AI system", remove: "Remove", max: 10, fields: [
+            { k: 'name', t: 'text', label: "Name of the system or tool (e.g. ChatGPT, an in-house model, a vendor platform)" },
+            { k: 'desc', t: 'area', label: "What it does and how it works, briefly" },
+            { k: 'use', t: 'one', inline: true, label: "Used in", opts: [{ v: 'product', l: "Our product (used by customers)" }, { v: 'internal', l: "Internal operations" }, { v: 'both', l: "Both" }] },
+            { k: 'process', t: 'text', label: "Business process it supports (e.g. credit scoring, support triage, stock optimisation)" },
+            { k: 'input', t: 'text', label: "Input data (e.g. transactions, images, text, sensor data, user data)" },
+            { k: 'output', t: 'text', label: "Output (e.g. score, recommendation, classification, automated action, alert)" },
+            { k: 'source', t: 'text', label: "Where the data comes from (internal databases, third parties, external APIs, user-generated, synthetic)" },
+            { k: 'built', t: 'one', label: "Who built it?", opts: [{ v: 'self', l: "We built it ourselves" }, { v: 'commissioned', l: "An outside developer built it to our specifications" }, { v: 'ready', l: "A ready-made product from another company" }] },
+            { k: 'brand', t: 'one', inline: true, label: "Is it offered to others under your name?", opts: [{ v: 'yes', l: "Yes" }, { v: 'no', l: "No" }] },
+            { k: 'auto', t: 'one', label: "Autonomy", opts: [{ v: 'full', l: "Fully automated" }, { v: 'on', l: "Partly automated: a human monitors and can step in (human-on-the-loop)" }, { v: 'in', l: "Advisory: a human makes the final decision (human-in-the-loop)" }] },
+            { k: 'impact', t: 'area', label: "Decisions it influences, and the impact of a wrong output (financial, operational, on customers)" },
+            { k: 'users', t: 'text', label: "Number of internal users; does it affect end customers?" },
+            { k: 'stage', t: 'one', inline: true, label: "Stage", opts: [{ v: 'live', l: "Live" }, { v: 'pilot', l: "Pilot" }, { v: 'planned', l: "Planned" }] },
+            { k: 'owner', t: 'text', label: "Person responsible (name and role)" }] }
+        ] },
+      { title: "Scope and classification",
+        items: [
+          { id: 'k9', n: '9', q: "Have you self-assessed the AI Act risk class of your systems?", ref: art('6'), fields: [
+            { k: 'done', t: 'one', inline: true, opts: YND },
+            { k: 'result', t: 'one', inline: true, label: "If yes, the result", opts: [{ v: 'prohibited', l: "Prohibited" }, { v: 'high', l: "High-risk" }, { v: 'limited', l: "Limited risk (transparency)" }, { v: 'minimal', l: "Minimal risk" }, { v: 'unsure', l: "Unsure" }] },
+            { k: 'where', t: 'text', label: "Where is it documented?" }] },
+          { id: 'k10', n: '10', t: 'many', q: "Does any of your systems do any of the following?", ref: art('5'), opts: [
+            { v: 'manipulation', l: "Manipulates behaviour, or exploits vulnerabilities linked to age, disability or social situation" },
+            { v: 'scoring', l: "Social scoring" },
+            { v: 'crime', l: "Predicts the risk of someone committing a crime, based on profiling" },
+            { v: 'scraping', l: "Builds face databases by scraping the internet or CCTV footage" },
+            { v: 'emotion', l: "Infers emotions at work or in education" },
+            { v: 'biocat', l: "Categorises people by sensitive traits (e.g. ethnicity, religion, sexual orientation) from biometric data" },
+            { v: 'rbi', l: "Real-time remote biometric identification in public spaces" },
+            { v: 'none', l: "None of these", none: true }] },
+          { id: 'k11', n: '11', t: 'many', q: "Does any of your systems make or support decisions in these areas?", ref: annex('III'), opts: [
+            { v: 'biometrics', l: "Biometrics: identification, categorisation or emotion recognition" },
+            { v: 'infra', l: "Critical infrastructure (energy, water, transport, digital infrastructure)" },
+            { v: 'education', l: "Education and vocational training" },
+            { v: 'employment', l: "Employment, HR and worker management" },
+            { v: 'credit', l: "Creditworthiness or credit scoring" },
+            { v: 'insurance', l: "Risk assessment and pricing in life or health insurance" },
+            { v: 'public', l: "Access to public benefits and essential public services" },
+            { v: 'emergency', l: "Emergency calls and dispatch" },
+            { v: 'law', l: "Law enforcement, migration or border control" },
+            { v: 'justice', l: "Justice and democratic processes" },
+            { v: 'none', l: "None of these", none: true }] },
+          { id: 'k12', n: '12', t: 'one', inline: true, q: "Is any of your systems a safety component of a regulated product?", ref: annex('I'),
+            hint: "For example machinery, medical devices, vehicles, toys, lifts or radio equipment.", opts: YND },
+          { id: 'k13', n: '13', t: 'one', q: "Do you use general-purpose AI models (e.g. GPT, Claude, Gemini, Llama)?", ref: art('25, 53'), opts: [
+            { v: 'no', l: "No" }, { v: 'api', l: "Yes, through an API or a ready-made product" },
+            { v: 'finetune', l: "Yes, and we fine-tune or significantly modify them" }, { v: 'own', l: "Yes, we train our own general-purpose model" }, { v: 'dk', l: "Don’t know" }] }
+        ] },
+      { title: "How the AI works",
+        items: [
+          { id: 'k14', n: '14', t: 'area', q: "Where exactly does AI step in? Describe the flow: input → processing → output → decision.", hint: "Be specific for each system; avoid general descriptions." },
+          { id: 'k15', n: '15', t: 'area', q: "Does the AI influence real decisions? What is the impact, and what happens when it gets something wrong?", ref: art('9') },
+          { id: 'k16', n: '16', t: 'area', q: "What can the AI do on its own (e.g. access databases, start processes, send commands), and what are the limits?", ref: art('14') },
+          { id: 'k17', n: '17', t: 'area', q: "Which third-party services or APIs are used (LLM provider, speech, hosting…), and what role does each play?" },
+          { id: 'k18', n: '18', q: "If anything was trained or fine-tuned in-house, was it trained on your own historical decisions?", fields: [
+            { k: 'v', t: 'one', inline: true, opts: [{ v: 'yes', l: "Yes" }, { v: 'no', l: "No" }, { v: 'na', l: "Nothing is trained in-house" }, { v: 'dk', l: "Don’t know" }] },
+            { k: 'd', t: 'text', label: "If yes, which data and outcomes" }] },
+          { id: 'k19', n: '19', t: 'one', inline: true, q: "Are model versions pinned, or set to auto-update?", opts: [
+            { v: 'pinned', l: "Pinned" }, { v: 'auto', l: "Auto-update / latest" }, { v: 'mixed', l: "Mixed" }, { v: 'unsure', l: "Unsure" }] },
+          { id: 'k20', n: '20', q: "Integrations and usage volume", fields: [
+            { k: 'int', t: 'text', label: "Integrations live today, and planned (e.g. CRM, email, voice, messaging)" },
+            { k: 'vol', t: 'text', label: "Usage volume to date and monthly run rate" }] }
+        ] },
+      { title: "Data governance and testing",
+        items: [
+          { id: 'k21', n: '21', t: 'area', q: "What data were the models trained on: sources, period, and whether it is real, synthetic or third-party?", ref: art('10') },
+          { id: 'k22', n: '22', q: "Is data quality and representativeness checked and documented?", ref: art('10'), fields: [
+            { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "How (e.g. sampling, internal audits)" }] },
+          { id: 'k23', n: '23', q: "Is incoming data validated automatically (missing values, outliers, consistency)?", ref: art('10'), fields: [
+            { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "Examples (rules, filters)" }] },
+          { id: 'k24', n: '24', t: 'area', q: "How are data updates and quality problems (incomplete or wrong data) handled?", ref: art('10') },
+          { id: 'k25', n: '25', q: "Has accuracy been measured, and is it consistent across subgroups (e.g. gender, age, language, accent)? Is it documented?", ref: art('15'), fields: [
+            { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "What was tested" }] },
+          { id: 'k26', n: '26', q: "Has robustness been tested (edge cases, unusual inputs, stress tests)? Is it documented?", ref: art('15'), fields: [
+            { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "Methods used" }] },
+          { id: 'k27', n: '27', q: "Do you collect demographic data about the people affected (e.g. gender, age, nationality)?", fields: [
+            { k: 'v', t: 'one', inline: true, opts: YND }, { k: 'd', t: 'text', label: "If yes, what" }] }
+        ] },
+      { title: "Logging and traceability",
+        items: [
+          { id: 'k28', n: '28', t: 'area', q: "What is logged for each AI output (e.g. input, output, model version, timestamp)?", ref: art('12') },
+          { id: 'k29', n: '29', q: "Can a specific decision be reconstructed from the logs (input → model → output)?", ref: art('12'), fields: [
+            { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "How" }] },
+          { id: 'k30', n: '30', q: "What is stored per interaction, for how long, and where?", fields: [
+            { k: 'stored', t: 'area', label: "What is stored (audio, transcripts, scores, logs, metadata), and for how long" },
+            { k: 'host', t: 'text', label: "Hosting provider and region" },
+            { k: 'eea', t: 'one', inline: true, label: "Any processing outside the EEA?", opts: YND }] }
+        ] },
+      { title: "Human oversight",
+        items: [
+          { id: 'k31', n: '31', q: "Can a human review, override or escalate an AI output?", ref: art('14'), fields: [
+            { k: 'v', t: 'one', inline: true, label: "Possible?", opts: YND },
+            { k: 'doc', t: 'one', inline: true, label: "Is it documented?", opts: [{ v: 'documented', l: "Documented" }, { v: 'informal', l: "Informal only" }, { v: 'none', l: "No workflow" }] },
+            { k: 'how', t: 'text', label: "How it works in practice (interface, procedure, reaction time)" }] },
+          { id: 'k32', n: '32', t: 'one', q: "Are high-impact outcomes (e.g. a rejection) ever acted on without a human checking that specific case?", ref: art('14'), opts: [
+            { v: 'always', l: "No, a human always checks the case first" }, { v: 'sometimes', l: "Sometimes they are acted on automatically" },
+            { v: 'auto', l: "Yes, always automated" }, { v: 'na', l: "Not applicable: no high-impact outcomes" }] },
+          { id: 'k33', n: '33', t: 'text', q: "Who has final responsibility for decisions made or supported by AI?" }
+        ] },
+      { title: "Transparency",
+        items: [
+          { id: 'k34', n: '34', t: 'one', inline: true, q: "Do your clients receive instructions for use (capabilities, limits, how to read outputs)?", ref: art('13'),
+            opts: YPN.concat([{ v: 'na', l: "Not applicable: we don’t supply AI to clients" }]) },
+          { id: 'k35', n: '35', t: 'one', inline: true, q: "Are people told they are interacting with AI?", ref: art('50(1)'),
+            opts: YPN.concat([{ v: 'na', l: "Not applicable: no AI interacts with people directly" }]) },
+          { id: 'k36', n: '36', t: 'one', inline: true, q: "Is AI-generated content you publish (text, images, audio, video) labelled as such?", ref: art('50(2), (4)'),
+            opts: YPN.concat([{ v: 'na', l: "Not applicable: we don’t publish AI-generated content" }]) },
+          { id: 'k37', n: '37', t: 'one', inline: true, opt: true, q: "Is a non-AI alternative offered to people who prefer one?", opts: YND }
+        ] },
+      { title: "Governance and risk management",
+        items: [
+          { id: 'k38', n: '38', q: "Is there a documented risk management process (risks, mitigations, residual risk), or is risk only handled informally?", ref: art('9'), fields: [
+            { k: 'v', t: 'one', inline: true, opts: [{ v: 'documented', l: "Documented process" }, { v: 'informal', l: "Informal only" }, { v: 'nothing', l: "Nothing yet" }] },
+            { k: 'd', t: 'text', label: NOTES }] },
+          { id: 'k39', n: '39', q: "How are changes to the AI reviewed and approved before deployment?", ref: art('17'), fields: [
+            { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "How" }] },
+          { id: 'k40', n: '40', t: 'one', inline: true, q: "Is there version control for AI policies and technical documentation?", ref: art('17, 18'), opts: YPND },
+          { id: 'k41', n: '41', q: "Are compliance roles assigned, and is there a named person for the AI Act?", ref: art('17'), fields: [
+            { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'who', t: 'text', label: "Who" }] },
+          { id: 'k42', n: '42', q: "Do you monitor performance in production (accuracy, drift, complaints, alert thresholds)?", ref: art('72'), fields: [
+            { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "How" }] },
+          { id: 'k43', n: '43', t: 'one', inline: true, q: "Is there an incident process that could cover AI incidents?", ref: art('73'), opts: YPND },
+          { id: 'k44', n: '44', q: "Who has access to the AI systems and their data? Is access role-based?", fields: [
+            { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "Roles and access levels (e.g. admin, operator)" }] },
+          { id: 'k45', n: '45', q: "Are there AI policies or governance processes, formal or informal?", fields: [
+            { k: 'v', t: 'one', inline: true, opts: YPND }, { k: 'd', t: 'text', label: "Which, and who owns them" }] },
+          { id: 'k46', n: '46', t: 'one', inline: true, q: "Have the people who use or build AI had AI literacy training?", ref: art('4'), opts: YPND },
+          { id: 'k47', n: '47', q: "Security: which measures protect the AI systems, and which tests have been done?", ref: art('15'),
+            hint: "A short overview is enough here. The detail goes in our cybersecurity questionnaire.", fields: [
+            { k: 'measures', t: 'area', label: "Measures (e.g. access control, protection against data manipulation, attack monitoring)" },
+            { k: 'tests', t: 'text', label: "Tests done, and how often (e.g. penetration test, vulnerability assessment)" }] },
+          { id: 'k48', n: '48', q: "Does your marketing describe the AI as “unbiased”, “fair” or “AI Act compliant”?", fields: [
+            { k: 'v', t: 'one', inline: true, opts: YND }, { k: 'd', t: 'text', label: "If yes, what backs these claims" }] },
+          { id: 'k49', n: '49', t: 'one', inline: true, q: "Have you carried out a fundamental rights impact assessment (FRIA)?", ref: art('27'), opts: YPND,
+            hint: "Required before using a high-risk system if you are a public body or provide a public service, or if you use AI for credit scoring or for life or health insurance pricing.",
+            show: when(function (s) { return s.fria; }) }
+        ] },
+      { title: "Documents",
+        items: [
+          { id: 'k50', n: '50', t: 'grid', q: "Which of these documents do you have?", opts: DOCS, note: "Link or note (optional)",
+            intro: "Only the documents that fit your answers are listed.", rows: [
+            { h: "Every company using or building AI" },
+            { id: 'd1', l: "AI system inventory", d: "Which systems you use, what for, and who owns them.", ref: "Good practice" },
+            { id: 'd2', l: "Written risk-classification assessment for each system", ref: art('6') },
+            { id: 'd3', l: "Documented reasoning for treating an Annex III system as not high-risk", ref: art('6(3)–(4)'), show: when(function (s) { return s.annex3.length > 0; }) },
+            { id: 'd4', l: "AI literacy measures: training plan and records", ref: art('4') },
+            { id: 'd5', l: "Internal AI policy or acceptable-use policy", ref: "Good practice" },
+            { h: "Transparency", show: function (a) { return a.k35 !== 'na' || a.k36 !== 'na' || has(a, 'k11', 'biometrics'); } },
+            { id: 'd6', l: "Notice telling users they are interacting with AI", ref: art('50(1)'), show: function (a) { return a.k35 !== 'na'; } },
+            { id: 'd7', l: "Labelling or marking of AI-generated content, including deepfakes", ref: art('50(2), (4)'), show: function (a) { return a.k36 !== 'na'; } },
+            { id: 'd8', l: "Notice for people exposed to emotion recognition or biometric categorisation", ref: art('50(3)'), show: function (a) { return has(a, 'k11', 'biometrics'); } },
+            { h: "Providers of high-risk AI", show: when(function (s) { return s.provider && s.high; }) },
+            { id: 'd9', l: "Risk management system documentation", ref: art('9') },
+            { id: 'd10', l: "Data governance documentation (sources, preparation, bias checks)", ref: art('10') },
+            { id: 'd11', l: "Technical documentation", ref: art('11') + ', ' + annex('IV') },
+            { id: 'd12', l: "Logging specification, with logs kept for at least 6 months", ref: art('12, 19') },
+            { id: 'd13', l: "Instructions for use for your clients", ref: art('13') },
+            { id: 'd14', l: "Human oversight design (who, how, with which tools)", ref: art('14') },
+            { id: 'd15', l: "Accuracy, robustness and cybersecurity test reports", ref: art('15') },
+            { id: 'd16', l: "Quality management system: written policies and procedures", ref: art('17') },
+            { id: 'd17', l: "Procedure for corrective actions and for informing authorities", ref: art('20') },
+            { id: 'd18', l: "Conformity assessment record", ref: art('43') },
+            { id: 'd19', l: "EU declaration of conformity", ref: art('47') },
+            { id: 'd20', l: "CE marking", ref: art('48') },
+            { id: 'd21', l: "Registration in the EU database", ref: art('49') },
+            { id: 'd22', l: "Post-market monitoring plan", ref: art('72') },
+            { id: 'd23', l: "Serious incident reporting procedure", ref: art('73') },
+            { id: 'd24', l: "Mandate for an authorised representative in the EU", ref: art('22'), show: when(function (s) { return s.nonEU; }) },
+            { h: "Deployers of high-risk AI", show: when(function (s) { return s.deployer && s.high; }) },
+            { id: 'd25', l: "Named people assigned to human oversight, and their training", ref: art('26(2)') },
+            { id: 'd26', l: "Check that your input data is relevant and representative", ref: art('26(4)') },
+            { id: 'd27', l: "Logs kept for at least 6 months", ref: art('26(6)') },
+            { id: 'd28', l: "Information given to workers and their representatives (if used at work)", ref: art('26(7)') },
+            { id: 'd29', l: "Information given to people affected by AI-supported decisions", ref: art('26(11)') },
+            { id: 'd30', l: "DPIA that uses the provider’s information", ref: art('26(9)') + ' · GDPR ' + art('35') },
+            { id: 'd31', l: "Procedure for explaining individual decisions on request", ref: art('86') },
+            { id: 'd32', l: "Fundamental rights impact assessment (FRIA)", ref: art('27'), show: when(function (s) { return s.fria; }) },
+            { id: 'd33', l: "Registration in the EU database (public bodies)", ref: art('26(8), 49(3)'), show: when(function (s) { return s.publicBody; }) },
+            { h: "Providers of general-purpose AI models", show: when(function (s) { return s.gpaiProvider; }) },
+            { id: 'd34', l: "Technical documentation of the model", ref: art('53(1)(a)') + ', ' + annex('XI') },
+            { id: 'd35', l: "Information for downstream providers", ref: art('53(1)(b)') + ', ' + annex('XII') },
+            { id: 'd36', l: "Copyright compliance policy", ref: art('53(1)(c)') },
+            { id: 'd37', l: "Public summary of training content", ref: art('53(1)(d)') }] },
+          { id: 'k51', n: '51', t: 'area', q: "Which of these documents can you share now? Paste links or list them." }
+        ] },
+      { title: "Send", intro: "Who should we follow up with?", final: true,
+        items: CONTACT.concat([{ id: 'notes', n: '', t: 'area', q: "Anything else we should know?" }]) }
+    ]
+  };
+
+  /* For our email only (never shown to the visitor): roles, likely risk level and document gaps. */
+  aiact.summary = function (a) {
+    var s = aiScope(a), facts = [];
+    var roleOf = { self: 'provider', commissioned: 'provider', ready: 'deployer' };
+    var list = cards(a).map(function (c, i) {
+      if (!c.built && !c.brand) return '';
+      var r = c.brand === 'yes' ? 'provider' : roleOf[c.built] || '';
+      if (r === 'provider' && (c.use === 'internal' || c.use === 'both')) r = 'provider and deployer';
+      return (c.name || 'AI system' + ' ' + (i + 1)) + ': ' + r;
+    }).filter(Boolean);
+    if (list.length) facts.push(['Likely role per system', list.join('; ')]);
+    var optLabel = function (id, v) { var q = findQ(id); return q ? label(q.opts, v) : v; };
+    if (s.prohibited.length) facts.push(['Possible prohibited practice', s.prohibited.map(function (v) { return optLabel('k10', v); }).join('; ')]);
+    if (s.annex3.length) facts.push(['Annex III areas', s.annex3.map(function (v) { return optLabel('k11', v); }).join('; ')]);
+    if (s.annex1) facts.push(['Annex I product', optLabel('k12', a.k12)]);
+    if (a.k13 && a.k13 !== 'no') facts.push(['General-purpose AI', optLabel('k13', a.k13)]);
+    var level = s.prohibited.length ? 'Check for prohibited practices first' :
+      s.annex3.length || s.annex1 || a['k9.result'] === 'high' ? 'High-risk likely for at least one system' :
+      a.k35 === 'yes' || a.k35 === 'partly' || a.k35 === 'no' || a.k36 === 'yes' || a.k36 === 'partly' || a.k36 === 'no' ? 'Limited risk (transparency obligations)' : 'Minimal risk, unless the call shows otherwise';
+    facts.push(['Likely risk level', level]);
+    if (s.fria) facts.push(['FRIA', 'Likely required']);
+    var grid = findQ('k50'), group = '', counts = {};
+    grid.rows.forEach(function (r) {
+      if (r.h) { group = visible(r, a) ? r.h : ''; return; }
+      if (!group || !visible(r, a)) return;
+      var c = counts[group] || (counts[group] = { yes: 0, partly: 0, gap: 0, total: 0 });
+      c.total++;
+      if (a[r.id] === 'yes') c.yes++; else if (a[r.id] === 'partly') c.partly++; else c.gap++;
+    });
+    for (var g in counts) {
+      var c = counts[g];
+      facts.push(['Documents: ' + g, c.yes + ' ' + 'in place' + ' · ' + c.partly + ' ' + 'partly' + ' · ' + c.gap + ' ' + 'missing or unknown' + ' (' + c.total + ')']);
+    }
+    return { likely: [], unlikely: [], roles: [], facts: facts };
+  };
+  function findQ(id) {
+    for (var i = 0; i < aiact.steps.length; i++)
+      for (var j = 0; j < aiact.steps[i].items.length; j++) if (aiact.steps[i].items[j].id === id) return aiact.steps[i].items[j];
+    return null;
+  }
+
+  var TOOLS = { quick: quick, discovery: discovery, aiact: aiact };
 
   /* ------------------------------------------------------------------ engine */
   function esc(s) {
@@ -589,21 +892,50 @@
       return fieldsOf(q).some(function (f) { return !filled(A[key(q, f)]); });
     }
 
+    function refHtml(x) { return x.ref ? ' <span class="q-ref">' + esc(x.ref) + '</span>' : ''; }
+    function count(q) { return Math.min(q.max, Math.max(1, Number(A[q.id + '.n']) || 1)); }
+    /* Grid rows that apply: a heading hides its whole group, and a heading with no visible row is dropped. */
+    function gridRows(q) {
+      var out = [], head = null, on = true;
+      q.rows.forEach(function (r) {
+        if (r.h) { head = r; on = visible(r, A); return; }
+        if (!on || !visible(r, A)) return;
+        if (head) { out.push(head); head = null; }
+        out.push(r);
+      });
+      return out;
+    }
+
     function qHtml(q) {
       if (q.h) return '<h3 class="q-group">' + esc(q.h) + '</h3>';
       if (q.t === 'grid') {
-        var rows = q.rows.filter(function (r) { return visible(r, A); });
-        return '<div class="q q-grid"><div class="q-text">' + esc(q.q) + '</div>' +
+        var rows = gridRows(q), gopts = q.opts || YPND;
+        return '<div class="q q-grid"><div class="q-text">' + (q.n ? '<span class="q-n">' + esc(q.n) + '</span>' : '') + esc(q.q) + refHtml(q) + '</div>' +
+          (q.intro ? '<div class="q-help">' + esc(q.intro) + '</div>' : '') +
           rows.map(function (r) {
-            return '<div class="q-row"><div class="q-row-l">' + esc(r.l) + '</div><div class="q-opts q-inline" role="radiogroup" aria-label="' + esc(r.l) + '">' +
-              YPND.map(function (o) { return optHtml({ id: r.id }, { k: '' }, o, false); }).join('') + '</div></div>';
+            if (r.h) return '<div class="q-row-h">' + esc(r.h) + '</div>';
+            return '<div class="q-row"><div class="q-row-l">' + esc(r.l) + refHtml(r) + (r.d ? '<span class="q-row-d">' + esc(r.d) + '</span>' : '') + '</div>' +
+              '<div class="q-opts q-inline" role="radiogroup" aria-label="' + esc(r.l) + '">' +
+              gopts.map(function (o) { return optHtml({ id: r.id }, { k: '' }, o, false); }).join('') + '</div>' +
+              (q.note && filled(A[r.id]) ? '<input class="q-input q-row-note" type="text" data-k="' + esc(r.id + '.note') + '" value="' + esc(A[r.id + '.note'] || '') + '" placeholder="' + esc(q.note) + '" aria-label="' + esc(q.note) + '">' : '') +
+              '</div>';
           }).join('') + '</div>';
+      }
+      if (q.t === 'repeat') {
+        var n = count(q), h = '';
+        for (var i = 1; i <= n; i++) {
+          h += '<div class="q-card"><div class="q-card-h"><span>' + esc(q.item) + ' ' + i + '</span>' +
+            (n > 1 ? '<button type="button" class="q-link" data-remove="' + esc(q.id) + '" data-i="' + i + '">' + esc(q.remove) + '</button>' : '') + '</div>' +
+            q.fields.map(function (f) { return fieldHtml({ id: q.id + '.' + i }, f, false); }).join('') + '</div>';
+        }
+        if (n < q.max) h += '<button type="button" class="q-btn q-ghost q-add" data-add="' + esc(q.id) + '">' + esc(q.add) + '</button>';
+        return '<div class="q q-repeat">' + h + '</div>';
       }
       var bad = errors && missing(q);
       return '<div class="q' + (bad ? ' is-missing' : '') + '" data-q="' + esc(q.id) + '">' +
         '<div class="q-text">' + (q.n ? '<span class="q-n">' + esc(q.n) + '</span>' : '') + esc(q.q) +
         (q.req ? ' <span class="q-req" aria-hidden="true">*</span>' : '') +
-        (q.opt ? ' <span class="q-optional">(' + esc(UI.optional) + ')</span>' : '') + '</div>' +
+        (q.opt ? ' <span class="q-optional">(' + esc(UI.optional) + ')</span>' : '') + refHtml(q) + '</div>' +
         (q.hint ? '<div class="q-help">' + esc(q.hint) + '</div>' : '') +
         fieldsOf(q).map(function (f) { return fieldHtml(q, f, q.req); }).join('') + '</div>';
     }
@@ -624,11 +956,11 @@
       h += st.items.filter(function (q) { return visible(q, A); }).map(qHtml).join('');
       if (st.final) {
         h += '<input class="q-hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" data-hp>' +
-          '<p class="q-note">' + esc(UI.dataNote) + ' <a href="privacy-policy.html">' + esc(UI.privacy) + '</a>.</p>';
+          '<p class="q-note">' + esc(tool.dataNote || UI.dataNote) + ' <a href="privacy-policy.html">' + esc(UI.privacy) + '</a>.</p>';
       }
       if (errors) h += '<p class="q-error" role="alert">' + esc(errors === 'send' ? UI.sendError : UI.missing) + '</p>';
       h += '<div class="q-nav">' + (stepIx > 0 ? '<button type="button" class="q-btn q-ghost" data-back>' + esc(UI.back) + '</button>' : '') +
-        '<button type="button" class="q-btn q-primary" data-next>' + esc(st.final ? (tool.id === 'quick' ? UI.submitQuick : UI.submitDiscovery) : UI.next) + '</button></div>';
+        '<button type="button" class="q-btn q-primary" data-next>' + esc(st.final ? (tool.submit || (tool.id === 'quick' ? UI.submitQuick : UI.submitDiscovery)) : UI.next) + '</button></div>';
       el.innerHTML = h;
       if (focusKey) {
         var f = el.querySelector(focusKey);
@@ -643,9 +975,22 @@
         st.items.forEach(function (q) {
           if (q.h || !visible(q, A)) return;
           if (q.t === 'grid') {
-            q.rows.forEach(function (r) {
-              if (visible(r, A) && filled(A[r.id])) out.push({ s: st.title, n: '', q: r.l, a: label(YPND, A[r.id]) });
+            gridRows(q).forEach(function (r) {
+              if (r.h || !filled(A[r.id])) return;
+              var note = String(A[r.id + '.note'] || '').trim();
+              out.push({ s: st.title, n: '', q: r.l, a: label(q.opts || YPND, A[r.id]) + (note ? ' · ' + note : '') });
             });
+            return;
+          }
+          if (q.t === 'repeat') {
+            for (var i = 1; i <= count(q); i++) {
+              var lines = q.fields.map(function (f) {
+                var v = f.k === 'name' ? '' : show(f, A[q.id + '.' + i + '.' + f.k]);
+                return v ? f.label.replace(/ \(.*\)$/, '') + ': ' + v : '';
+              }).filter(Boolean);
+              var name = String(A[q.id + '.' + i + '.name'] || '').trim();
+              if (lines.length) out.push({ s: st.title, n: '', q: q.item + ' ' + i + (name ? ': ' + name : ''), a: lines.join('\n') });
+            }
             return;
           }
           var parts = fieldsOf(q).map(function (f) {
@@ -659,6 +1004,7 @@
     }
 
     function summary() {
+      if (tool.summary) return tool.summary(A);
       var s = scope(A), likely = [], unlikely = [];
       if (s.ai) likely.push(REG.aiact);
       if (s.gdpr) likely.push(REG.gdpr);
@@ -686,7 +1032,7 @@
       var hp = el.querySelector('[data-hp]');
       var payload = {
         tool: tool.id, lang: lang, t: started, website: hp ? hp.value : '',
-        company: A.q1 || '', name: A.name || '', email: A.email || '',
+        company: A.q1 || A.g1 || '', name: A.name || '', email: A.email || '',
         items: collect(), summary: summary(), prefill: profileLink()
       };
       btn.disabled = true;
@@ -710,8 +1056,8 @@
 
     function renderDone() {
       var sm = done.summary, quickTool = tool.id === 'quick';
-      var h = '<div class="q-done"><h2 class="q-title" tabindex="-1">' + esc(quickTool ? UI.thanksQuickTitle : UI.thanksDiscoveryTitle) + '</h2>' +
-        '<p class="q-intro">' + esc(quickTool ? UI.thanksQuick : UI.thanksDiscovery) +
+      var h = '<div class="q-done"><h2 class="q-title" tabindex="-1">' + esc(tool.thanksTitle || (quickTool ? UI.thanksQuickTitle : UI.thanksDiscoveryTitle)) + '</h2>' +
+        '<p class="q-intro">' + esc(tool.thanks || (quickTool ? UI.thanksQuick : UI.thanksDiscovery)) +
         (quickTool ? ' <a class="q-link" href="https://calendly.com/senecai-consulting/30min" target="_blank" rel="noopener">' + esc(UI.bookCall) + '</a>' : '') + '</p>';
       if (quickTool && sm.likely.length) h += '<div class="q-result"><div class="q-sub">' + esc(UI.likely) + '</div><ul>' + sm.likely.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
       if (quickTool && sm.unlikely.length) h += '<div class="q-result q-result-no"><div class="q-sub">' + esc(UI.unlikely) + '</div><ul>' + sm.unlikely.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul><p>' + esc(UI.unlikelyNote) + '</p></div>';
@@ -743,6 +1089,30 @@
         } else A[k] = v;
         save();
         render('.q-opt[data-k="' + k + '"][data-v="' + v + '"]');
+        return;
+      }
+      var add = e.target.closest('[data-add]');
+      if (add) {
+        var rid = add.getAttribute('data-add');
+        A[rid + '.n'] = (Number(A[rid + '.n']) || 1) + 1;
+        save(); render();
+        var cs = el.querySelectorAll('.q-card');
+        if (cs.length) { var last = cs[cs.length - 1]; last.scrollIntoView({ behavior: 'smooth', block: 'start' }); var inp = last.querySelector('.q-input'); if (inp) inp.focus({ preventScroll: true }); }
+        return;
+      }
+      var rm = e.target.closest('[data-remove]');
+      if (rm) {
+        var qid = rm.getAttribute('data-remove'), at = Number(rm.getAttribute('data-i')), n = Number(A[qid + '.n']) || 1;
+        var pre = qid + '.', moved = {};
+        Object.keys(A).forEach(function (k) {
+          var m = k.indexOf(pre) === 0 && /^(\d+)\.(.+)$/.exec(k.slice(pre.length));
+          if (!m) { moved[k] = A[k]; return; }
+          var i = Number(m[1]);
+          if (i < at) moved[k] = A[k];
+          else if (i > at) moved[pre + (i - 1) + '.' + m[2]] = A[k];
+        });
+        moved[qid + '.n'] = n - 1;
+        A = moved; save(); render();
         return;
       }
       if (e.target.closest('[data-next]')) {

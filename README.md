@@ -42,7 +42,7 @@ Plain static HTML. No build step, no framework; the only dependencies are `nodem
   `checkers.ro.v3.js` is renamed, update `ENGINES` in `api/checker-report.js` and
   `includeFiles` in `vercel.json`. The PDF and email text lives in the engine's `UI` object,
   so the Romanian build translates it like everything else.
-- Quote questionnaires — two forms rendered by `assets/quote.v3.js` (data + engine, versioned
+- Quote questionnaires — two forms rendered by `assets/quote.v4.js` (data + engine, versioned
   like the checkers) and emailed through `api/quote.js` to `LEADS_TO` (default `hello@senecai.eu`; same SMTP variables as the contact form;
   nothing is stored, progress is kept in the visitor's browser until they submit):
   - `get-a-quote.html` — Tier 1, "Get a quote in 24 hours", the lead magnet linked from the hero
@@ -89,7 +89,7 @@ The Romanian site lives in `ro/` (served at `/ro/…`) and is **generated** from
 pages: `python3 tools/i18n/build_ro.py` translates every text node and attribute using the
 dictionaries in `tools/i18n/ro_pages.py` (pages) and `tools/i18n/ro_checkers.py` (compliance
 checkers → `assets/checkers.ro.v3.js`) and `tools/i18n/ro_quote.py` (quote questionnaires →
-`assets/quote.ro.v3.js`), rewrites asset paths and wires the EN/RO switch.
+`assets/quote.ro.v4.js`), rewrites asset paths and wires the EN/RO switch.
 The same script writes the SEO head block of every page (both languages) and `sitemap.xml`;
 to add a page, append it to `PAGE_FILES`.
 After editing any English page or `assets/checkers.v4.js`, re-run the script: it fails and

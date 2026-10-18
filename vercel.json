@@ -100,6 +100,16 @@
       "permanent": true
     },
     {
+      "source": "/scopoing-ai-act",
+      "destination": "/scoping-ai-act",
+      "permanent": true
+    },
+    {
+      "source": "/ro/scopoing-ai-act",
+      "destination": "/ro/scoping-ai-act",
+      "permanent": true
+    },
+    {
       "source": "/compliance",
       "destination": "/resources#compliance-checkers",
       "permanent": true
