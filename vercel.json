@@ -123,6 +123,16 @@
       "source": "/global-ai-policy-study",
       "destination": "/SenecAI-Global-AI-Policy-Report-2026.pdf",
       "permanent": true
+    },
+    {
+      "source": "/prospecting",
+      "destination": "https://claude.ai/artifact/GDwNPgyXkdUr7GznFCRSfC",
+      "permanent": false
+    },
+    {
+      "source": "/prospecting/",
+      "destination": "https://claude.ai/artifact/GDwNPgyXkdUr7GznFCRSfC",
+      "permanent": false
     }
   ]
 }
