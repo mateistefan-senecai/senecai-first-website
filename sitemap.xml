@@ -110,4 +110,14 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/get-a-quote"/>
     <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/get-a-quote"/>
   </url>
+  <url>
+    <loc>https://www.senecai.eu/academy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/academy"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/academy"/>
+  </url>
+  <url>
+    <loc>https://www.senecai.eu/ro/academy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.senecai.eu/academy"/>
+    <xhtml:link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/academy"/>
+  </url>
 </urlset>

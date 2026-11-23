@@ -35,7 +35,7 @@ QUOTE_EN = "assets/quote.v7.js"
 QUOTE_RO = "assets/quote.ro.v7.js"
 ATTRS = ("alt", "aria-label", "title", "content")
 # Text that is the same in both languages (brands, names, symbols, codes).
-KEEP_WORDS = {"EN", "RO", "SenecAI", "SenecAI Compliance", "AI Act", "GDPR", "NIS2", "DORA", "CRA",
+KEEP_WORDS = {"EN", "RO", "Academy", "SenecAI", "SenecAI Compliance", "AI Act", "GDPR", "NIS2", "DORA", "CRA",
               "ISO 27001", "ISO 42001", "AIVERGENT", "hello@senecai.eu", "LinkedIn", "Sapio.ai", "SoCyber",
               "Tales of Security", "AI Advy", "AI Leaders Romania", "Institute for Applied AI",
               "Institutul de Cercetare Informatică (ICI)", "WebHunt.io", "Matei Ștefan", "Vlad Tudor",
@@ -146,9 +146,12 @@ def strip_seo(s):
     s = re.sub(re.escape(SEO_START) + r".*?" + re.escape(SEO_END), "", s, flags=re.S)
     return re.sub(r'<link rel="alternate" hreflang="en"[^>]*>\n<link rel="alternate" hreflang="ro"[^>]*>\n', "", s)
 
+# Standalone pages built elsewhere (EN + RO already written); listed in sitemap.xml only.
+EXTRA_PAGES = ["academy"]
+
 def sitemap():
     urls = []
-    for name in PAGE_FILES:
+    for name in PAGE_FILES + [p + ".html" for p in EXTRA_PAGES]:
         if name in UNLISTED:
             continue
         page = name.replace(".html", "")
