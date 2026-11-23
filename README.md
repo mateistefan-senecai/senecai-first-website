@@ -71,6 +71,10 @@ Plain static HTML. No build step, no framework; the only dependencies are `nodem
   and is bundled into `assets/policy-map.v1.{js,css}` (`cd tools/policy-map && npm install &&
   npm run build`; bump the version in the file names when it changes). Its data is
   `data/ai-policy-geo.json`; the report PDF is `SenecAI-Global-AI-Policy-Report-2026.pdf`.
+- `academy/index.html` / `ro/academy/index.html` — SenecAI Academy, the training arm (Understand · Govern · Build).
+  Both languages are **generated** by `_src/build.py` in the separate "SenecAI Academy/website" project (copy lives in its
+  `EN`/`RO` dictionaries), not by `tools/i18n/build_ro.py`; that script only lists them in `sitemap.xml` (`EXTRA_PAGES`).
+  Linked as "Academy" in the top nav of every page.
 - `404.html` — served by Vercel for unknown URLs; all its links are root-absolute.
 - Contact form — in the "Ready to get compliant?" band on every page. `assets/contact-form.v1.js`
   posts it to `api/contact.js`, a Vercel serverless function that emails the enquiry (nothing is
