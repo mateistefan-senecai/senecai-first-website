@@ -3,513 +3,431 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SenecAI Academy — From AI curious to AI confident</title>
+<title>SenecAI Academy — Understand. Govern. Build.</title>
 <link rel="canonical" href="https://www.senecai.eu/academy">
 <link rel="alternate" hreflang="en" href="https://www.senecai.eu/academy">
 <link rel="alternate" hreflang="ro" href="https://www.senecai.eu/ro/academy">
 <link rel="alternate" hreflang="x-default" href="https://www.senecai.eu/academy">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#17160f">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="SenecAI">
+<meta property="og:site_name" content="SenecAI Academy">
 <meta property="og:locale" content="en_GB">
 <meta property="og:url" content="https://www.senecai.eu/academy">
-<meta property="og:title" content="SenecAI Academy — From AI curious to AI confident">
+<meta property="og:title" content="SenecAI Academy — Understand. Govern. Build.">
 <meta property="og:description" content="AI literacy, AI governance and EU AI Act training, and hands-on AI workshops. The training arm of SenecAI Compliance.">
 <meta property="og:image" content="https://www.senecai.eu/assets/og-image.v1.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="AI literacy, AI governance and EU AI Act training, and hands-on AI workshops. The training arm of SenecAI Compliance.">
 <link rel="preload" href="/assets/fonts/archivo-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/jetbrains-mono-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+/* Fonts are self-hosted (SIL OFL 1.1) so no visitor data goes to Google Fonts. */
+@font-face { font-family: "Archivo"; font-style: normal; font-weight: 400 900; font-display: swap; src: url(/assets/fonts/archivo-latin.v1.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Archivo"; font-style: normal; font-weight: 400 900; font-display: swap; src: url(/assets/fonts/archivo-latin-ext.v1.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400 700; font-display: swap; src: url(/assets/fonts/jetbrains-mono-latin.v1.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400 700; font-display: swap; src: url(/assets/fonts/jetbrains-mono-latin-ext.v1.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
 
-  /* Archivo (SIL OFL 1.1), self-hosted so no visitor data goes to Google Fonts. */
-  @font-face { font-family: Archivo; font-style: normal; font-weight: 400 900; font-display: swap; src: url(/assets/fonts/archivo-latin-ext.v1.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
-  @font-face { font-family: Archivo; font-style: normal; font-weight: 400 900; font-display: swap; src: url(/assets/fonts/archivo-latin.v1.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-  body { margin: 0; font-family: Archivo, system-ui, sans-serif; color: #201e1d; background: #17160f; }
-  a { color: #8a6a1f; text-decoration: none; }
-  a:hover { color: #6d5417; }
-  html { scroll-behavior: smooth; }
-  [id] { scroll-margin-top: 210px; }
-  /* Keeps the CTA button in the true top-right corner: below this width the nav
-     links drop to their own row instead of pushing the button down. */
-  @media (max-width: 1420px) { [data-nav-links] { order: 3; flex-basis: 100%; } }
-  .om-cta { position: relative; overflow: hidden; }
-  .om-cta > span { position: relative; z-index: 1; }
-  .om-cta::before { content: ""; position: absolute; inset: 0; background: #17160f; transform: translateX(-101%); transition: transform .28s cubic-bezier(.2,.7,.2,1); }
-  .om-cta:hover::before { transform: translateX(0); }
-  .om-cta-light::before { background: #ffffff; }
+:root {
+  --bk: #17160f; --bk2: #1f1d17; --bk3: #2a271f; --gd: #d5aa4b; --gd2: #e6c477; --gd-d: #8a6a1f;
+  --cr: #faf3e3; --cr2: #f8f1de; --mu: rgba(250,243,227,.66); --mu2: rgba(250,243,227,.48); --ln: rgba(250,243,227,.12); --lng: rgba(213,170,75,.4);
+  --sans: Archivo, system-ui, sans-serif; --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --gut: clamp(16px, 4vw, 56px); --sec: clamp(72px, 9vw, 128px);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+[id] { scroll-margin-top: 84px; }
+body { margin: 0; background: var(--bk); color: var(--cr); font: 400 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: inherit; }
+img { max-width: 100%; display: block; }
+:focus-visible { outline: 2px solid var(--gd); outline-offset: 3px; }
+::selection { background: var(--gd); color: var(--bk); }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 var(--gut); }
+.sec { position: relative; padding: var(--sec) 0; border-top: 1px solid var(--ln); }
+.cream { background: var(--cr2); color: #201e1d; border-top: 0; }
+.kick { font: 500 12.5px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--gd); }
+.cream .kick { color: var(--gd-d); }
+h1, h2, h3, h4 { margin: 0; font-family: var(--sans); }
+h2 { font-weight: 800; font-size: clamp(34px, 4.6vw, 62px); line-height: 1; letter-spacing: -.035em; max-width: 18ch; }
+h2 .g { color: var(--gd); }
+.lede { margin: 0; max-width: 60ch; font-size: clamp(17px, 1.4vw, 19px); color: var(--mu); }
+.cream .lede { color: #4a453e; }
+.head { display: grid; gap: 18px; margin-bottom: clamp(40px, 5vw, 64px); }
+.gridbg { position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(213,170,75,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(213,170,75,.07) 1px, transparent 1px); background-size: 48px 48px; -webkit-mask-image: radial-gradient(ellipse at 50% 35%, #000 15%, transparent 72%); mask-image: radial-gradient(ellipse at 50% 35%, #000 15%, transparent 72%); }
 
-  /* ---- Ink stage hero ---- */
-  @keyframes gridpan { from { transform: translate(0,0); } to { transform: translate(68px,68px); } }
-  @keyframes flow { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -1370; } }
-  @keyframes pulse { 0%,100% { opacity: .3; } 50% { opacity: 1; } }
-  @media (prefers-reduced-motion: reduce) {
-    .ink-anim, .ink-anim * { animation: none !important; }
-  }
-  .ink-nav-link { transition: color .18s ease; }
-  .ink-nav-link:hover { color: #d5aa4b; }
-  .ink-nav-cta { transition: background .18s ease; }
-  .ink-nav-cta:hover { background: #e6c477; }
-  .ink-cta { transition: background .18s ease; }
-  .ink-cta:hover { background: #e6c477; }
-  .ink-cta:hover .ink-arrow { transform: translateX(4px); }
-  .ink-arrow { display: inline-block; transition: transform .18s ease; }
-  .ink-secondary { transition: color .18s ease; }
-  .ink-secondary:hover { color: #d5aa4b; }
-  .ink-ghost { transition: color .18s ease, border-color .18s ease; }
-  .ink-ghost:hover { color: #d5aa4b; border-color: #d5aa4b !important; }
-  .ink-ghost:hover .ink-arrow { transform: translateX(4px); }
-  @media (max-width: 560px) { .hero-ctas > a { flex: 1 1 100%; min-width: 0 !important; } }
-  .ink-focus:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
-  .hero-break { display: block; }
-  @media (max-width: 900px) { .hero-break { display: none; } .ink-h1 { font-size: clamp(40px, 8.5vw, 64px) !important; } }
-  @media (max-width: 900px) {
-    .svc-rail-grid { grid-template-columns: 1fr !important; }
-    .svc-rail { flex-direction: row !important; overflow-x: auto; border-right: none !important; border-bottom: 1px solid #201e1d; }
-    .svc-rail button { border-top: none !important; border-right: 1px solid #ddd7c8; white-space: nowrap; }
-    .eng-ladder { grid-template-columns: 1fr !important; }
-    .eng-ladder > div { margin-top: 0 !important; }
-  }
+/* Buttons */
+.btn { display: inline-flex; align-items: center; gap: 12px; padding: 16px 22px; font: 600 13.5px/1 var(--mono); letter-spacing: .02em; text-decoration: none; border: 1px solid transparent; transition: background .18s, color .18s, border-color .18s; cursor: pointer; }
+.btn .arr { transition: transform .18s; }
+.btn:hover .arr { transform: translateX(4px); }
+.b-gold { background: var(--gd); color: var(--bk); }
+.b-gold:hover { background: var(--gd2); }
+.b-line { border-color: rgba(250,243,227,.4); color: var(--cr); }
+.b-line:hover { border-color: var(--gd); color: var(--gd); }
+.b-dark { background: var(--bk); color: var(--cr); }
+.b-dark:hover { background: var(--bk3); }
+.tlink { font: 500 14px/1.4 var(--mono); color: var(--gd); text-decoration: none; border-bottom: 1px solid var(--lng); padding-bottom: 2px; }
+.tlink:hover { border-color: var(--gd); }
 
-  /* ---- Palette: black (#17160f) and gold (#f8f1de) are the only section backgrounds.
-     Every gold section carries the animated gold dot wave. ---- */
-  .bg-black { background: #17160f; color: #faf3e3; }
-  .bg-gold { position: relative; overflow: hidden; background: #f8f1de; color: #201e1d; }
-  .bg-gold > * { position: relative; z-index: 1; }
-  /* Animated gold dot wave (assets/dot-wave.v1.js injects the canvas into every .bg-gold). */
-  .bg-gold > canvas[data-dot-wave] { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-  /* ---- Coverage matrix (The Challenge): regulations x disciplines ---- */
-  .cov { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 20px; }
-  .cov-grid { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); border-top: 2px solid #1a1813; border-left: 2px solid #1a1813; }
-  .cov-grid > div { border-right: 1px solid #d9c99a; border-bottom: 1px solid #d9c99a; }
-  .cov-grid > .cov-h, .cov-grid > .cov-r { padding: 12px; border-right: 2px solid #1a1813; }
-  .cov-grid > .cov-h { border-bottom: 2px solid #1a1813; font: 800 12px/1.2 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
-  .cov-grid > .cov-r { font: 800 18px/1.2 Archivo, sans-serif; }
-  .cov-grid > div:not(.cov-core):not(.cov-sup) { background: #f8f1de; }
-  .cov-grid > .cov-end { border-right: 2px solid #1a1813; }
-  .cov-grid > .cov-last { border-bottom: 2px solid #1a1813; }
-  .cov-core { background: #c9a22c; }
-  .cov-sup { background: #ead9a6; }
-  .cov-key { display: flex; flex-wrap: wrap; gap: 12px 24px; font: 400 13px/1.3 Archivo, sans-serif; color: #4a443a; }
-  .cov-key span { display: flex; gap: 8px; align-items: center; }
-  .cov-key i { width: 14px; height: 14px; }
-  .cov-key strong { color: #1a1813; }
-  @media (max-width: 520px) { .cov-grid > .cov-h { font-size: 10px; letter-spacing: .06em; padding: 10px 6px; } .cov-grid > .cov-r { font-size: 15px; padding: 10px 8px; } }
-  /* ---- Horizontal scroll band (partners, testimonials) ---- */
-  .hscroll { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 14px; scrollbar-width: thin; scrollbar-color: #c9a227 transparent; overscroll-behavior-x: contain; }
-  .hscroll > * { flex: 0 0 auto; scroll-snap-align: start; }
-  .hscroll::-webkit-scrollbar { height: 6px; }
-  .hscroll::-webkit-scrollbar-thumb { background: #c9a227; }
-  .hscroll-btn { all: unset; box-sizing: border-box; width: 44px; height: 44px; display: grid; place-items: center; cursor: pointer; font: 800 18px/1 Archivo, sans-serif; border: 1px solid currentColor; transition: background .18s ease, color .18s ease; }
-  .hscroll-btn:hover { background: #d5aa4b; border-color: #d5aa4b; color: #17160f; }
-  .hscroll-btn:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
-  /* ---- Team cards: large photo, bio revealed on demand ---- */
-  .team-card { box-sizing: border-box; width: min(320px, 78vw); display: flex; flex-direction: column; border: 1px solid #ddd7c8; background: #f8f1de; }
-  .team-photo { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; background: #17160f; }
-  .team-body { display: flex; flex-direction: column; gap: 10px; padding: 22px 22px 24px; }
-  .team-name { font: 800 30px/1.05 Archivo, sans-serif; letter-spacing: -.02em; }
-  .team-role { font: 600 13px/1.4 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #8a6a1f; }
-  .team-bio-btn { all: unset; box-sizing: border-box; align-self: flex-start; margin-top: 8px; display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; cursor: pointer; font: 700 12px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #201e1d; border: 1px solid #201e1d; transition: background .18s ease, color .18s ease, border-color .18s ease; }
-  .team-bio-btn::after { content: "+"; font-size: 16px; letter-spacing: 0; }
-  .team-bio-btn[aria-expanded="true"]::after { content: "\2212"; }
-  .team-bio-btn:hover, .team-bio-btn[aria-expanded="true"] { background: #17160f; border-color: #17160f; color: #faf3e3; }
-  .team-bio-btn:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
-  .team-bio { margin-top: 6px; font: 400 15px/1.6 Archivo, sans-serif; color: #4a453e; }
-  .footer-link { color: rgba(250,243,227,.72); font: 600 14px/1.3 Archivo, sans-serif; transition: color .18s ease; }
-  .footer-link:hover { color: #d5aa4b; }
-  /* Method steps: on phones the outcome moves under the description instead of a narrow third column. */
-  @media (max-width: 640px) {
-    #method [data-stagger] > div { grid-template-columns: 44px minmax(0, 1fr) !important; }
-    #method [data-stagger] > div > div:last-child { grid-column: 2; }
-  }
-  /* ---- Contact form in the final CTA band (assets/contact-form.v1.js, api/contact.js) ---- */
-  .cta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); gap: clamp(32px, 5vw, 72px); align-items: start; }
-  .cf { min-width: 0; display: flex; flex-direction: column; gap: 16px; padding: clamp(20px, 2.4vw, 32px); border: 1px solid #ddd7c8; background: rgba(255, 252, 243, .94); color: #201e1d; }
-  .cf-title { font: 800 13px/1 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8a6a1f; }
-  .cf-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 16px; }
-  .cf-field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
-  .cf-field > span { font: 700 11px/1.2 Archivo, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: #4a453e; }
-  .cf-field input, .cf-field textarea { box-sizing: border-box; width: 100%; margin: 0; padding: 12px 14px; border: 1.5px solid #201e1d; border-radius: 0; background: #fffdf7; color: #201e1d; font: 400 16px/1.45 Archivo, sans-serif; }
-  .cf-field textarea { resize: vertical; min-height: 120px; }
-  .cf-field input:focus, .cf-field textarea:focus { outline: 2px solid #d5aa4b; outline-offset: 1px; }
-  .cf-hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
-  .cf-note { margin: 0; font: 400 13px/1.5 Archivo, sans-serif; color: #4a453e; }
-  .cf-note a, .cf-status a { color: #8a6a1f; font-weight: 700; text-decoration: underline; }
-  .cf-submit { all: unset; box-sizing: border-box; align-self: flex-start; display: flex; align-items: center; gap: 28px; padding: 16px 22px; background: #201e1d; color: #faf3e3; cursor: pointer; font: 800 13.5px/1.3 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; transition: background .18s ease, color .18s ease; }
-  .cf-submit:hover { background: #d5aa4b; color: #17160f; }
-  .cf-submit:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 2px; }
-  .cf-submit:disabled { opacity: .6; cursor: progress; }
-  .cf-status { margin: 0; padding: 12px 14px; border-left: 3px solid #c9a227; background: #f8f1de; font: 600 15px/1.5 Archivo, sans-serif; color: #201e1d; }
-  .cf-error { border-left-color: #b3261e; }
+/* Nav */
+.nav { position: sticky; top: 0; z-index: 30; background: rgba(23,22,15,.82); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--ln); }
+.nav .wrap { display: flex; align-items: center; gap: 32px; height: 72px; }
+.brand { flex-shrink: 0; }
+.brand img { height: 44px; width: auto; }
+.nav-links { display: flex; gap: 24px; font: 500 13px/1 var(--mono); }
+.nav-links a { color: var(--mu); text-decoration: none; transition: color .15s; }
+.nav-links a:hover { color: var(--gd); }
+.nav-end { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+.lang { display: flex; border: 1px solid rgba(250,243,227,.3); font: 500 12px/1 var(--mono); }
+.lang a, .lang span { padding: 8px 10px; text-decoration: none; color: var(--mu); }
+.lang span { background: var(--cr); color: var(--bk); }
+.nav .btn { padding: 12px 16px; font-size: 12.5px; }
+@media (max-width: 1000px) { .nav-links { display: none; } }
+@media (max-width: 560px) { .nav .btn { display: none; } .brand img { height: 36px; } }
 
+/* Hero */
+.hero { position: relative; overflow: hidden; padding: clamp(64px, 10vw, 120px) 0 0; text-align: center; }
+.hero h1 { margin: 22px auto 26px; max-width: 14ch; font: 800 clamp(52px, 9vw, 132px)/.92 var(--sans); letter-spacing: -.05em; }
+.hero h1 span { white-space: nowrap; }
+.hero h1 i { font-style: normal; color: var(--gd); }
+.hero .lede { margin: 0 auto 32px; }
+.hero-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 22px; }
+.mods { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); margin-top: clamp(56px, 7vw, 88px); border-top: 1px solid var(--ln); text-align: left; }
+.mod { display: block; padding: 26px clamp(18px, 2.4vw, 32px) 30px; border-left: 1px solid var(--ln); text-decoration: none; transition: background .2s; }
+.mod:first-child { border-left: 0; }
+.mod:hover { background: rgba(213,170,75,.06); }
+.mod .n { font: 500 12px/1 var(--mono); letter-spacing: .12em; color: var(--gd); }
+.mod h3 { margin: 14px 0 6px; font: 700 clamp(22px, 2.2vw, 28px)/1.1 var(--sans); letter-spacing: -.02em; }
+.mod p { margin: 0; font-size: 15px; color: var(--mu); }
+.mod .bar { height: 3px; margin-top: 20px; background: rgba(250,243,227,.1); overflow: hidden; }
+.mod .bar i { display: block; height: 100%; background: var(--gd); transform-origin: left; animation: fill 1.4s cubic-bezier(.2,.7,.2,1) both; }
+.mod:nth-child(2) .bar i { animation-delay: .25s; } .mod:nth-child(3) .bar i { animation-delay: .5s; }
+@keyframes fill { from { transform: scaleX(0); } }
+@media (max-width: 820px) { .mods { grid-template-columns: 1fr; } .mod { border-left: 0; border-top: 1px solid var(--ln); } .mod:first-child { border-top: 0; } }
 
-.x1:hover { color: #201e1d; border-bottom-color: #c9a227; }
-.x2:hover { color: #201e1d; border-bottom-color: #c9a227; }
-.x3:hover { color: #201e1d; border-bottom-color: #c9a227; }
-.x4:hover { color: #201e1d; border-bottom-color: #c9a227; }
-.x5:hover { color: #201e1d; border-bottom-color: #c9a227; }
-.x6:hover { background: #f7f2e4; color: #1a1712; }
-.x7:hover { color: #ffffff; }
-.x8:hover { color: #ffffff; }
-.x9:hover { color: #c9a227; border-bottom-color: #c9a227; }
-.x40:hover { color: #f7f2e4; border-bottom-color: #c9a227; }
-.x10:hover { color: #ffffff; }
-.x11:hover { color: #201e1d; }
-.x12:hover { border-color: #c9a227; color: #c9a227; }
-.x12:focus-visible { outline: 2px solid #c9a227; outline-offset: 2px; }
-.x13:hover { border-color: #c9a227; color: #c9a227; }
-.x13:focus-visible { outline: 2px solid #c9a227; outline-offset: 2px; }
-.x14:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
-.x15:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
-.x16:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
-.x17:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
-.x18:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
-.x19:focus-visible { outline: 2px solid #c9a227; outline-offset: -6px; }
-.x20:hover { background: #fcfbf7; color: #201e1d; }
-.x20:focus-visible { outline: 2px solid #c9a227; outline-offset: -6px; }
-.x21:hover { background: #fcfbf7; color: #201e1d; }
-.x21:focus-visible { outline: 2px solid #c9a227; outline-offset: -6px; }
-.x22:hover { background: #fcfbf7; color: #201e1d; }
-.x22:focus-visible { outline: 2px solid #c9a227; outline-offset: -6px; }
-.x23:hover { background: #fcfbf7; color: #201e1d; }
-.x23:focus-visible { outline: 2px solid #c9a227; outline-offset: -6px; }
-.x24:hover { background: #fcfbf7; color: #201e1d; }
-.x24:focus-visible { outline: 2px solid #c9a227; outline-offset: -6px; }
-.x25:hover { color: #fcfbf7; }
-.x26:hover { color: #c9a227; }
-.x27:hover { color: #c9a227; }
-.x28:hover { color: #c9a227; }
-.x29:hover { color: #c9a227; }
-.x30:hover { color: #c9a227; }
-.x31:hover { color: #c9a227; }
-.x32:hover { color: #c9a227; }
-.x33:hover { color: #c9a227; }
-.x34:hover { color: #c9a227; }
-.x35:hover { color: #c9a227; }
-.x36:hover { color: #c9a227; }
-  .faq-q { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; }
-  .faq-q::-webkit-details-marker { display: none; }
-  .faq-q::after { content: "+"; flex: none; font: 800 20px/1 Archivo, sans-serif; color: #d5aa4b; }
-  .faq-item[open] > .faq-q::after { content: "\2013"; }
-  .faq-q:hover { color: #d5aa4b !important; }
-  .faq-item p { margin: 0 0 10px; } .faq-item p:last-child { margin: 0; }
-  .faq-item ul, .faq-item ol { margin: 0 0 10px; padding-left: 20px; }
-  .faq-item a { color: #d5aa4b; font-weight: 700; }
-  /* FAQ categories: each one folds open to show its questions. */
-  .faq-groups { display: flex; flex-direction: column; border-bottom: 1px solid rgba(250,243,227,.18); }
-  .faq-group { border-top: 1px solid rgba(250,243,227,.18); }
-  .faq-group-q { list-style: none; display: flex; align-items: center; gap: 16px; padding: 24px 0; cursor: pointer; font: 800 clamp(20px, 2.2vw, 26px)/1.2 Archivo, sans-serif; letter-spacing: -.01em; text-transform: uppercase; color: #faf3e3; transition: color .18s ease; }
-  .faq-group-q::-webkit-details-marker { display: none; }
-  .faq-group-q::after { content: "+"; margin-left: 16px; flex: none; width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid #d5aa4b; color: #d5aa4b; font: 800 20px/1 Archivo, sans-serif; }
-  .faq-group[open] > .faq-group-q::after { content: "\2013"; background: #d5aa4b; color: #17160f; }
-  .faq-group-q:hover { color: #d5aa4b; }
-  .faq-group-q:focus-visible { outline: 2px solid #d5aa4b; outline-offset: 4px; }
-  .faq-count { margin-left: auto; font: 600 12px/1 Archivo, sans-serif; letter-spacing: .12em; color: rgba(250,243,227,.55); }
+/* Promise */
+.promise { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(36px, 6vw, 88px); align-items: center; }
+.promise .body p { margin: 0 0 16px; max-width: 58ch; font-size: 18px; color: #4a453e; }
+.qcard { background: var(--bk); color: var(--cr); border: 1px solid var(--bk); }
+.qcard .top { display: flex; gap: 6px; align-items: center; padding: 11px 14px; border-bottom: 1px solid var(--ln); }
+.qcard .top i { width: 9px; height: 9px; border-radius: 50%; background: rgba(250,243,227,.22); }
+.qcard .top span { margin-left: auto; font: 400 11.5px/1 var(--mono); color: var(--mu2); }
+.qcard .q { padding: clamp(24px, 3vw, 36px); }
+.qcard .was { font: 400 14px/1.5 var(--mono); color: var(--mu2); text-decoration: line-through; text-decoration-color: rgba(213,170,75,.6); }
+.qcard .now { margin-top: 10px; font: 800 clamp(26px, 2.8vw, 36px)/1.12 var(--sans); letter-spacing: -.025em; }
+.qcard .now::before { content: "→ "; color: var(--gd); }
+.qcard .a4 { display: grid; gap: 6px; padding: 18px clamp(24px, 3vw, 36px); border-top: 1px solid var(--ln); }
+.qcard .a4 b { font: 500 12px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--gd); }
+.qcard .a4 span { font-size: 15px; color: var(--mu); }
+@media (max-width: 880px) { .promise { grid-template-columns: 1fr; } }
 
+/* Programmes */
+.prog { display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
+.tabs { display: grid; gap: 8px; position: sticky; top: 100px; }
+.tab { display: grid; gap: 6px; width: 100%; padding: 18px 20px; text-align: left; background: transparent; color: var(--cr); border: 1px solid var(--ln); font: inherit; cursor: pointer; transition: border-color .18s, background .18s; }
+.tab:hover { border-color: var(--lng); }
+.tab .n { font: 500 11.5px/1 var(--mono); letter-spacing: .12em; color: var(--mu2); }
+.tab strong { font: 700 21px/1.15 var(--sans); letter-spacing: -.015em; }
+.tab[aria-selected="true"] { border-color: var(--gd); background: rgba(213,170,75,.08); }
+.tab[aria-selected="true"] .n { color: var(--gd); }
+.panel h3 { font: 800 clamp(30px, 3.4vw, 44px)/1.05 var(--sans); letter-spacing: -.03em; }
+.panel .sub { margin-top: 8px; font: 500 13px/1.4 var(--mono); color: var(--gd); }
+.panel .lead { display: inline-block; margin-top: 16px; padding: 9px 12px; border: 1px solid var(--lng); font-size: 14px; color: var(--gd2); }
+.meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 1px; margin: 28px 0 32px; background: var(--ln); border: 1px solid var(--ln); }
+.meta div { padding: 18px 20px; background: var(--bk); }
+.meta b { display: block; margin-bottom: 8px; font: 500 11.5px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--gd); }
+.meta p { margin: 0; font-size: 14.5px; color: var(--mu); }
+.ch { font: 500 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--mu2); margin-bottom: 14px; }
+.courses { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px; }
+.course { display: flex; flex-direction: column; gap: 10px; padding: 22px; background: var(--bk2); border: 1px solid var(--ln); transition: border-color .18s, transform .18s; }
+.course:hover { border-color: var(--lng); transform: translateY(-2px); }
+.course.feat { border-color: var(--lng); }
+.chip { align-self: flex-start; padding: 5px 9px; border: 1px solid var(--lng); font: 500 11px/1.2 var(--mono); letter-spacing: .04em; color: var(--gd); }
+.course h4 { font: 700 19px/1.25 var(--sans); letter-spacing: -.01em; }
+.course p { margin: 0; font-size: 14.5px; color: var(--mu); }
+.prog-cta { margin-top: 40px; }
+.js-tabs .panel[hidden] { display: none; }
+.panel + .panel { margin-top: 64px; }
+.js-tabs .panel + .panel { margin-top: 0; }
+@media (max-width: 900px) { .prog { grid-template-columns: 1fr; } .tabs { position: static; grid-template-columns: repeat(3, minmax(0, 1fr)); } .tab { padding: 14px; } .tab strong { font-size: 16px; } }
+@media (max-width: 520px) { .tabs { grid-template-columns: 1fr; } }
 
-  .ac-wrap { padding: clamp(56px, 7vw, 96px) clamp(20px, 4vw, 64px); }
-  .ac-eyebrow { font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b; }
-  .bg-gold .ac-eyebrow { color: #a37c17; }
-  .ac-h2 { margin: 0; max-width: 24ch; font: 900 clamp(32px, 3.8vw, 52px)/1.02 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase; }
-  .bg-gold .ac-h2 { color: #201e1d; }
-  .ac-lede { margin: 0; max-width: 62ch; font: 400 19px/1.6 Archivo, sans-serif; }
-  .bg-black .ac-lede { color: rgba(250,243,227,.74); }
-  .bg-gold .ac-lede { color: #4a453e; }
-  .ac-head { display: flex; flex-direction: column; gap: 16px; margin-bottom: clamp(32px, 4vw, 48px); }
-  .ac-split { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: clamp(32px, 5vw, 64px); align-items: center; }
-  .ac-pillars-badge { position: relative; display: flex; flex-wrap: wrap; justify-content: center; border: 1px solid rgba(250,243,227,.3); }
-  .ac-pillars-badge span { padding: 10px 16px; font: 800 12px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #faf3e3; }
-  .ac-pillars-badge span + span { border-left: 1px solid rgba(250,243,227,.3); }
-  .ac-pillars-badge b { color: #d5aa4b; margin-right: 8px; }
-  @media (max-width: 640px) { .ac-pillars-badge { flex-direction: column; align-self: stretch; } .ac-pillars-badge span + span { border-left: none; border-top: 1px solid rgba(250,243,227,.3); } }
-  .ac-textlink { position: relative; font: 700 13px/1.4 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #d5aa4b; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
-  .ac-textlink:hover { color: #faf3e3; }
-  .bg-gold .ac-textlink { color: #8a6a1f; }
-  .bg-gold .ac-textlink:hover { color: #201e1d; }
-  .ac-body p { margin: 0 0 16px; max-width: 58ch; font: 400 18px/1.6 Archivo, sans-serif; color: #4a453e; }
-  .ac-quote { margin: 0; padding: clamp(28px, 3vw, 40px); background: #17160f; color: #faf3e3; }
-  .ac-quote blockquote { margin: 0; font: 800 clamp(24px, 2.6vw, 34px)/1.2 Archivo, sans-serif; letter-spacing: -.02em; }
-  .ac-quote blockquote span { color: #d5aa4b; }
-  .ac-quote .ac-art4 { margin-top: 26px; padding-top: 20px; border-top: 1px solid rgba(250,243,227,.2); font: 500 15px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.78); }
-  .ac-quote .ac-art4 em { display: block; margin-bottom: 8px; font: 700 11px/1 Archivo, sans-serif; font-style: normal; letter-spacing: .16em; text-transform: uppercase; color: #d5aa4b; }
-  /* Pillar switcher: all panels show without JavaScript; the script turns them into tabs. */
-  .pl-tabs { display: none; flex-wrap: wrap; border-bottom: 1px solid rgba(250,243,227,.18); margin-bottom: clamp(28px, 3vw, 40px); }
-  [data-pillars].js .pl-tabs { display: flex; }
-  .pl-tab { all: unset; box-sizing: border-box; cursor: pointer; padding: 16px 22px 14px; border-bottom: 3px solid transparent; font: 800 13px/1.2 Archivo, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: rgba(250,243,227,.6); }
-  .pl-tab b { color: rgba(250,243,227,.35); margin-right: 8px; }
-  .pl-tab:hover { color: #faf3e3; }
-  .pl-tab[aria-selected="true"] { color: #faf3e3; border-bottom-color: #d5aa4b; }
-  .pl-tab[aria-selected="true"] b { color: #d5aa4b; }
-  .pl-tab:focus-visible { outline: 2px solid #d5aa4b; outline-offset: -2px; }
-  .pl-panel { display: flex; flex-direction: column; gap: clamp(28px, 3vw, 40px); }
-  .pl-panel[hidden] { display: none; }
-  [data-pillars]:not(.js) .pl-panel + .pl-panel { margin-top: clamp(56px, 6vw, 80px); padding-top: clamp(40px, 4vw, 56px); border-top: 1px solid rgba(250,243,227,.18); }
-  .pl-title { display: flex; flex-direction: column; gap: 10px; }
-  .pl-title h3 { margin: 0; font: 900 clamp(28px, 3vw, 40px)/1.05 Archivo, sans-serif; letter-spacing: -.03em; text-transform: uppercase; color: #faf3e3; }
-  .pl-title h3 span { color: #d5aa4b; }
-  .pl-sub { font: 700 13px/1.3 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: rgba(250,243,227,.6); }
-  .pl-lead { font: 500 italic 16px/1.4 Archivo, sans-serif; color: #d5aa4b; }
-  .pl-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: clamp(20px, 3vw, 36px); }
-  .pl-meta > div { padding-top: 16px; border-top: 2px solid #d5aa4b; }
-  .pl-meta b { display: block; margin-bottom: 10px; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #d5aa4b; }
-  .pl-meta p { margin: 0; font: 400 16px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.78); }
-  .pl-progs-h { font: 700 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: rgba(250,243,227,.6); }
-  .pl-progs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px; }
-  .pl-prog { display: flex; flex-direction: column; gap: 12px; padding: clamp(22px, 2.4vw, 30px); border: 1px solid rgba(250,243,227,.18); }
-  .pl-prog.feat { background: #f8f1de; border-color: #f8f1de; }
-  .pl-prog h4 { margin: 0; font: 800 20px/1.2 Archivo, sans-serif; letter-spacing: -.01em; color: #faf3e3; }
-  .pl-prog.feat h4 { color: #201e1d; }
-  .pl-prog p { margin: 0; font: 400 15px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.72); }
-  .pl-prog.feat p { color: #4a453e; }
-  .pl-tag { align-self: flex-start; padding: 6px 10px; background: #d5aa4b; color: #17160f; font: 800 10.5px/1.2 Archivo, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
-  .pl-prog.feat .pl-tag { background: #201e1d; color: #faf3e3; }
-  .ac-btn { align-self: flex-start; display: inline-flex; align-items: center; gap: 24px; padding: 14px 18px; font: 800 13px/1.3 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase; border: 2px solid #d5aa4b; color: #d5aa4b; }
-  .ac-btn:hover { background: #d5aa4b; color: #17160f; }
-  .bg-gold .ac-btn { background: #201e1d; border-color: #201e1d; color: #faf3e3; }
-  .bg-gold .ac-btn:hover { background: #d5aa4b; border-color: #d5aa4b; color: #17160f; }
-  .ac-why { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: clamp(24px, 3vw, 40px); }
-  .ac-why > div { display: flex; flex-direction: column; gap: 12px; padding-top: 18px; border-top: 2px solid #1a1813; }
-  .ac-why b { font: 900 13px/1 Archivo, sans-serif; letter-spacing: .14em; color: #a37c17; }
-  .ac-why h3 { margin: 0; font: 800 22px/1.15 Archivo, sans-serif; letter-spacing: -.01em; color: #201e1d; }
-  .ac-why p { margin: 0; font: 400 16px/1.55 Archivo, sans-serif; color: #4a453e; }
-  .ac-fac { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 20px; }
-  .ac-person { display: flex; flex-direction: column; gap: 14px; padding: clamp(24px, 2.6vw, 32px); border: 1px solid rgba(250,243,227,.18); }
-  .ac-person.lead { background: #f8f1de; border-color: #f8f1de; }
-  .ac-mono { width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; border: 2px solid #d5aa4b; font: 900 22px/1 Archivo, sans-serif; letter-spacing: .02em; color: #d5aa4b; }
-  .ac-person.lead .ac-mono { background: #201e1d; border-color: #201e1d; color: #d5aa4b; }
-  .ac-photo { width: 88px; height: 88px; object-fit: cover; border: 2px solid #d5aa4b; }
-  .ac-person h3 { margin: 0; font: 800 22px/1.15 Archivo, sans-serif; letter-spacing: -.01em; color: #faf3e3; }
-  .ac-person.lead h3 { color: #201e1d; }
-  .ac-role { font: 700 12px/1.4 Archivo, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: #d5aa4b; }
-  .ac-person.lead .ac-role { color: #8a6a1f; }
-  .ac-person p { margin: 0; font: 400 15px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.72); }
-  .ac-person.lead p { color: #4a453e; }
-  .ac-person a { color: inherit; font-weight: 700; text-decoration: underline; }
-  .ac-fmts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); border-top: 2px solid #1a1813; border-left: 2px solid #1a1813; }
-  .ac-fmts > div { display: flex; flex-direction: column; gap: 12px; padding: clamp(22px, 2.4vw, 30px); border-right: 2px solid #1a1813; border-bottom: 2px solid #1a1813; background: rgba(255,252,243,.7); }
-  .ac-fmts b { font: 900 13px/1 Archivo, sans-serif; letter-spacing: .14em; color: #a37c17; }
-  .ac-fmts h3 { margin: 0; font: 800 21px/1.15 Archivo, sans-serif; letter-spacing: -.01em; color: #201e1d; }
-  .ac-fmts p { margin: 0; font: 400 15px/1.55 Archivo, sans-serif; color: #4a453e; }
-  .ac-fmts .ac-btn { margin-top: auto; }
-  .ac-bridge { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: clamp(24px, 4vw, 56px); align-items: center; padding: clamp(28px, 3.4vw, 48px); border: 1px solid rgba(213,170,75,.5); }
-  .ac-bridge p { margin: 12px 0 0; max-width: 62ch; font: 400 17px/1.6 Archivo, sans-serif; color: rgba(250,243,227,.74); }
-  .ac-bridge .ac-btn { justify-self: start; }
-  .cf-field select { box-sizing: border-box; width: 100%; margin: 0; padding: 12px 14px; border: 1.5px solid #201e1d; border-radius: 0; background: #fffdf7; color: #201e1d; font: 400 16px/1.45 Archivo, sans-serif; }
-  .cf-field select:focus { outline: 2px solid #d5aa4b; outline-offset: 1px; }
-  .cf-row3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 16px; }
-  .ac-signoff { font: 800 13px/1.5 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8a6a1f; }
+/* Why */
+.why { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 1px; background: rgba(32,30,29,.14); border: 1px solid rgba(32,30,29,.14); }
+.why > div { padding: 28px 24px 30px; background: var(--cr2); }
+.why .n { font: 500 13px/1 var(--mono); color: var(--gd-d); }
+.why h3 { margin: 22px 0 10px; font: 700 21px/1.2 var(--sans); letter-spacing: -.015em; }
+.why p { margin: 0; font-size: 15px; color: #4a453e; }
+
+/* Faculty */
+.fac { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 900px) { .fac { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .fac { grid-template-columns: 1fr; } }
+.person { display: flex; flex-direction: column; background: var(--bk2); border: 1px solid var(--ln); }
+.person .pic { aspect-ratio: 4 / 3; background: var(--bk3); overflow: hidden; display: grid; place-items: center; }
+.person .pic img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; filter: grayscale(1) contrast(1.05); transition: filter .4s; }
+.person:hover .pic img { filter: none; }
+.person .mono { font: 500 40px/1 var(--mono); color: var(--gd); }
+.person .txt { padding: 20px 22px 24px; }
+.person h3 { font: 700 22px/1.15 var(--sans); letter-spacing: -.015em; }
+.role { margin: 8px 0 12px; font: 500 12px/1.4 var(--mono); letter-spacing: .06em; color: var(--gd); }
+.person p { margin: 0; font-size: 14.5px; color: var(--mu); }
+.person p a { color: var(--cr); text-decoration: underline; text-decoration-color: var(--gd); text-underline-offset: 3px; }
+.person.lead { grid-column: 1 / -1; flex-direction: row; }
+.person.lead .pic { aspect-ratio: auto; flex: 0 0 min(38%, 420px); min-height: 340px; }
+.person.lead .txt p { font-size: 16px; max-width: 62ch; }
+.person.lead .txt { padding: 28px; align-self: center; }
+.person.lead h3 { font-size: 30px; }
+@media (max-width: 700px) { .person.lead { flex-direction: column; } .person.lead .pic { min-height: 0; aspect-ratio: 4 / 3; } }
+
+/* Formats */
+.fmts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px; }
+.fmt { display: flex; flex-direction: column; gap: 12px; padding: 28px; background: var(--cr); border: 1px solid rgba(32,30,29,.14); }
+.fmt .n { font: 500 12px/1 var(--mono); letter-spacing: .12em; color: var(--gd-d); }
+.fmt h3 { margin-top: 18px; font: 700 23px/1.15 var(--sans); letter-spacing: -.015em; }
+.fmt p { margin: 0 0 12px; font-size: 15px; color: #4a453e; }
+.fmt .btn { margin-top: auto; align-self: flex-start; }
+
+/* Bridge */
+.bridge { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: center; padding: clamp(28px, 4vw, 52px); border: 1px solid var(--lng); }
+.bridge::before, .bridge::after { content: ""; position: absolute; width: 10px; height: 10px; border: 1px solid var(--gd); background: var(--bk); }
+.bridge::before { top: -6px; left: -6px; } .bridge::after { bottom: -6px; right: -6px; }
+.bridge h2 { font-size: clamp(28px, 3.2vw, 42px); margin-top: 14px; }
+.bridge p { margin: 14px 0 0; max-width: 64ch; color: var(--mu); }
+@media (max-width: 860px) { .bridge { grid-template-columns: 1fr; } }
+
+/* CTA + form */
+.cta-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(36px, 6vw, 88px); align-items: start; }
+.cta-grid h2 { margin: 18px 0 20px; }
+.cta-grid .lede { margin-bottom: 24px; }
+.signoff { margin-top: 36px; font: 500 13px/1.5 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--gd); }
+.form { display: grid; gap: 16px; padding: clamp(22px, 3vw, 34px); background: var(--bk2); border: 1px solid var(--ln); }
+.form-title { font: 500 12.5px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--gd); }
+.row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 14px; }
+.row3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 14px; }
+.field { display: grid; gap: 7px; font: 500 12.5px/1.3 var(--mono); color: var(--mu); }
+.field input, .field select, .field textarea { width: 100%; padding: 13px 14px; border: 1px solid rgba(250,243,227,.2); border-radius: 0; background: var(--bk); color: var(--cr); font: 400 16px/1.4 var(--sans); }
+.field select { -webkit-appearance: none; appearance: none; background-image: linear-gradient(45deg, transparent 50%, #d5aa4b 50%), linear-gradient(135deg, #d5aa4b 50%, transparent 50%); background-position: calc(100% - 18px) 55%, calc(100% - 13px) 55%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 34px; }
+.field textarea { resize: vertical; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: 0; border-color: var(--gd); box-shadow: 0 0 0 1px var(--gd); }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.note { margin: 0; font-size: 13px; color: var(--mu2); }
+.note a { text-decoration: underline; }
+.form .btn { justify-self: start; }
+.status { margin: 0; font-size: 15px; color: #9fd49a; }
+.status.err { color: #f0a08f; }
+@media (max-width: 900px) { .cta-grid { grid-template-columns: 1fr; } }
+
+/* Footer */
+.foot { border-top: 1px solid var(--ln); padding: 56px 0 28px; font-size: 15px; color: var(--mu); }
+.foot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 32px; }
+.foot .brand img { height: 52px; }
+.foot p { margin: 16px 0 0; max-width: 30ch; font-size: 14px; }
+.foot h4 { margin-bottom: 16px; font: 500 11.5px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--gd); }
+.foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.foot a { text-decoration: none; }
+.foot a:hover { color: var(--cr); }
+.foot-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px; margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--ln); font: 400 11.5px/1.5 var(--mono); letter-spacing: .06em; color: var(--mu2); }
+
+/* Reveal on scroll */
+.js .rv { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+.js .rv.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .js .rv { opacity: 1; transform: none; transition: none; } .mod .bar i { animation: none; } .btn, .course, .person .pic img { transition: none; } }
 
 </style>
 </head>
 <body>
-<div style="background: #17160f;">
 
-  <div id="top" style="position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: 20px; padding: 16px clamp(20px, 4vw, 56px); border-bottom: 1px solid rgba(250,243,227,.16); background: #17160f;">
-    <a href="/" style="display: flex; align-items: center; gap: 14px;" aria-label="SenecAI home">
-      <img src="/assets/senecai-compliance-logo-light.png" alt="SenecAI Compliance" style="display: block; height: 50px; width: auto;">
-      <span style="padding-left: 14px; border-left: 1px solid rgba(250,243,227,.3); font: 800 13px/1 Archivo, sans-serif; letter-spacing: .22em; text-transform: uppercase; color: #d5aa4b;">Academy</span>
-    </a>
-    <div data-nav-links="true" style="display: flex; flex-wrap: wrap; gap: 22px; font: 700 12.5px/1 Archivo, sans-serif; letter-spacing: .09em; text-transform: uppercase;">
-      <a class="ink-nav-link ink-focus" href="#programmes" style="color: rgba(250,243,227,.82);">Programmes</a>
-      <a class="ink-nav-link ink-focus" href="#why" style="color: rgba(250,243,227,.82);">Why us</a>
-      <a class="ink-nav-link ink-focus" href="#faculty" style="color: rgba(250,243,227,.82);">Faculty</a>
-      <a class="ink-nav-link ink-focus" href="#formats" style="color: rgba(250,243,227,.82);">Formats</a>
-    </div>
-    <div style="display: flex; align-items: center; gap: 16px; margin-left: auto;">
-      <div style="display: flex; border: 1px solid rgba(250,243,227,.5); font: 700 12px/1 Archivo, sans-serif; letter-spacing: .08em;"><span style="padding: 7px 12px; background: #faf3e3; color: #17160f;" aria-current="true">EN</span><a class="ink-focus" href="/ro/academy" hreflang="ro" lang="ro" style="padding: 7px 12px; color: #faf3e3;">RO</a></div>
-      <a href="#cta" class="ink-nav-cta ink-focus" style="display: flex; align-items: center; padding: 12px 18px; background: #d5aa4b; color: #17160f; font: 800 12.5px/1 Archivo, sans-serif; letter-spacing: .07em; text-transform: uppercase;" data-nav-cta="true"><span>Request a quote</span></a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="/academy"><img src="/assets/senecai-academy-logo-light.png" alt="SenecAI Academy" width="727" height="213"></a>
+    <nav class="nav-links" aria-label="Academy"><a href="#programmes">/programmes</a><a href="#why">/why-us</a><a href="#faculty">/faculty</a><a href="#formats">/formats</a></nav>
+    <div class="nav-end">
+      <div class="lang"><span aria-current="true">EN</span><a href="/ro/academy" hreflang="ro" lang="ro">RO</a></div>
+      <a class="btn b-gold" href="#cta">Request a quote <span class="arr" aria-hidden="true">→</span></a>
     </div>
   </div>
-  <div data-screen-label="Hero" style="position: relative; overflow: hidden; background: #17160f; box-sizing: border-box; min-height: calc(88vh - 89px); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 28px; padding: clamp(48px, 8vh, 96px) clamp(20px, 4vw, 56px);">
-    <div class="ink-anim" aria-hidden="true" style="position: absolute; inset: 0; overflow: hidden; pointer-events: none;">
-      <div style="position: absolute; inset: -40px; background-image: linear-gradient(rgba(213,170,75,.10) 1px, transparent 1px), linear-gradient(90deg, rgba(213,170,75,.10) 1px, transparent 1px); background-size: 68px 68px; animation: gridpan 34s linear infinite;"></div>
-      <div style="position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(23,22,15,.2) 0%, #17160f 75%);"></div>
+</header><main>
+<section class="hero" data-screen-label="Hero">
+  <div class="gridbg" aria-hidden="true"></div>
+  <div class="wrap" style="position: relative;">
+    <div class="kick">// The training arm of SenecAI Compliance</div>
+    <h1><span>Understand<i>.</i></span> <span>Govern<i>.</i></span> <span>Build<i>.</i></span></h1>
+    <p class="lede">Practical AI literacy, AI governance and EU AI Act training, and hands-on AI workshops — led by AI Act specialist Matei Ștefan, with hands-on AI engineers on the technical track.</p>
+    <div class="hero-ctas">
+      <a class="btn b-gold" href="#programmes">Explore programmes <span class="arr" aria-hidden="true">→</span></a>
+      <a class="btn b-line" href="#cta">Book a custom team workshop</a>
     </div>
-    <div style="position: relative; display: flex; align-items: center; gap: 14px; font: 700 13px/1.3 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">
-      <span style="width: 36px; height: 1px; background: #d5aa4b;"></span>The training arm of SenecAI Compliance<span style="width: 36px; height: 1px; background: #d5aa4b;"></span>
-    </div>
-    <h1 class="ink-h1" style="position: relative; margin: 0; max-width: 16ch; font: 900 clamp(44px, 6.4vw, 96px)/.95 Archivo, sans-serif; letter-spacing: -.035em; text-transform: uppercase; color: #faf3e3;">From AI curious <span style="color: #d5aa4b;">to AI confident.</span></h1>
-    <div class="ac-pillars-badge"><span><b>01</b>Understand AI</span><span><b>02</b>Govern AI</span><span><b>03</b>Build with AI</span></div>
-    <p style="position: relative; margin: 0; max-width: 60ch; font: 400 clamp(17px, 1.5vw, 20px)/1.55 Archivo, sans-serif; color: rgba(250,243,227,.78);">Practical AI literacy, AI governance and EU AI Act training, and hands-on AI workshops — led by AI Act specialist Matei Ștefan, with hands-on AI engineers on the technical track.</p>
-    <div class="hero-ctas" style="position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 16px;">
-      <a href="#programmes" class="ink-cta ink-focus" style="display: flex; align-items: center; justify-content: space-between; gap: 40px; min-width: 260px; padding: 20px 24px; background: #d5aa4b; color: #17160f; font: 800 14px/1 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;"><span>Explore programmes</span><span class="ink-arrow">→</span></a>
-      <a href="#cta" class="ink-ghost ink-focus" style="display: flex; align-items: center; justify-content: space-between; gap: 40px; min-width: 260px; padding: 20px 24px; border: 1.5px solid rgba(250,243,227,.6); color: #faf3e3; font: 800 14px/1 Archivo, sans-serif; letter-spacing: .08em; text-transform: uppercase;"><span>Book a custom team workshop</span><span class="ink-arrow">→</span></a>
-    </div>
-    <a class="ac-textlink ink-focus" href="https://calendly.com/senecai-consulting/30min" target="_blank" rel="noopener">Or book a 1:1 session →</a>
+    <a class="tlink" href="https://calendly.com/senecai-consulting/30min" target="_blank" rel="noopener">Or book a 1:1 session →</a>
+    <div class="mods"><a class="mod" href="#programmes" data-pillar="0"><div class="n">MODULE_01</div><h3>Understand AI</h3><p>AI literacy &amp; fundamentals</p><div class="bar"><i style="width: 33%"></i></div></a><a class="mod" href="#programmes" data-pillar="1"><div class="n">MODULE_02</div><h3>Govern AI</h3><p>AI regulation &amp; governance</p><div class="bar"><i style="width: 67%"></i></div></a><a class="mod" href="#programmes" data-pillar="2"><div class="n">MODULE_03</div><h3>Build with AI</h3><p>AI tools, productivity &amp; hands-on workshops</p><div class="bar"><i style="width: 100%"></i></div></a></div>
   </div>
-  <div id="promise" class="bg-gold ac-wrap" data-screen-label="Problem and promise">
-    <div class="ac-split">
-      <div class="ac-body" style="min-width: 0; display: flex; flex-direction: column; gap: 10px;">
-        <div class="ac-eyebrow" style="margin-bottom: 8px;">The problem, and our promise</div>
-        <h2 class="ac-h2" style="margin-bottom: 14px;">Move beyond the AI fluff.</h2>
-        <p>AI is moving fast. New tools, new possibilities, new regulations. And sometimes it feels like everyone else is already one step ahead.</p><p>Whether you&#x27;re just getting started with AI, looking to make better use of it at work, or trying to understand the regulatory landscape, we help you cut through the noise.</p><p>From basic AI literacy and practical AI workshops to advanced AI governance, EU AI Act and GDPR training, our programmes are designed around what you actually need to know. Our corporate programmes also come with structured documentation that supports your organisation&#x27;s obligation under Article 4 of the EU AI Act (as amended by the Digital Omnibus) to take measures for AI literacy.</p>
+</section>
+<section id="promise" class="sec cream" data-screen-label="Problem and promise">
+  <div class="wrap promise">
+    <div class="body rv">
+      <div class="head" style="margin-bottom: 24px;">
+        <div class="kick">// The problem, and our promise</div>
+        <h2>Move beyond the AI fluff.</h2>
       </div>
-      <figure class="ac-quote">
-        <blockquote>From “I wish I knew this” <span>to “Now this makes sense.”</span></blockquote>
-        <div class="ac-art4"><em>Article 4 of the EU AI Act</em>Corporate programmes include attendance logs, syllabi and completion records that document your AI literacy measures.</div>
-      </figure>
+      <p>AI is moving fast. New tools, new possibilities, new regulations. And sometimes it feels like everyone else is already one step ahead.</p><p>Whether you&#x27;re just getting started with AI, looking to make better use of it at work, or trying to understand the regulatory landscape, we help you cut through the noise.</p><p>From basic AI literacy and practical AI workshops to advanced AI governance, EU AI Act and GDPR training, our programmes are designed around what you actually need to know. Our corporate programmes also come with structured documentation that supports your organisation&#x27;s obligation under Article 4 of the EU AI Act (as amended by the Digital Omnibus) to take measures for AI literacy.</p>
     </div>
+    <figure class="qcard rv" style="margin: 0;">
+      <div class="top" aria-hidden="true"><i></i><i></i><i></i><span>senecai.academy</span></div>
+      <div class="q"><div class="was">From “I wish I knew this”</div><div class="now">to “Now this makes sense.”</div></div>
+      <figcaption class="a4"><b>Article 4 of the EU AI Act</b><span>Corporate programmes include attendance logs, syllabi and completion records that document your AI literacy measures.</span></figcaption>
+    </figure>
   </div>
-  <div id="programmes" class="bg-black ac-wrap" data-screen-label="Programmes">
-    <div class="ac-head">
-      <div class="ac-eyebrow">The three pillars</div>
-      <h2 class="ac-h2">Three objectives. One clear path.</h2>
-      <p class="ac-lede">Whether you are an individual building future-proof skills or an organisation preparing your teams for an AI-driven environment, our programmes are built around three objectives.</p>
+</section>
+<section id="programmes" class="sec" data-screen-label="Programmes">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="kick">// The three pillars</div>
+      <h2>Three objectives. One clear path.</h2>
+      <p class="lede">Whether you are an individual building future-proof skills or an organisation preparing your teams for an AI-driven environment, our programmes are built around three objectives.</p>
     </div>
-    <div data-pillars>
-      <div class="pl-tabs" role="tablist" aria-label="The three pillars"><button class="pl-tab" type="button" role="tab" id="pl-tab-0" aria-controls="pl-panel-0" aria-selected="true"><b>01</b>Understand AI</button><button class="pl-tab" type="button" role="tab" id="pl-tab-1" aria-controls="pl-panel-1" aria-selected="false"><b>02</b>Govern AI</button><button class="pl-tab" type="button" role="tab" id="pl-tab-2" aria-controls="pl-panel-2" aria-selected="false"><b>03</b>Build with AI</button></div>
-      <div class="pl-panel" role="tabpanel" id="pl-panel-0" aria-labelledby="pl-tab-0">
-        <div class="pl-title"><div class="ac-eyebrow">Pillar 01</div><h3>Understand AI</h3><div class="pl-sub">AI literacy &amp; fundamentals</div></div>
-        <div class="pl-meta"><div><b>What it is</b><p>Practical, jargon-free foundational training that demystifies how AI works, where it fails, and how to use it safely in daily operations. Every corporate programme includes attendance logs, role-relevant curriculum documentation and completion records.</p></div><div><b>Why it matters</b><p>Under Article 4 of the EU AI Act (as amended by the Digital Omnibus), organisations must take measures to support the AI literacy of their staff and anyone operating AI systems on their behalf. What counts is concrete, proportionate action you can document, not a pass mark. Our corporate programmes give you that documentation, while reducing data leaks and “shadow AI” risks.</p></div><div><b>Who it&#x27;s for</b><p>All employees, non-technical teams, HR and L&amp;D leaders, managers, and individuals looking for a clear, practical foundation in AI.</p></div></div>
-        <div class="pl-progs-h">Featured programmes</div>
-        <div class="pl-progs"><div class="pl-prog feat"><span class="pl-tag">Article 4 Evidence Kit</span><h4>AI ABCs: Practical AI Literacy</h4><p>How LLMs work, hallucinations, bias, data privacy rules and safe workplace adoption, with an Article 4 documentation pack for corporate clients.</p></div><div class="pl-prog"><h4>AI for Everyday Work &amp; Critical Thinking</h4><p>Evaluating AI outputs critically and bringing AI safely into daily administrative and operational tasks.</p></div><div class="pl-prog"><span class="pl-tag">Tailored by department</span><h4>Role-Specific AI Literacy</h4><p>Sessions tailored to the workflows and risk profiles of HR, Marketing, Sales, Finance or Operations.</p></div></div>
-      </div>
-      <div class="pl-panel" role="tabpanel" id="pl-panel-1" aria-labelledby="pl-tab-1">
-        <div class="pl-title"><div class="ac-eyebrow">Pillar 02</div><h3>Govern AI</h3><div class="pl-sub">AI regulation &amp; governance</div></div>
-        <div class="pl-meta"><div><b>What it is</b><p>In-depth legal, regulatory and operational training on the EU AI Act, how it meets the GDPR, sector-specific rules, and internal AI governance frameworks.</p></div><div><b>Why it matters</b><p>Regulatory missteps carry real financial and reputational costs, while a lack of internal rules stalls innovation. We help you move from abstract legal text to classifying AI systems, managing high-risk obligations and building governance you can defend.</p></div><div><b>Who it&#x27;s for</b><p>Legal teams, DPOs, compliance and risk officers, executives, product managers, and founders in regulated industries.</p></div></div>
-        <div class="pl-progs-h">Featured programmes</div>
-        <div class="pl-progs"><div class="pl-prog feat"><span class="pl-tag">Foundation</span><h4>EU AI Act Essentials: From Obligations to Action</h4><p>Risk tiers, value-chain roles (provider vs deployer), prohibited practices, compliance timelines and documentation duties.</p></div><div class="pl-prog"><h4>The EU AI Act and the GDPR</h4><p>Lawful bases for AI training and deployment, personal data governance, transparency, and aligning DPIAs with FRIAs.</p></div><div class="pl-prog"><span class="pl-tag">Fintech · MedTech · Biometrics</span><h4>Vertical AI Compliance</h4><p>High-risk AI obligations, human oversight, conformity assessment and sector standards in fintech, medtech and biometrics.</p></div><div class="pl-prog"><h4>AI Governance &amp; Responsible AI in Practice</h4><p>Building an internal AI governance framework: acceptable use policies, AI inventories, bias mitigation and compliance by design.</p></div><div class="pl-prog"><span class="pl-tag">AIGP now · CIPP/E from 2027</span><h4>Certification Preparation</h4><p>Structured preparation for IAPP exams: which parts of the Body of Knowledge to prioritise, how to read scenario questions, and exam technique, taught by an AIGP-certified trainer.</p></div></div>
-      </div>
-      <div class="pl-panel" role="tabpanel" id="pl-panel-2" aria-labelledby="pl-tab-2">
-        <div class="pl-title"><div class="ac-eyebrow">Pillar 03</div><h3>Build with AI</h3><div class="pl-sub">AI tools, productivity &amp; hands-on workshops</div><div class="pl-lead">Led by Technical Lead Vlad Tudor — AI engineer &amp; founder of Sapio AI</div></div>
-        <div class="pl-meta"><div><b>What it is</b><p>Hands-on workshops on mastering modern AI tools, writing reliable prompts, and building real AI workflows and automations.</p></div><div><b>Why it matters</b><p>Most teams barely scratch the surface of what AI can do, losing hours to trial and error with no measurable return. Guided by an active AI engineer, your team learns to turn AI into a practical productivity multiplier and to build secure workflows that scale.</p></div><div><b>Who it&#x27;s for</b><p>Leadership teams, operational teams, tech leads, product builders, founders, and professionals ready to move from basic prompting to real execution.</p></div></div>
-        <div class="pl-progs-h">Featured programmes</div>
-        <div class="pl-progs"><div class="pl-prog feat"><span class="pl-tag">Leadership · 4 hours</span><h4>AI Foundation for Leadership Teams</h4><p>Four hours on site for up to 10 leaders: where AI fits in your company, your top three use cases, a 90-day adoption blueprint, one-page AI rules, and Claude for briefings, reports and decisions. Follow-up call at 30 days.</p></div><div class="pl-prog"><h4>Hands-on AI Productivity &amp; Structured Prompting</h4><p>Practical mastery of ChatGPT, Claude and Copilot, structured prompting frameworks, document analysis and task automation.</p></div><div class="pl-prog"><h4>Building AI Workflows &amp; Practical Automations</h4><p>Step-by-step workshops on connecting AI models with internal tools to build custom assistants and automated pipelines.</p></div><div class="pl-prog"><h4>Custom Technical Workshops &amp; 1:1 Sessions</h4><p>Bespoke engineering workshops for product teams, or private sessions for leaders and individuals building specific AI solutions.</p></div></div>
-      </div>
-    </div>
-    <div style="margin-top: clamp(32px, 4vw, 48px);"><a class="ac-btn ink-focus" href="#cta"><span>Request a custom syllabus</span><span aria-hidden="true">→</span></a></div>
-  </div>
-  <div id="why" class="bg-gold ac-wrap" data-screen-label="Why SenecAI Academy">
-    <div class="ac-head">
-      <div class="ac-eyebrow">Why SenecAI Academy</div>
-      <h2 class="ac-h2">Where legal precision meets real engineering.</h2>
-      <p class="ac-lede">Most AI trainings are taught either by lawyers who have never built an AI system, or by engineers who treat regulation as an afterthought. At SenecAI Academy, you get both in the same room.</p>
-    </div>
-    <div class="ac-why">
-      <div><b>01</b><h3>AI governance &amp; regulatory expertise</h3><p>Most programmes are designed and delivered by founder Matei Ștefan and grounded in the advisory practice of SenecAI Compliance, so every session reflects the latest EU AI Act, Digital Omnibus and GDPR developments.</p></div>
-      <div><b>02</b><h3>Hands-on engineering &amp; building</h3><p>The Build track is led by Vlad Tudor, an AI engineer and founder of Sapio AI who builds production AI systems, workflows and automations.</p></div>
-      <div><b>03</b><h3>Audit-ready documentation</h3><p>For corporate clients, we provide clear training records, syllabi and attendance logs that document your Article 4 measures.</p></div>
-      <div><b>04</b><h3>Tailored, not generic</h3><p>Every corporate workshop can be tailored to your industry, your internal tech stack and your actual risk profile.</p></div>
-    </div>
-  </div>
-  <div id="faculty" class="bg-black ac-wrap" data-screen-label="Faculty">
-    <div class="ac-head">
-      <div class="ac-eyebrow">Faculty</div>
-      <h2 class="ac-h2">Meet your trainers.</h2>
-    </div>
-    <div class="ac-fac">
-      <div class="ac-person lead"><img class="ac-photo" src="/assets/team/matei-stefan.jpg" alt="Matei Ștefan" loading="lazy"><h3>Matei Ștefan</h3><div class="ac-role">Founder &amp; Lead Trainer</div><p>Legal professional specialising in AI regulation and technology law. He followed the AI Act at the European Parliament from the Commission's first proposal, worked on international law at the United Nations, and now advises companies on the AI Act, GDPR and digital regulation. IAPP AIGP. Author of <a href="https://theaiactguy.substack.com/" target="_blank" rel="noopener">The AI Act Guy</a> and the Global AI Policy Report 2026. Leads the Understand and Govern pillars.</p></div>
-      <div class="ac-person"><img class="ac-photo" src="/assets/team/vlad-tudor.jpg" alt="Vlad Tudor" loading="lazy"><h3>Vlad Tudor</h3><div class="ac-role">Technical Lead · Build with AI</div><p>AI engineer and founder of Sapio AI. Creator of ai-aflat.ro, Romania's free AI assistant for national legislation, and a Forbes Romania 30 Under 30 honoree (2025). Leads the Build pillar.</p></div>
-      <div class="ac-person"><div class="ac-mono" aria-hidden="true">AP</div><h3>Andrei Pavel</h3><div class="ac-role">Guest Expert</div><p>Company workshops. Full profile coming soon.</p></div>
-      <div class="ac-person"><div class="ac-mono" aria-hidden="true">+</div><h3>Guest experts</h3><div class="ac-role">Masterclasses &amp; specialist workshops</div><p>Specialists in cybersecurity, data and AI engineering who join for masterclasses and specialist workshops.</p></div>
-    </div>
-  </div>
-  <div id="formats" class="bg-gold ac-wrap" data-screen-label="Delivery formats">
-    <div class="ac-head">
-      <div class="ac-eyebrow">Delivery formats</div>
-      <h2 class="ac-h2">Flexible delivery for teams and individuals.</h2>
-    </div>
-    <div class="ac-fmts">
-      <div><b>01</b><h3>In-house corporate workshops</h3><p>Tailored half-day, full-day or multi-module programmes, delivered on site or live online for your company.</p><a class="ac-btn ink-focus" href="#cta"><span>Request a quote</span><span aria-hidden="true">→</span></a></div>
-      <div><b>02</b><h3>Public cohorts</h3><p>Scheduled open-enrolment programmes, live online or in person, for professionals who prefer to learn in a group.</p><a class="ac-btn ink-focus" href="#cta"><span>Register your interest</span><span aria-hidden="true">→</span></a></div>
-      <div><b>03</b><h3>Executive 1:1 &amp; individual training</h3><p>Focused private sessions for founders, executives and professionals who want to level up fast. Book a session directly online.</p><a class="ac-btn ink-focus" href="https://calendly.com/senecai-consulting/30min" target="_blank" rel="noopener"><span>Book a 1:1 session</span><span aria-hidden="true">→</span></a></div>
-    </div>
-  </div>
-  <div class="bg-black ac-wrap" data-screen-label="SenecAI Compliance">
-    <div class="ac-bridge">
+    <div class="prog" data-pillars>
+      <div class="tabs" role="tablist" aria-label="The three pillars"><button class="tab" type="button" role="tab" id="tab-0" aria-controls="panel-0" aria-selected="true"><span class="n">MODULE_01</span><strong>Understand AI</strong></button><button class="tab" type="button" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="false"><span class="n">MODULE_02</span><strong>Govern AI</strong></button><button class="tab" type="button" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false"><span class="n">MODULE_03</span><strong>Build with AI</strong></button></div>
       <div>
-        <div class="ac-eyebrow">SenecAI Compliance</div>
-        <h2 class="ac-h2" style="margin-top: 14px; font-size: clamp(28px, 3vw, 40px);">Ready to go beyond training?</h2>
+      <div class="panel" role="tabpanel" id="panel-0" aria-labelledby="tab-0">
+        <h3>Understand AI</h3><div class="sub">AI literacy &amp; fundamentals</div>
+        <div class="meta"><div><b>What it is</b><p>Practical, jargon-free foundational training that demystifies how AI works, where it fails, and how to use it safely in daily operations. Every corporate programme includes attendance logs, role-relevant curriculum documentation and completion records.</p></div><div><b>Why it matters</b><p>Under Article 4 of the EU AI Act (as amended by the Digital Omnibus), organisations must take measures to support the AI literacy of their staff and anyone operating AI systems on their behalf. What counts is concrete, proportionate action you can document, not a pass mark. Our corporate programmes give you that documentation, while reducing data leaks and “shadow AI” risks.</p></div><div><b>Who it&#x27;s for</b><p>All employees, non-technical teams, HR and L&amp;D leaders, managers, and individuals looking for a clear, practical foundation in AI.</p></div></div>
+        <div class="ch">// Featured programmes</div>
+        <div class="courses"><article class="course feat"><span class=chip>Article 4 Evidence Kit</span><h4>AI ABCs: Practical AI Literacy</h4><p>How LLMs work, hallucinations, bias, data privacy rules and safe workplace adoption, with an Article 4 documentation pack for corporate clients.</p></article><article class="course"><h4>AI for Everyday Work &amp; Critical Thinking</h4><p>Evaluating AI outputs critically and bringing AI safely into daily administrative and operational tasks.</p></article><article class="course"><span class=chip>Tailored by department</span><h4>Role-Specific AI Literacy</h4><p>Sessions tailored to the workflows and risk profiles of HR, Marketing, Sales, Finance or Operations.</p></article></div>
+      </div>
+      <div class="panel" role="tabpanel" id="panel-1" aria-labelledby="tab-1">
+        <h3>Govern AI</h3><div class="sub">AI regulation &amp; governance</div>
+        <div class="meta"><div><b>What it is</b><p>In-depth legal, regulatory and operational training on the EU AI Act, how it meets the GDPR, sector-specific rules, and internal AI governance frameworks.</p></div><div><b>Why it matters</b><p>Regulatory missteps carry real financial and reputational costs, while a lack of internal rules stalls innovation. We help you move from abstract legal text to classifying AI systems, managing high-risk obligations and building governance you can defend.</p></div><div><b>Who it&#x27;s for</b><p>Legal teams, DPOs, compliance and risk officers, executives, product managers, and founders in regulated industries.</p></div></div>
+        <div class="ch">// Featured programmes</div>
+        <div class="courses"><article class="course feat"><span class=chip>Foundation</span><h4>EU AI Act Essentials: From Obligations to Action</h4><p>Risk tiers, value-chain roles (provider vs deployer), prohibited practices, compliance timelines and documentation duties.</p></article><article class="course"><h4>The EU AI Act and the GDPR</h4><p>Lawful bases for AI training and deployment, personal data governance, transparency, and aligning DPIAs with FRIAs.</p></article><article class="course"><span class=chip>Fintech · MedTech · Biometrics</span><h4>Vertical AI Compliance</h4><p>High-risk AI obligations, human oversight, conformity assessment and sector standards in fintech, medtech and biometrics.</p></article><article class="course"><h4>AI Governance &amp; Responsible AI in Practice</h4><p>Building an internal AI governance framework: acceptable use policies, AI inventories, bias mitigation and compliance by design.</p></article><article class="course"><span class=chip>AIGP now · CIPP/E from 2027</span><h4>Certification Preparation</h4><p>Structured preparation for IAPP exams: which parts of the Body of Knowledge to prioritise, how to read scenario questions, and exam technique, taught by an AIGP-certified trainer.</p></article></div>
+      </div>
+      <div class="panel" role="tabpanel" id="panel-2" aria-labelledby="tab-2">
+        <h3>Build with AI</h3><div class="sub">AI tools, productivity &amp; hands-on workshops</div><div class="lead">Led by Technical Lead Vlad Tudor — AI engineer &amp; founder of Sapio AI</div>
+        <div class="meta"><div><b>What it is</b><p>Hands-on workshops on mastering modern AI tools, writing reliable prompts, and building real AI workflows and automations.</p></div><div><b>Why it matters</b><p>Most teams barely scratch the surface of what AI can do, losing hours to trial and error with no measurable return. Guided by an active AI engineer, your team learns to turn AI into a practical productivity multiplier and to build secure workflows that scale.</p></div><div><b>Who it&#x27;s for</b><p>Leadership teams, operational teams, tech leads, product builders, founders, and professionals ready to move from basic prompting to real execution.</p></div></div>
+        <div class="ch">// Featured programmes</div>
+        <div class="courses"><article class="course feat"><span class=chip>Leadership · 4 hours</span><h4>AI Foundation for Leadership Teams</h4><p>Four hours on site for up to 10 leaders: where AI fits in your company, your top three use cases, a 90-day adoption blueprint, one-page AI rules, and Claude for briefings, reports and decisions. Follow-up call at 30 days.</p></article><article class="course"><h4>Hands-on AI Productivity &amp; Structured Prompting</h4><p>Practical mastery of ChatGPT, Claude and Copilot, structured prompting frameworks, document analysis and task automation.</p></article><article class="course"><h4>Building AI Workflows &amp; Practical Automations</h4><p>Step-by-step workshops on connecting AI models with internal tools to build custom assistants and automated pipelines.</p></article><article class="course"><h4>Custom Technical Workshops &amp; 1:1 Sessions</h4><p>Bespoke engineering workshops for product teams, or private sessions for leaders and individuals building specific AI solutions.</p></article></div>
+      </div>
+        <div class="prog-cta"><a class="btn b-gold" href="#cta">Request a custom syllabus <span class="arr" aria-hidden="true">→</span></a></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="why" class="sec cream" data-screen-label="Why SenecAI Academy">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="kick">// Why SenecAI Academy</div>
+      <h2>Where legal precision meets real engineering.</h2>
+      <p class="lede">Most AI trainings are taught either by lawyers who have never built an AI system, or by engineers who treat regulation as an afterthought. At SenecAI Academy, you get both in the same room.</p>
+    </div>
+    <div class="why rv"><div><div class="n">[01]</div><h3>AI governance &amp; regulatory expertise</h3><p>Most programmes are designed and delivered by founder Matei Ștefan and grounded in the advisory practice of SenecAI Compliance, so every session reflects the latest EU AI Act, Digital Omnibus and GDPR developments.</p></div><div><div class="n">[02]</div><h3>Hands-on engineering &amp; building</h3><p>The Build track is led by Vlad Tudor, an AI engineer and founder of Sapio AI who builds production AI systems, workflows and automations.</p></div><div><div class="n">[03]</div><h3>Audit-ready documentation</h3><p>For corporate clients, we provide clear training records, syllabi and attendance logs that document your Article 4 measures.</p></div><div><div class="n">[04]</div><h3>Tailored, not generic</h3><p>Every corporate workshop can be tailored to your industry, your internal tech stack and your actual risk profile.</p></div></div>
+  </div>
+</section>
+<section id="faculty" class="sec" data-screen-label="Faculty">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="kick">// Faculty</div>
+      <h2>Meet your trainers.</h2>
+    </div>
+    <div class="fac"><article class="person lead rv"><div class="pic"><img src="/assets/team/matei-stefan.jpg" alt="Matei Ștefan" loading="lazy"></div><div class="txt"><h3>Matei Ștefan</h3><div class="role">Founder &amp; Lead Trainer</div><p>Legal professional specialising in AI regulation and technology law. He followed the AI Act at the European Parliament from the Commission's first proposal, worked on international law at the United Nations, and now advises companies on the AI Act, GDPR and digital regulation. IAPP AIGP. Author of <a href="https://theaiactguy.substack.com/" target="_blank" rel="noopener">The AI Act Guy</a> and the Global AI Policy Report 2026. Leads the Understand and Govern pillars.</p></div></article><article class="person rv"><div class="pic"><img src="/assets/team/vlad-tudor.jpg" alt="Vlad Tudor" loading="lazy"></div><div class="txt"><h3>Vlad Tudor</h3><div class="role">Technical Lead · Build with AI</div><p>AI engineer and founder of Sapio AI. Creator of ai-aflat.ro, Romania's free AI assistant for national legislation, and a Forbes Romania 30 Under 30 honoree (2025). Leads the Build pillar.</p></div></article><article class="person rv"><div class="pic"><span class="mono" aria-hidden="true">AP</span></div><div class="txt"><h3>Andrei Pavel</h3><div class="role">Guest Expert</div><p>Company workshops. Full profile coming soon.</p></div></article><article class="person rv"><div class="pic"><span class="mono" aria-hidden="true">+</span></div><div class="txt"><h3>Guest experts</h3><div class="role">Masterclasses &amp; specialist workshops</div><p>Specialists in cybersecurity, data and AI engineering who join for masterclasses and specialist workshops.</p></div></article></div>
+  </div>
+</section>
+<section id="formats" class="sec cream" data-screen-label="Delivery formats">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="kick">// Delivery formats</div>
+      <h2>Flexible delivery for teams and individuals.</h2>
+    </div>
+    <div class="fmts"><article class="fmt rv"><div class="n">FORMAT_01</div><h3>In-house corporate workshops</h3><p>Tailored half-day, full-day or multi-module programmes, delivered on site or live online for your company.</p><a class="btn b-dark" href="#cta">Request a quote <span class="arr" aria-hidden="true">→</span></a></article><article class="fmt rv"><div class="n">FORMAT_02</div><h3>Public cohorts</h3><p>Scheduled open-enrolment programmes, live online or in person, for professionals who prefer to learn in a group.</p><a class="btn b-line" href="#cta" style="color: #201e1d; border-color: rgba(32,30,29,.4);">Register your interest <span class="arr" aria-hidden="true">→</span></a></article><article class="fmt rv"><div class="n">FORMAT_03</div><h3>Executive 1:1 &amp; individual training</h3><p>Focused private sessions for founders, executives and professionals who want to level up fast. Book a session directly online.</p><a class="btn b-line" href="https://calendly.com/senecai-consulting/30min" target="_blank" rel="noopener" style="color: #201e1d; border-color: rgba(32,30,29,.4);">Book a 1:1 session <span class="arr" aria-hidden="true">→</span></a></article></div>
+  </div>
+</section>
+<section class="sec" data-screen-label="SenecAI Compliance">
+  <div class="wrap">
+    <div class="bridge rv">
+      <div>
+        <div class="kick">// SenecAI Compliance</div>
+        <h2>Ready to go beyond training?</h2>
         <p>Training is often the first step. When your organisation is ready to draft internal AI policies, map high-risk systems, carry out fundamental rights impact assessments (FRIAs) or prepare for EU AI Act audits, our parent advisory practice, SenecAI Compliance, supports your implementation end to end.</p>
       </div>
-      <a class="ac-btn ink-focus" href="https://www.senecai.eu/"><span>Discover SenecAI Compliance</span><span aria-hidden="true">→</span></a>
+      <a class="btn b-line" href="https://www.senecai.eu/">Discover SenecAI Compliance <span class="arr" aria-hidden="true">→</span></a>
     </div>
   </div>
-  <div id="cta" class="bg-gold" data-screen-label="Final CTA" data-tone-band="cta" style="border-top: 1px solid #ddd7c8; padding: clamp(48px, 6vw, 88px) clamp(20px, 4vw, 64px);">
-    <div class="cta-grid">
-      <div style="min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 22px;">
-        <h2 style="margin: 0; max-width: 20ch; font: 900 clamp(36px, 5.2vw, 68px)/0.96 Archivo, sans-serif; letter-spacing: -.035em; text-transform: uppercase; color: #201e1d;">Equip your team for the AI era — safely and practically.</h2>
-        <p style="margin: 0; max-width: 42ch; font: 400 18px/1.55 Archivo, sans-serif; color: #4a453e;">Tell us about your team, your industry or your learning goals, and we&#x27;ll propose a tailored training plan.</p>
-        <a class="ac-textlink ink-focus" href="https://calendly.com/senecai-consulting/30min" target="_blank" rel="noopener">Prefer one-on-one? Book a 1:1 session →</a>
-        <div class="ac-signoff" style="margin-top: 12px;">SenecAI Academy. Understand. Govern. Build.</div>
-      </div>
-      <form class="cf" action="/api/contact" method="post" data-contact-form>
-        <div class="cf-title">Request a custom syllabus &amp; quote</div>
-        <div class="cf-row">
-          <label class="cf-field"><span>Name</span><input name="name" type="text" required maxlength="200" autocomplete="name"></label>
-          <label class="cf-field"><span>Work email</span><input name="email" type="email" required maxlength="254" autocomplete="email"></label>
-        </div>
-        <label class="cf-field"><span>Company (optional)</span><input name="company" type="text" maxlength="200" autocomplete="organization"></label>
-        <div class="cf-row3">
-          <label class="cf-field"><span>Pillar</span><select data-extra="Pillar"><option value="">—</option><option>Understand AI</option><option>Govern AI</option><option>Build with AI</option><option>Not sure yet</option></select></label>
-          <label class="cf-field"><span>Team size</span><select data-extra="Team size"><option value="">—</option><option>Just me</option><option>2–10</option><option>11–50</option><option>51–250</option><option>250+</option></select></label>
-          <label class="cf-field"><span>Format</span><select data-extra="Format"><option value="">—</option><option>In-house, on site</option><option>Live online</option><option>1:1</option></select></label>
-        </div>
-        <label class="cf-field"><span>Your team, your industry and what you want to achieve</span><textarea name="message" rows="5" required minlength="10" maxlength="5000">SenecAI Academy: </textarea></label>
-        <div class="cf-hp" aria-hidden="true"><label>Leave this field empty<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
-        <input type="hidden" name="t" value="">
-        <p class="cf-note">We use your details only to reply to your enquiry. See our <a href="/privacy-policy.html">Privacy Policy</a>.</p>
-        <button type="submit" class="cf-submit"><span>Request syllabus &amp; quote</span><span aria-hidden="true">→</span></button>
-        <p class="cf-status" data-cf-status="sending" role="status" hidden>Sending…</p>
-        <p class="cf-status" data-cf-status="ok" role="status" hidden>Thank you. Your request has been sent and we will get back to you shortly.</p>
-        <p class="cf-status cf-error" data-cf-status="error" role="alert" hidden>Your message could not be sent. Please email us at <a href="mailto:matei.stefan@senecai.eu">matei.stefan@senecai.eu</a>.</p>
-      </form>
+</section>
+<section id="cta" class="sec" data-screen-label="Final CTA">
+  <div class="gridbg" aria-hidden="true"></div>
+  <div class="wrap cta-grid" style="position: relative;">
+    <div class="rv">
+      <div class="kick">// Request a custom syllabus &amp; quote</div>
+      <h2>Equip your team for the AI era — safely and practically.</h2>
+      <p class="lede">Tell us about your team, your industry or your learning goals, and we&#x27;ll propose a tailored training plan.</p>
+      <a class="tlink" href="https://calendly.com/senecai-consulting/30min" target="_blank" rel="noopener">Prefer one-on-one? Book a 1:1 session →</a>
+      <div class="signoff">SenecAI Academy. Understand. Govern. Build.</div>
     </div>
+    <form class="form rv" action="/api/contact" method="post" data-contact-form>
+      <div class="form-title">&gt; Request a custom syllabus &amp; quote</div>
+      <div class="row">
+        <label class="field"><span>Name</span><input name="name" type="text" required maxlength="200" autocomplete="name"></label>
+        <label class="field"><span>Work email</span><input name="email" type="email" required maxlength="254" autocomplete="email"></label>
+      </div>
+      <label class="field"><span>Company (optional)</span><input name="company" type="text" maxlength="200" autocomplete="organization"></label>
+      <div class="row3">
+        <label class="field"><span>Pillar</span><select data-extra="Pillar"><option value="">—</option><option>Understand AI</option><option>Govern AI</option><option>Build with AI</option><option>Not sure yet</option></select></label>
+        <label class="field"><span>Team size</span><select data-extra="Team size"><option value="">—</option><option>Just me</option><option>2–10</option><option>11–50</option><option>51–250</option><option>250+</option></select></label>
+        <label class="field"><span>Format</span><select data-extra="Format"><option value="">—</option><option>In-house, on site</option><option>Live online</option><option>1:1</option></select></label>
+      </div>
+      <label class="field"><span>Your team, your industry and what you want to achieve</span><textarea name="message" rows="5" required minlength="10" maxlength="5000">SenecAI Academy: </textarea></label>
+      <div class="hp" aria-hidden="true"><label>Leave this field empty<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+      <input type="hidden" name="t" value="">
+      <p class="note">We use your details only to reply to your enquiry. See our <a href="/privacy-policy.html">Privacy Policy</a>.</p>
+      <button type="submit" class="btn b-gold">Request syllabus &amp; quote <span class="arr" aria-hidden="true">→</span></button>
+      <p class="status" data-cf-status="sending" role="status" hidden>Sending…</p>
+      <p class="status" data-cf-status="ok" role="status" hidden>Thank you. Your request has been sent and we will get back to you shortly.</p>
+      <p class="status err" data-cf-status="error" role="alert" hidden>Your message could not be sent. Please email us at <a href="mailto:matei.stefan@senecai.eu">matei.stefan@senecai.eu</a>.</p>
+    </form>
   </div>
-  <div data-screen-label="Footer" style="background: #17160f; color: #faf3e3; border-top: 1px solid rgba(250,243,227,.16);">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 28px; padding: 44px clamp(20px, 4vw, 64px);">
-      <div style="min-width: 0; display: flex; flex-direction: column; gap: 14px;">
-        <a href="/" style="display: flex; align-items: center; gap: 10px;"><img src="/assets/senecai-compliance-logo-light.png" alt="SenecAI Compliance" style="display: block; height: auto; width: clamp(200px, 18vw, 280px);"></a>
-        <div style="font: 400 14px/1.55 Archivo, sans-serif; color: rgba(250,243,227,.6); max-width: 30ch;">SenecAI Academy. Understand. Govern. Build. The training arm of SenecAI Compliance.</div>
-      </div>
-      <div style="min-width: 0; display: flex; flex-direction: column; gap: 12px;">
-        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">Academy</div>
-        <a class="footer-link" href="#programmes">Programmes</a>
-        <a class="footer-link" href="#why">Why us</a>
-        <a class="footer-link" href="#faculty">Faculty</a>
-        <a class="footer-link" href="#formats">Formats</a>
-        <a class="footer-link" href="/">SenecAI home</a>
-      </div>
-      <div style="min-width: 0; display: flex; flex-direction: column; gap: 12px;">
-        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">Get in touch</div>
-        <a class="footer-link" href="mailto:hello@senecai.eu">hello@senecai.eu</a>
-        <a class="footer-link" href="https://calendly.com/senecai-consulting/30min" target="_blank" rel="noopener">Prefer one-on-one? Book a 1:1 session</a>
-      </div>
-      <div style="min-width: 0; display: flex; flex-direction: column; gap: 12px;">
-        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">Connect</div>
-        <a class="footer-link" href="https://www.linkedin.com/company/senecai-consulting/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="footer-link" href="https://theaiactguy.substack.com/" target="_blank" rel="noopener">The AI Act Guy — Substack</a>
-      </div>
-      <div style="min-width: 0; display: flex; flex-direction: column; gap: 12px;">
-        <div style="font: 700 11px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #d5aa4b;">Legal</div>
-        <a class="footer-link" href="/legal-notice.html">Legal Notice</a>
-        <a class="footer-link" href="/privacy-policy.html">Privacy Policy</a>
-        <a class="footer-link" href="/terms-of-use.html">Terms of Use</a>
-      </div>
+</section></main>
+<footer class="foot" data-screen-label="Footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div><a class="brand" href="/academy"><img src="/assets/senecai-academy-logo-light.png" alt="SenecAI Academy" width="727" height="213"></a><p>SenecAI Academy. Understand. Govern. Build. The training arm of SenecAI Compliance.</p></div>
+      <div><h4>Academy</h4><ul><li><a href="#programmes">Programmes</a></li><li><a href="#why">Why us</a></li><li><a href="#faculty">Faculty</a></li><li><a href="#formats">Formats</a></li><li><a href="/">SenecAI home</a></li></ul></div><div><h4>Get in touch</h4><ul><li><a href="mailto:hello@senecai.eu">hello@senecai.eu</a></li><li><a href="https://calendly.com/senecai-consulting/30min" target="_blank" rel="noopener">Prefer one-on-one? Book a 1:1 session</a></li></ul></div><div><h4>Connect</h4><ul><li><a href="https://www.linkedin.com/company/senecai-consulting/" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://theaiactguy.substack.com/" target="_blank" rel="noopener">The AI Act Guy — Substack</a></li></ul></div><div><h4>Legal</h4><ul><li><a href="/legal-notice.html">Legal Notice</a></li><li><a href="/privacy-policy.html">Privacy Policy</a></li><li><a href="/terms-of-use.html">Terms of Use</a></li></ul></div>
     </div>
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px; padding: 16px clamp(20px, 4vw, 64px); border-top: 1px solid rgba(250,243,227,.12); font: 600 11px/1.5 Archivo, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: rgba(250,243,227,.5);"><span>SenecAI – brand registered at OSIM under no. 055263/15.07.2026</span><span>SenecAI Compliance S.R.L. · CUI 55377157</span></div>
+    <div class="foot-bottom"><span>SenecAI – brand registered at OSIM under no. 055263/15.07.2026</span><span>SenecAI Compliance S.R.L. · CUI 55377157</span></div>
   </div>
-</div>
+</footer>
 
 <script>
 (function () {
-  /* Pillar switcher: tabs with arrow-key support. Without JS every panel stays visible. */
-  var root = document.querySelector("[data-pillars]");
+  /* Module tabs with arrow keys. Without JS every panel stays visible, one after another. */
+  var root = document.querySelector("[data-pillars]"), pick = null;
   if (root) {
     var tabs = [].slice.call(root.querySelectorAll('[role="tab"]'));
     var panels = [].slice.call(root.querySelectorAll('[role="tabpanel"]'));
-    var pick = function (i, focus) {
+    pick = function (i, focus) {
       tabs.forEach(function (t, j) { var on = i === j; t.setAttribute("aria-selected", on ? "true" : "false"); t.tabIndex = on ? 0 : -1; panels[j].hidden = !on; });
       if (focus) tabs[i].focus();
     };
     tabs.forEach(function (t, i) {
       t.addEventListener("click", function () { pick(i); });
       t.addEventListener("keydown", function (e) {
-        if (e.key === "ArrowRight" || e.key === "ArrowLeft") { e.preventDefault(); pick((i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length, true); }
+        if (e.key === "ArrowDown" || e.key === "ArrowRight" || e.key === "ArrowUp" || e.key === "ArrowLeft") {
+          e.preventDefault(); var f = e.key === "ArrowDown" || e.key === "ArrowRight"; pick((i + (f ? 1 : tabs.length - 1)) % tabs.length, true);
+        }
       });
     });
-    root.classList.add("js");
+    root.classList.add("js-tabs");
     pick(0);
+  }
+  /* Hero module cards open the matching tab. */
+  [].forEach.call(document.querySelectorAll("[data-pillar]"), function (a) {
+    a.addEventListener("click", function () { if (pick) pick(+a.getAttribute("data-pillar")); });
+  });
+  /* Reveal on scroll. Without IntersectionObserver everything is simply visible. */
+  if ("IntersectionObserver" in window) {
+    document.documentElement.classList.add("js");
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { rootMargin: "0px 0px -6% 0px", threshold: 0.06 });
+    [].forEach.call(document.querySelectorAll(".rv"), function (el) { io.observe(el); });
   }
   /* Quote form: the three choices travel inside the message, so /api/contact needs no change. */
   [].forEach.call(document.querySelectorAll("[data-contact-form]"), function (form) {
@@ -523,7 +441,6 @@
   });
 })();
 </script>
-<script src="/assets/dot-wave.v1.js" defer></script>
 <script src="/assets/contact-form.v1.js" defer></script>
 </body>
 </html>
